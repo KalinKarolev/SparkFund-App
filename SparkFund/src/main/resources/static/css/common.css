@@ -1,0 +1,32 @@
+body {
+    background: linear-gradient(to bottom right, #FFB84D, #FFF5E1);
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 40px;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.nav-bar {
+    height: 100%;
+}
+
+.sidebar-container {
+    text-align: left;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    padding: 40px;
+    width: 200px;
+}
+
+main {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    width: 100%;
+    max-width: 1500px;
+    padding: 0 40px;
+}

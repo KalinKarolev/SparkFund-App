@@ -1,0 +1,238 @@
+/* Overall content container remains unchanged */
+.content-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: calc(100% - 240px); /* e.g., accounting for sidebar width and padding */
+}
+
+/* Spark Information Container: fixed height of 50% viewport height */
+.spark-info-container {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    gap: 20px;
+    height: 50vh; /* 50% of the viewport height */
+    /*margin-bottom: 20px;*/
+}
+
+/* Left column: 50% width */
+.spark-info-left {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+/* Right column: 50% width, split vertically */
+.spark-info-right {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.spark-description {
+    flex-grow: 1;
+}
+
+/* Slideshow container occupies 80% of the right column's height */
+.slideshow-container {
+    position: relative;
+    width: 100%;
+    height: 80%;
+    overflow: hidden;
+    margin-bottom: 10px;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+}
+
+/* Creator Info Container (now inside spark-info-left) */
+.small-info-container {
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    margin-top: auto;
+    max-height: 80px;
+}
+
+.small-info-container img.creator-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.spark-message-container {
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    max-height: 80px;
+    margin: 10px;
+}
+
+.spark-message-container img.creator-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Hide radio buttons */
+.slideshow-container input[type="radio"] {
+    display: none;
+}
+
+.slides {
+    display: flex;
+    width: 300%; /* For three slides */
+    height: 100%;
+    transition: transform 0.5s ease;
+}
+
+.slide {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.navigation {
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+    text-align: center;
+}
+
+.navigation label {
+    cursor: pointer;
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    margin: 0 4px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    transition: background 0.3s ease;
+}
+
+#slide1:checked ~ .slides {
+    transform: translateX(0%);
+}
+#slide2:checked ~ .slides {
+    transform: translateX(-570px); /* Adjust if necessary */
+}
+#slide3:checked ~ .slides {
+    transform: translateX(-1140px);
+}
+
+#slide1:checked ~ .navigation label[for="slide1"],
+#slide2:checked ~ .navigation label[for="slide2"],
+#slide3:checked ~ .navigation label[for="slide3"] {
+    background: rgba(255, 255, 255, 0.9);
+}
+
+/* Info row: container for donator messages and financial details */
+.info-row {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+    justify-content: space-between;
+}
+
+/* Donator Messages Container: 50% width */
+.donator-messages-container {
+    flex: 1;
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    width: 50%;
+    height: 250px; /* Adjust based on your layout */
+    overflow: hidden; /* Prevent resizing based on content */
+}
+
+/* Financial Information Container: 50% width */
+.financial-info-container {
+    flex: 1;
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 50%;
+    height: 250px; /* Adjust based on your layout */
+    overflow: hidden; /* Prevent resizing based on content */
+}
+
+.donate-button {
+    background-color: #FFB84D;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    align-self: flex-start;
+    margin-top: 10px;
+    margin-left: 275px;
+}
+
+.donate-button:hover {
+    background-color: #FFA500;
+}
+
+.update-button {
+    background-color: #FFB84D;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    align-self: flex-end;
+    margin-top: 10px;
+    margin-left: 120px;
+}
+
+.update-button:hover {
+    background-color: #FFA500;
+}
+
+/* Progress bar container */
+.progress-container {
+    width: 100%;
+    height: 20px;
+    background-color: #eee;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 10px 0;
+}
+
+/* Actual progress bar */
+.progress-bar {
+    height: 100%;
+    background-color: #4CAF50;
+    transition: width 0.5s ease-in-out;
+}

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spark Details</title>
+  <link rel="stylesheet" href="/css/index.css">
+  <link rel="stylesheet" href="/css/home.css">
+  <link rel="stylesheet" href="/css/common.css">
+  <link rel="stylesheet" href="/css/spark.css">
+</head>
+<body>
+<main>
+  <div th:replace="fragments/commons :: nav-bar"></div>
+
+  <!-- Main content container -->
+  <div class="content-container">
+    <!-- Spark Information Container: fixed height 50% of viewport -->
+    <div class="spark-info-container">
+      <!-- Left column: Title, Description, and Creator Info -->
+      <div class="spark-info-left">
+        <h2>Spark Title</h2>
+        <p class="spark-description">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        </p>
+        <!-- Creator info moved here -->
+        <div class="small-info-container">
+          <h3>Created by:</h3>
+          <img class="creator-image" src="/images/Default-User_Image.png" alt="Creator Image">
+          <div>
+            <p class="creator-name">John Doe</p>
+            <p class="creator-email">john@example.com</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right column: Slideshow (80% height) and Meta info (20% height) -->
+      <div class="spark-info-right">
+        <!-- Slideshow container -->
+        <div class="slideshow-container">
+          <!-- Radio buttons to control slides -->
+          <input type="radio" name="slider" id="slide1" checked>
+          <input type="radio" name="slider" id="slide2">
+          <input type="radio" name="slider" id="slide3">
+
+          <!-- Slides wrapper -->
+          <div class="slides">
+            <div class="slide">
+              <img src="/images/Default-User_Image.png" alt="Image 1">
+            </div>
+            <div class="slide">
+              <img src="/images/Default-User_Image.png" alt="Image 2">
+            </div>
+            <div class="slide">
+              <img src="/images/Default-User_Image.png" alt="Image 3">
+            </div>
+          </div>
+
+          <!-- Navigation dots -->
+          <div class="navigation">
+            <label for="slide1"></label>
+            <label for="slide2"></label>
+            <label for="slide3"></label>
+          </div>
+        </div>
+
+        <!-- Meta information container -->
+        <div class="small-info-container">
+          <p>
+            <label for="category"><b>Category:</b></label>
+            <select id="category" name="category" disabled>
+              <option>Education</option>
+              <option>Health</option>
+              <option>Environment</option>
+              <option>Community</option>
+              <option>Emergency</option>
+            </select>
+          </p>
+          <p>
+            <b>Created:</b> <span class="created-date">2025-02-24</span> |
+            <b>Updated:</b> <span class="updated-date">2025-02-25</span>
+            <span> <button class="update-button">Update</button></span>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Info Row: Donator Messages and Financial Details -->
+    <div class="info-row">
+      <!-- Donator Messages Container: 50% width -->
+      <div class="donator-messages-container">
+        <div class="spark-message-container">
+          <img class="creator-image" src="/images/Default-User_Image.png" alt="Creator Image">
+          <p class="donator-message">"Great initiative!" - Donator A</p>
+        </div>
+        <div class="spark-message-container">
+          <img class="creator-image" src="/images/Default-User_Image.png" alt="Creator Image">
+          <p class="donator-message">"Happy to help!" - Donator B</p>
+        </div>
+        <div class="spark-message-container">
+          <img class="creator-image" src="/images/Default-User_Image.png" alt="Creator Image">
+          <p class="donator-message">"Great initiative!" - Donator A</p>
+        </div>
+      </div>
+
+      <!-- Financial Information Container: 50% width -->
+      <div class="financial-info-container">
+        <h3>Financial Details</h3>
+        <p>
+          <b>Current Amount:</b> <span class="current-amount">$500</span> |
+          <b>Goal Amount:</b> <span class="goal-amount">$1000</span>
+        </p>
+
+        <!-- Progress Bar -->
+        <div class="progress-container">
+          <div class="progress-bar" style="width: 60%;"></div>
+        </div>
+
+        <p>
+          <label for="status">Status:</label>
+          <select id="status" name="status" disabled>
+            <option>Active</option>
+            <option>Completed</option>
+            <option>Canceled</option>
+          </select>
+          <button class="donate-button">Donate</button>
+        </p>
+      </div>
+    </div>
+  </div>
+</main>
+</body>
+</html>
