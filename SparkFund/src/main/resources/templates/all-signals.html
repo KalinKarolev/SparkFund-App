@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Signals</title>
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/users.css">
+</head>
+<body>
+
+<main>
+    <div th:replace="fragments/commons :: nav-bar"></div>
+
+    <div class="content-wrapper">
+        <div class="main-container">
+
+            <form method="GET" >
+                <div class="filter-container">
+                    <label for="status-filter">Filter by Status:</label>
+                    <select id="status-filter" name="status" class="filter-dropdown" onchange="this.form.submit()">
+                        <option value="Any Status">Any Status</option>
+                        <option value="pending">Pending</option>
+                        <option value="resolved">Resolved</option>
+                    </select>
+                </div>
+            </form>
+
+            <div class="single-section-box section-container">
+                <table class="styled-table">
+                    <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>User</th>
+                        <th>User email</th>
+                        <th>Status</th>
+                        <th>Created on</th>
+                        <th>Updated on</th>
+                        <th>Open</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Message Title</td>
+                        <td>KKarolev</td>
+                        <td>no email</td>
+                        <td>PENDING</td>
+                        <td>25-02-2025</td>
+                        <td>26-02-2025</td>
+                        <td>
+                            <form method="GET">
+                                <button class="profile-actions-button">
+                                    <p>Open</p>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Message Title</td>
+                        <td>KKarolev</td>
+                        <td>no email</td>
+                        <td>PENDING</td>
+                        <td>25-02-2025</td>
+                        <td>26-02-2025</td>
+                        <td>
+                            <form method="GET">
+                                <button class="profile-actions-button">
+                                    <p>Open</p>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Message Title</td>
+                        <td>KKarolev</td>
+                        <td>no email</td>
+                        <td>PENDING</td>
+                        <td>25-02-2025</td>
+                        <td>26-02-2025</td>
+                        <td>
+                            <form method="GET">
+                                <button class="profile-actions-button">
+                                    <p>Open</p>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    </trth>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="fragments/commons :: footer"></div>
+</main>
+
+</body>
+</html>

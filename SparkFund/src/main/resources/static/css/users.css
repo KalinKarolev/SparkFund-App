@@ -1,0 +1,145 @@
+.styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    margin: 10px 0;
+    background: #fff7ea;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.10);
+}
+
+.styled-table thead {
+    background: linear-gradient(to bottom right, #FFB84D, #ffc594);
+    color: #ffffff;
+    text-transform: uppercase;
+    font-weight: 200;
+}
+
+.styled-table thead th {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.styled-table tbody td {
+    padding: 12px;
+    text-align: center;
+    color: #333;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.single-section-box.section-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    overflow: hidden;
+
+}
+
+.single-section-box.section-container::before,
+.single-section-box.section-container::after {
+    content: '';
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    position: absolute;
+    border-radius: 90%;
+    opacity: 0.7;
+    filter: blur(40px);
+    z-index: 1;
+}
+
+.profile-actions-button {
+    align-self: center;
+    text-align: center;
+    padding: 0 10px;
+    width: 100%;
+    min-width: 160px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    gap: 4px;
+    font-size: 14px;
+    font-family: 'Poppins', sans-serif;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    color: #ffffff;
+    background-color: rgba(13, 13, 26, 0.37);
+    font-weight: 300;
+    text-decoration: none;
+    z-index: 2;
+}
+
+.profile-actions-button p {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.profile-actions-button svg {
+    width: 16px;
+}
+
+.profile-actions-button:hover {
+    background: linear-gradient(to bottom right, #FFB84D, #ffc594);
+    color: white;
+    border-radius: 5px;
+    border: none;
+    font-weight: 300;
+    transition: background 0.9s ease-in-out;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Wrapper for the filter */
+.filter-container {
+    background: linear-gradient(to bottom right, #FFB84D, #ffc594);
+    padding: 10px 15px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    color: #ffffff;
+    width: fit-content; /* Only as wide as content */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.10);
+    text-transform: uppercase;
+}
+
+/* Style the dropdown */
+.filter-dropdown {
+    padding: 8px;
+    border-radius: 5px;
+    border: none;
+    background-color: #fff7ea;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.3s ease-in-out;
+    min-width: 140px;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+/* Change color on hover */
+.filter-dropdown:hover,
+.filter-dropdown:focus {
+    background: #fff7ea;
+    color: #333;
+}
+
+/* Change option styles */
+.filter-dropdown option {
+    background: #fff7ea;
+    color: #333;
+}
+
+/* Hover effect for dropdown options */
+.filter-dropdown option:hover {
+    background: linear-gradient(to bottom right, #FFB84D, #ffc594);
+    color: #333;
+}
+

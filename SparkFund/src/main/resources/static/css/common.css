@@ -22,6 +22,103 @@ body {
     width: 200px;
 }
 
+/* Form field container */
+.form-field {
+    position: relative;
+    width: 150%;
+    text-align: center;
+}
+
+.form-field select {
+    width: 100%; /* Match the input field width */
+    height: 40px; /* Match the input field height */
+    padding: 8px 10px; /* Add padding for consistent spacing */
+    border: 1px solid #ccc; /* Match the border style */
+    border-radius: 5px; /* Match the rounded corners */
+    font-size: 16px; /* Match the font size */
+    font-family: inherit; /* Use the same font as the input */
+    background-color: white; /* Ensure background matches */
+    appearance: none; /* Removes default styles (optional) */
+    text-align: center; /* Center the text */
+    text-align-last: center; /* Ensures the selected option is centered */
+}
+
+.form-field select {
+    -webkit-appearance: none; /* Remove default styling */
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path fill="black" d="M7 10l5 5 5-5H7z"/></svg>'); /* Custom dropdown arrow */
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding-right: 30px; /* Space for the arrow */
+}
+
+
+.main-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Center vertically */
+    gap: 30px;
+    width: 150%;
+    max-width: 400px;
+    height: 100%; /* Ensure it takes full height */
+}
+
+.main-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: calc(100%);
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    min-height: 200px;
+}
+
+.wallet-balance {
+    background-color: #FFB84D;
+    color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 1.2rem;
+    text-align: center;
+    margin-bottom: 20px;
+    display: inline-block;
+}
+
+/* Labels centered over fields */
+.form-field label {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 0 5px;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+/* Input fields */
+.form-field input,
+.form-field textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+/* Ensuring text area looks good */
+.form-field textarea {
+    resize: none;
+}
+
 main {
     display: flex;
     align-items: flex-start;
@@ -29,4 +126,33 @@ main {
     width: 100%;
     max-width: 1500px;
     padding: 0 40px;
+}
+
+.content-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    flex-grow: 1;
+    max-width: 1200px;
+}
+
+.footer {
+    color: rgb(0, 0, 0);
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 300;
+    letter-spacing: 0.5px;
+    margin-top: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: 10px 0;
+}
+
+.footer span {
+    white-space: nowrap;
 }

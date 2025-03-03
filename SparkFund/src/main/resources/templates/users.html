@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Users</title>
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/users.css">
+</head>
+<body>
+
+<main>
+    <div th:replace="fragments/commons :: nav-bar"></div>
+
+    <div class="content-wrapper">
+        <div class="main-container">
+            <div class="single-section-box section-container">
+                <table class="styled-table">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Status</th>
+                        <th>Created on</th>
+                        <th>Switch status</th>
+                        <th>Change Role</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>123123123123123123123123123123</td>
+                        <td>KKarolev</td>
+                        <td>no email</td>
+                        <td>ADMIN</td>
+                        <td>ACTIVE</td>
+                        <td>25-02-2025</td>
+                        <td>
+                            <form method="PUT">
+                                <button class="profile-actions-button">
+                                    <p>Status</p>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                                         class="bi bi-toggle-on" viewBox="0 0 16 16">
+                                        <path d="M5 3a5 5 0 0 0 0 10h6a5 5 0 0 0 0-10zm6 9a4 4 0 1 1 0-8 4 4 0 0 1 0 8"></path>
+                                    </svg>
+                                </button>
+                            </form>
+                        </td>
+                        <td>
+                            <form method="PUT">
+                                <button class="profile-actions-button">
+                                    <p>Role</p>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                                         class="bi bi-toggle-on" viewBox="0 0 16 16">
+                                        <path d="M5 3a5 5 0 0 0 0 10h6a5 5 0 0 0 0-10zm6 9a4 4 0 1 1 0-8 4 4 0 0 1 0 8"></path>
+                                    </svg>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>123123123123123123123123123123</td>
+                        <td>KKarolev</td>
+                        <td>no email</td>
+                        <td>ADMIN</td>
+                        <td>ACTIVE</td>
+                        <td>25-02-2025</td>
+                        <td>
+                            <form method="PUT">
+                                <button class="profile-actions-button">
+                                    <p>Status</p>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                                         class="bi bi-toggle-on" viewBox="0 0 16 16">
+                                        <path d="M5 3a5 5 0 0 0 0 10h6a5 5 0 0 0 0-10zm6 9a4 4 0 1 1 0-8 4 4 0 0 1 0 8"></path>
+                                    </svg>
+                                </button>
+                            </form>
+                        </td>
+                        <td>
+                            <form method="PUT">
+                                <button class="profile-actions-button">
+                                    <p>Role</p>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                                         class="bi bi-toggle-on" viewBox="0 0 16 16">
+                                        <path d="M5 3a5 5 0 0 0 0 10h6a5 5 0 0 0 0-10zm6 9a4 4 0 1 1 0-8 4 4 0 0 1 0 8"></path>
+                                    </svg>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>123123123123123123123123123123</td>
+                        <td>KKarolev</td>
+                        <td>no email</td>
+                        <td>ADMIN</td>
+                        <td>ACTIVE</td>
+                        <td>25-02-2025</td>
+                        <td>
+                            <form method="PUT">
+                                <button class="profile-actions-button">
+                                    <p>Status</p>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                                         class="bi bi-toggle-on" viewBox="0 0 16 16">
+                                        <path d="M5 3a5 5 0 0 0 0 10h6a5 5 0 0 0 0-10zm6 9a4 4 0 1 1 0-8 4 4 0 0 1 0 8"></path>
+                                    </svg>
+                                </button>
+                            </form>
+                        </td>
+                        <td>
+                            <form method="PUT">
+                                <button class="profile-actions-button">
+                                    <p>Role</p>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                                         class="bi bi-toggle-on" viewBox="0 0 16 16">
+                                        <path d="M5 3a5 5 0 0 0 0 10h6a5 5 0 0 0 0-10zm6 9a4 4 0 1 1 0-8 4 4 0 0 1 0 8"></path>
+                                    </svg>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    </trth>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="fragments/commons :: footer"></div>
+</main>
+
+</body>
+</html>

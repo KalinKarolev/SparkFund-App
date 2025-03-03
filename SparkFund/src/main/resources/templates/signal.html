@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Signal</title>
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/signal.css">
+</head>
+<body>
+
+<main>
+    <div th:replace="fragments/commons :: nav-bar"></div>
+
+    <div class="content-wrapper">
+        <div class="main-container">
+            <div class="main-form">
+                <h2>Send Us a Signal</h2>
+
+<!--                <div class="signal-section signal-inputs">-->
+                    <div class="form-field">
+                        <label for="signal-title">Title:</label>
+                        <input type="text" id="signal-title" value="Signal Title">
+                    </div>
+                    <div class="form-field">
+                        <label for="signal-description">Description:</label>
+                        <textarea id="signal-description" rows="5"></textarea>
+                    </div>
+<!--                </div>-->
+
+<!--                <div class="signal-section signal-inputs">-->
+                    <div class="form-field">
+                        <select id="status" name="status" disabled>
+                            <option>PENDING</option>
+                            <option>RESOLVED</option>
+                        </select>
+                    </div>
+                    <div class="form-field">
+                        <label for="response">Response from Admin:</label>
+                        <textarea id="response" rows="5" disabled></textarea>
+                    </div>
+<!--                </div>-->
+            </div>
+            <p>
+                <b>Created:</b> <span>2025-02-24</span> |
+                <b>Updated:</b> <span>2025-02-25</span> |
+                <b>By:</b> <span>Very Long User Name</span>
+            </p>
+        </div>
+    </div>
+
+    <div th:replace="fragments/commons :: footer"></div>
+</main>
+
+</body>
+</html>

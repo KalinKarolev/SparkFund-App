@@ -1,0 +1,18 @@
+.signal-section {
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+/* First Section (Title & Description) */
+.signal-inputs {
+    border: 2px solid #FFB84D; /* Light Orange Border */
+    background-color: #FFF5E1; /* Matching background */
+}
+
+/* Second Section (Status, Response & Dates) */
+.signal-admin {
+    border: 2px solid #4D90FF; /* Light Blue Border */
+    background-color: #E8F0FE; /* Soft blue background */
+}

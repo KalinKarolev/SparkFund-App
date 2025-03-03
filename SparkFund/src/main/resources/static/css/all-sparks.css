@@ -1,0 +1,214 @@
+.spark-content-wrapper {
+    max-width: 1200px;
+}
+
+/* General container for the spark box */
+.spark-container {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    width: 1200px;
+    max-width: 1200px;
+    height: 200px;
+    margin-bottom: 20px;
+}
+
+.spark-container-header {
+    /*display: flex;*/
+    /*align-items: center;*/
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    /*padding: 20px;*/
+    width: 1240px;
+    max-width: 1240px;
+    margin-bottom: 20px;
+}
+
+/* Left part: Image container */
+.spark-image-container {
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+    border-radius: 10px;
+    margin-right: 20px; /* Space between image and text */
+}
+
+.spark-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Crop the image if it exceeds 200x200px */
+}
+
+/* Middle part: Text container with title and description */
+.spark-text-container {
+    width: 700px;
+    padding: 0 40px; /* Left and right padding */
+    flex: 1; /* Fill the remaining space */
+    max-height: 200px;
+}
+
+/* Title styling */
+.spark-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0;
+    padding-bottom: 10px;
+}
+
+/* Description styling with truncation */
+.spark-description {
+    font-size: 14px;
+    color: #333;
+    margin: 0;
+    padding-bottom: 20px;
+    text-overflow: ellipsis;
+    white-space: normal;
+    overflow: hidden;
+    max-width: 740px; /* Ensure the description doesn't exceed the container width */
+    line-height: 1.5;
+}
+
+/* Right part: Button and amount container */
+.spark-right-container {
+    width: 200px; /* Width for the right section */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Button container - Two buttons stacked vertically */
+.button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.spark-button {
+    padding: 10px;
+    background-color: #FFB84D; /* Button color */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    width: 200px; /* Button width */
+}
+
+.spark-button:hover {
+    background-color: #ff8c1a; /* Hover color */
+}
+
+/* Styling for the amount information under buttons */
+.amount-container {
+    background-color: #FFB84D;
+    border-radius: 5px;
+    padding: 10px;
+    text-align: center;
+    width: 180px;
+    max-width: 180px;
+    align-items: center; /* Align items vertically */
+    gap: 10px; /* Space between icon and text */
+}
+
+.amount-icon {
+    fill: white;
+    width: 20px;
+    height: 20px;
+}
+
+/* Text inside the amount container */
+.amount-text {
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.dropdown-container {
+    margin-bottom: 10px;
+    display: flex;  /* Added Flexbox to center */
+    justify-content: center; /* Horizontally center the dropdown */
+}
+
+.dropdown {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    padding: 10px 15px;
+    border-radius: 5px;
+    width: 200px;
+    text-align: center;
+    font-size: 14px;
+    color: #333;
+    font-weight: bold;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.dropdown:disabled {
+    background-color: #f0f0f0;
+    color: #999;
+    cursor: not-allowed;
+}
+
+.spark-filter-form {
+    width: 1240px;
+    padding: 5px;
+}
+
+.spark-filter-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.spark-filter-dropdown {
+    padding: 8px;
+    border-radius: 5px;
+    border: 2px solid #999999;
+    background-color: #ffffff;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.3s ease-in-out;
+    min-width: 222px;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+/* Change color on hover */
+.spark-filter-dropdown:hover,
+.spark-filter-dropdown:focus {
+    background: #ffffff;
+    color: #333;
+}
+
+/* Change option styles */
+.spark-filter-dropdown option {
+    background: #ffffff;
+    color: #333;
+}
+
+.filter-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.filter-label {
+    font-weight: bold;
+    white-space: nowrap; /* Prevents text from wrapping */
+}
+
+.filter-group {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between label and dropdown */
+    padding-left: 25px;
+}

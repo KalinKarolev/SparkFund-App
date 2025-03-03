@@ -13,4 +13,13 @@ public class SparkController {
         return "spark";
     }
 
+    @GetMapping("/edit")
+    public String getEditSparkPage() {
+        return "edit-spark";
+    }
+
+    @GetMapping("/all")
+    public String getAllSparks() {
+        return "all-sparks";
+    }
 }
