@@ -3,9 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Home Page</title>
+  <title>Home</title>
   <link rel="stylesheet" href="/css/index.css">
   <link rel="stylesheet" href="/css/common.css">
+  <link rel="stylesheet" href="/css/home.css">
+  <link rel="stylesheet" href="/css/all-sparks.css">
+  <link rel="stylesheet" href="/css/spark.css">
 </head>
 <body>
 
@@ -13,20 +16,196 @@
   <div th:replace="fragments/commons :: nav-bar"></div>
 
   <div class="content-wrapper">
-    <div class="wide-container">
-
+    <div class="head-container">
+      <div class="image-container">
+        <img src="/images/Woman-crowdfunding.png" alt="SparkFund Image">
+      </div>
+      <div class="text-container">
+        <h1>✨ Welcome to SparkFund! ✨</h1>
+        <p>Here, every big change starts with a Spark.</p>
+        <p><strong>🔥 Be the Spark!</strong> Start a fundraising campaign and bring your idea to life.</p>
+        <p><strong>💡 Ignite a Spark!</strong> Support a cause by donating and making a difference.</p>
+        <p>Together, we create impact — one Spark at a time. 🚀</p>
+      </div>
+      <div class="image-container">
+        <img src="/images/man-crowdfunding.png" alt="SparkFund Image">
+      </div>
     </div>
-    <div class="spark-container">
 
+    <div class="home-container">
+      <div class="latest-sparks-container">
+        <div class="home-spark-container">
+          <div class="home-spark-image-container">
+            <img src="https://t3.ftcdn.net/jpg/06/16/24/10/360_F_616241094_wxi9weiwE5gTPusHQZ4O5kfPjZwvEr4p.jpg" alt="Spark Image" class="spark-image">
+          </div>
+          <div class="home-spark-text-container">
+            <h3 class="spark-title">Spark Title</h3>
+            <div class="dropdown-container">
+              <select class="dropdown" disabled>
+                <option>ACTIVE</option>
+              </select>
+            </div>
+            <p class="home-spark-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent tempor erat sem. Duis gravida dapibus metus sit amet lacinia. Curabitur et leo vitae dolor gravida pellentesque et quis quam. In elementum enim pellentesque fermentum tempus. Duis maximus nisi vitae lacus bibendum malesuada. Maecenas ac nunc sollicitudin, suscipit ex in, dapibus dolor. Nam interdum turpis sit amet lacinia auctor. Etiam maximus laoreet arcu congue molestie. Nam sit amet nisl ac mi ullamcorper bibendum. Nulla pretium ornare diam nec consectetur.</p>
+          </div>
+          <div class="spark-right-container">
+            <div class="button-container">
+              <button class="spark-button">Show</button>
+              <button class="spark-button">Donate</button>
+            </div>
+            <div class="amount-container">
+              <svg class="amount-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#FF6347"/>
+              </svg>
+              <svg class="amount-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                <circle cx="12" cy="12" r="10" stroke="white" stroke-width="2" fill="#FFD700" />
+                <text x="12" y="16" text-anchor="middle" font-size="12" font-weight="bold" fill="white">€</text>
+              </svg>
+              <div class="amount-text">Current amount: 500€</div>
+              <div class="amount-text">Target amount: 1000€</div>
+            </div>
+          </div>
+        </div>
+        <div class="home-spark-container">
+          <div class="home-spark-image-container">
+            <img src="https://t3.ftcdn.net/jpg/06/16/24/10/360_F_616241094_wxi9weiwE5gTPusHQZ4O5kfPjZwvEr4p.jpg" alt="Spark Image" class="spark-image">
+          </div>
+          <div class="home-spark-text-container">
+            <h3 class="spark-title">Spark Title</h3>
+            <div class="dropdown-container">
+              <select class="dropdown" disabled>
+                <option>ACTIVE</option>
+              </select>
+            </div>
+            <p class="home-spark-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent tempor erat sem. Duis gravida dapibus metus sit amet lacinia. Curabitur et leo vitae dolor gravida pellentesque et quis quam. In elementum enim pellentesque fermentum tempus. Duis maximus nisi vitae lacus bibendum malesuada. Maecenas ac nunc sollicitudin, suscipit ex in, dapibus dolor. Nam interdum turpis sit amet lacinia auctor. Etiam maximus laoreet arcu congue molestie. Nam sit amet nisl ac mi ullamcorper bibendum. Nulla pretium ornare diam nec consectetur.</p>
+          </div>
+          <div class="spark-right-container">
+            <div class="button-container">
+              <button class="spark-button">Show</button>
+              <button class="spark-button">Donate</button>
+            </div>
+            <div class="amount-container">
+              <svg class="amount-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#FF6347"/>
+              </svg>
+              <svg class="amount-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                <circle cx="12" cy="12" r="10" stroke="white" stroke-width="2" fill="#FFD700" />
+                <text x="12" y="16" text-anchor="middle" font-size="12" font-weight="bold" fill="white">€</text>
+              </svg>
+              <div class="amount-text">Current amount: 500€</div>
+              <div class="amount-text">Target amount: 1000€</div>
+            </div>
+          </div>
+        </div>
+        <div class="home-spark-container">
+          <div class="home-spark-image-container">
+            <img src="https://t3.ftcdn.net/jpg/06/16/24/10/360_F_616241094_wxi9weiwE5gTPusHQZ4O5kfPjZwvEr4p.jpg" alt="Spark Image" class="spark-image">
+          </div>
+          <div class="home-spark-text-container">
+            <h3 class="spark-title">Spark Title</h3>
+            <div class="dropdown-container">
+              <select class="dropdown" disabled>
+                <option>ACTIVE</option>
+              </select>
+            </div>
+            <p class="home-spark-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent tempor erat sem. Duis gravida dapibus metus sit amet lacinia. Curabitur et leo vitae dolor gravida pellentesque et quis quam. In elementum enim pellentesque fermentum tempus. Duis maximus nisi vitae lacus bibendum malesuada. Maecenas ac nunc sollicitudin, suscipit ex in, dapibus dolor. Nam interdum turpis sit amet lacinia auctor. Etiam maximus laoreet arcu congue molestie. Nam sit amet nisl ac mi ullamcorper bibendum. Nulla pretium ornare diam nec consectetur.</p>
+          </div>
+          <div class="spark-right-container">
+            <div class="button-container">
+              <button class="spark-button">Show</button>
+              <button class="spark-button">Donate</button>
+            </div>
+            <div class="amount-container">
+              <svg class="amount-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#FF6347"/>
+              </svg>
+              <svg class="amount-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                <circle cx="12" cy="12" r="10" stroke="white" stroke-width="2" fill="#FFD700" />
+                <text x="12" y="16" text-anchor="middle" font-size="12" font-weight="bold" fill="white">€</text>
+              </svg>
+              <div class="amount-text">Current amount: 500€</div>
+              <div class="amount-text">Target amount: 1000€</div>
+            </div>
+          </div>
+        </div>
+        <div class="home-spark-container">
+          <div class="home-spark-image-container">
+            <img src="https://t3.ftcdn.net/jpg/06/16/24/10/360_F_616241094_wxi9weiwE5gTPusHQZ4O5kfPjZwvEr4p.jpg" alt="Spark Image" class="spark-image">
+          </div>
+          <div class="home-spark-text-container">
+            <h3 class="spark-title">Spark Title</h3>
+            <div class="dropdown-container">
+              <select class="dropdown" disabled>
+                <option>ACTIVE</option>
+              </select>
+            </div>
+            <p class="home-spark-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent tempor erat sem. Duis gravida dapibus metus sit amet lacinia. Curabitur et leo vitae dolor gravida pellentesque et quis quam. In elementum enim pellentesque fermentum tempus. Duis maximus nisi vitae lacus bibendum malesuada. Maecenas ac nunc sollicitudin, suscipit ex in, dapibus dolor. Nam interdum turpis sit amet lacinia auctor. Etiam maximus laoreet arcu congue molestie. Nam sit amet nisl ac mi ullamcorper bibendum. Nulla pretium ornare diam nec consectetur.</p>
+          </div>
+          <div class="spark-right-container">
+            <div class="button-container">
+              <button class="spark-button">Show</button>
+              <button class="spark-button">Donate</button>
+            </div>
+            <div class="amount-container">
+              <svg class="amount-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#FF6347"/>
+              </svg>
+              <svg class="amount-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                <circle cx="12" cy="12" r="10" stroke="white" stroke-width="2" fill="#FFD700" />
+                <text x="12" y="16" text-anchor="middle" font-size="12" font-weight="bold" fill="white">€</text>
+              </svg>
+              <div class="amount-text">Current amount: 500€</div>
+              <div class="amount-text">Target amount: 1000€</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="spark-container">
 
-    </div>
-    <div class="spark-container">
+    <div>
+      <div class="donation-summary-container">
+        <div class="donation-info">
+          <div class="donation-amount">
+            <span class="amount-number">€12,500</span>
+            <span class="amount-label">Total Raised</span>
+          </div>
+          <div class="spark-count">
+            <span class="spark-number">25</span>
+            <span class="spark-label">Sparks Funded</span>
+          </div>
+        </div>
+      </div>
 
+      <div class="top-donators-container">
+        <h4>🎖️ Biggest donators 🎖️</h4>
+        <div class="donators-container">
+          <h4>🥇</h4>
+          <img class="creator-image" src="/images/Default-User_Image.png" alt="Creator Image">
+          <p>
+            <span class="donator-pad">Kalin Karolev</span>
+            <span class="donator-pad">500 EUR</span>
+          </p>
+        </div>
+        <div class="donators-container">
+          <h4>🥈</h4>
+          <img class="creator-image" src="/images/Default-User_Image.png" alt="Creator Image">
+          <p>
+            <span class="donator-pad">Kalin Karolev</span>
+            <span class="donator-pad">500 EUR</span>
+          </p>
+        </div>
+        <div class="donators-container">
+          <h4>🥉</h4>
+          <img class="creator-image" src="/images/Default-User_Image.png" alt="Creator Image">
+          <p>
+            <span class="donator-pad">Kalin Karolev</span>
+            <span class="donator-pad">500 EUR</span>
+          </p>
+        </div>
+      </div>
     </div>
+
+
   </div>
-
 
   <div th:replace="fragments/commons :: footer"></div>
 </main>

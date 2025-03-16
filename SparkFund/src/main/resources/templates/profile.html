@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/wallet.css">
+</head>
+<body>
+<main>
+    <div th:replace="fragments/commons :: nav-bar"></div>
+
+    <div class="profile-content-wrapper">
+        <div class="profile-container">
+            <div class="main-form">
+                <h2>Edit Your Profile</h2>
+                <div class="status-role-container">
+                    <img src="/images/Default-User_Image.png" alt="Profile Status" class="status-role-image">
+                    <div class="status-role-fields">
+                        <div class="form-field">
+                            <select id="status" name="status" disabled>
+                                <option>ACTIVE</option>
+                                <option>INACTIVE</option>
+                            </select>
+                        </div>
+                        <div class="form-field">
+                            <select id="role" name="role" disabled>
+                                <option>USER</option>
+                                <option>ADMIN</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" value="username">
+                </div>
+                <div class="form-field">
+                    <label for="picture1">Profile Picture:</label>
+                    <input type="text" id="picture1" value="Add picture 1">
+                </div>
+                <div class="form-field">
+                    <label for="first-name">First name:</label>
+                    <input type="text" id="first-name" value="first-name">
+                </div>
+                <div class="form-field">
+                    <label for="last-name">Last name:</label>
+                    <input type="text" id="last-name" value="last-name">
+                </div>
+                <div class="form-field">
+                    <label for="email">Email:</label>
+                    <input type="text" id="email" value="email">
+                </div>
+                <div class="checkbox-field">
+                    <input type="checkbox" id="email-updates" class="custom-checkbox">
+                    <label for="email-updates">Anonymous donations</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="wallet-container">
+            <h2>Your Wallet</h2>
+
+            <!-- Current Balance -->
+            <div class="wallet-balance">
+                <p>Current Balance:</p>
+                <h3>€500.00</h3>
+                <button class="add-funds-btn">Add Funds</button>
+            </div>
+
+            <!-- Donation Summary -->
+            <div class="donation-summary">
+                <p><b>Total Donated:</b> €1200.00</p>
+                <p><b>Donation Impact:</b>⭐Your donations helped 10 projects!⭐</p>
+            </div>
+
+            <!-- Recent Donations Table -->
+            <div class="donation-history">
+                <h3>Your Donations</h3>
+                <table class="table-wrapper">
+                    <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Amount</th>
+                        <th>Recipient</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>March 10, 2025</td>
+                        <td>€50</td>
+                        <td>Charity A</td>
+                    </tr>
+                    <tr>
+                        <td>March 5, 2025</td>
+                        <td>€100</td>
+                        <td>Charity B</td>
+                    </tr>
+                    <tr>
+                        <td>March 1, 2025</td>
+                        <td>€75</td>
+                        <td>Charity C</td>
+                    </tr>
+                    <tr>
+                        <td>Feb 20, 2025</td>
+                        <td>€200</td>
+                        <td>Charity D</td>
+                    </tr>
+                    <tr>
+                        <td>Feb 10, 2025</td>
+                        <td>€150</td>
+                        <td>Charity E</td>
+                    </tr>
+                    <tr>
+                        <td>Feb 10, 2025</td>
+                        <td>€150</td>
+                        <td>Charity E</td>
+                    </tr>
+                    <tr>
+                        <td>Feb 10, 2025</td>
+                        <td>€150</td>
+                        <td>Charity E</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <div th:replace="fragments/commons :: footer"></div>
+</main>
+
+</body>
+</html>
