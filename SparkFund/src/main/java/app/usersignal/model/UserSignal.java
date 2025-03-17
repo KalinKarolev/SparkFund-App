@@ -1,11 +1,9 @@
-package app.donation.model;
+package app.usersignal.model;
 
-import app.spark.model.Spark;
-import app.wallet.model.Wallet;
+import app.user.model.User;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -15,24 +13,29 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Donation {
+public class UserSignal {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    @ManyToOne
+    private User creator;
+
     @Column(nullable = false)
-    private BigDecimal amount;
+    private String title;
 
     @Column(nullable = false)
     private String message;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    private Spark spark;
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private UserSignalStatus userSignalStatus;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    private Wallet wallet;
+    private String adminResponse;
 
     @Column(nullable = false)
     private LocalDateTime createdOn;
+
+    private LocalDateTime updatedOn;
 }

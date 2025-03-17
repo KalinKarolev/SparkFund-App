@@ -15,28 +15,33 @@
     </div>
     <h2>Register</h2>
 
-    <form th:action="@{/register}" method="POST">
+    <form th:action="@{/register}" th:method="POST" th:object="${registerRequest}">
         <div class="form-group">
             <label for="username">Username</label>
-            <input type="text" id="username" name="username" required placeholder="Enter username">
+            <input type="text" id="username" name="username" required placeholder="Enter username" th:field="*{username}">
+            <p class='alert-warning' th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
         </div>
 
         <div class="form-group">
             <label for="email">Email</label>
-            <input type="email" id="email" name="email" required placeholder="Enter email">
+            <input type="email" id="email" name="email" required placeholder="Enter email" th:field="*{email}">
+            <p class='alert-warning' th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
         </div>
 
         <div class="form-group">
             <label for="password">Password</label>
-            <input type="password" id="password" name="password" required placeholder="Enter password">
+            <input type="password" id="password" name="password" required placeholder="Enter password" th:field="*{password}">
+            <p class='alert-warning' th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
         </div>
 
         <div class="form-group">
             <label for="confirmPassword">Confirm Password</label>
-            <input type="password" id="confirmPassword" name="confirmPassword" required placeholder="Confirm password">
+            <input type="password" id="confirmPassword" name="confirmPassword" required placeholder="Confirm password" th:field="*{confirmPassword}">
+            <p class='alert-warning' th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}"></p>
         </div>
 
         <button type="submit" class="button">Register</button>
+        <p class="form-already">Already have an account? <a href="/login">Login!</a></p>
     </form>
 </div>
 

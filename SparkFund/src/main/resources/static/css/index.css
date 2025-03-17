@@ -42,6 +42,8 @@ body {
     transition: background-color 0.3s;
     background-color: #FFB84D;
     color: white;
+    text-decoration: none;
+    box-sizing: border-box;
 }
 
 .button:hover {

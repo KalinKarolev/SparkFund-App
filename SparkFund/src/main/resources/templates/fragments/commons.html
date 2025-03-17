@@ -7,13 +7,30 @@
         <div class="logo">
             <img src="/images/SparkFund-logo.png" alt="Logo">
         </div>
-        <button class="button">Home</button>
-        <button class="button">My profile</button>
-        <button class="button">All Sparks</button>
-        <button class="button">My Sparks</button>
-        <button class="button">Signal</button>
-        <button class="button">All Users</button>
-        <button class="button">All Signals</button>
+        <form>
+            <button class="button">Home</button>
+        </form>
+        <form>
+            <button class="button">My profile</button>
+        </form>
+        <form>
+            <button class="button">All Sparks</button>
+        </form>
+        <form>
+            <button class="button">My Sparks</button>
+        </form>
+        <form>
+            <button class="button">Send Signal</button>
+        </form>
+        <form>
+            <button class="button">All Users</button>
+        </form>
+        <form>
+            <button class="button">All User Signals</button>
+        </form>
+        <form th:action="@{/logout}" th:method="GET">
+            <button class="button" type="submit">Logout</button>
+        </form>
     </div>
 </div>
 

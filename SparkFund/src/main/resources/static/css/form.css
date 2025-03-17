@@ -65,6 +65,9 @@ h2 {
     text-transform: uppercase;
     font-weight: bold;
     transition: background-color 0.3s ease;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
 
 .button:hover {
@@ -73,4 +76,52 @@ h2 {
 
 .button:active {
     background-color: #e88c28;
+}
+
+.alert-warning {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 300;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    background: linear-gradient(to left, #f88e8e, #f56767, #f53b3b);
+    background-size: 200%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+p.alert-warning {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 300;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    background: linear-gradient(to left, #f88e8e, #f56767, #f53b3b);
+    background-size: 200%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 5px 0 0;
+}
+
+.form-already {
+    color: #000000;
+    font-weight: 300;
+    text-align: center;
+    font-size: 15px;
+    margin: 20px auto auto;
+}
+
+.form-already a {
+    text-decoration: none;
+    transition: 0.5s ease-out;
+    background: #fc9d10;
+    background-size: 200%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.form-already a:hover {
+    background-position: right;
+    transition: 0.5s ease-out;
 }

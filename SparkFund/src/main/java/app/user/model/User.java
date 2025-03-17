@@ -1,8 +1,8 @@
 package app.user.model;
 
-import app.signal.model.Signal;
-import app.spark.Spark;
-import app.wallet.Wallet;
+import app.usersignal.model.UserSignal;
+import app.spark.model.Spark;
+import app.wallet.model.Wallet;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -29,6 +29,9 @@ public class User {
 
     private String lastName;
 
+    @Column(nullable = false)
+    private String password;
+
     private String profilePicture;
 
     @Column(unique = true)
@@ -51,7 +54,7 @@ public class User {
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "creator")
     @OrderBy("createdOn DESC")
-    private List<Signal> createdSignals;
+    private List<UserSignal> userSignals;
 
     @Column(nullable = false)
     private LocalDateTime createdOn;

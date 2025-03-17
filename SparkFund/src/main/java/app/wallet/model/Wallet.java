@@ -1,4 +1,4 @@
-package app.wallet;
+package app.wallet.model;
 
 import app.donation.model.Donation;
 import app.user.model.User;
@@ -7,6 +7,7 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Currency;
 import java.util.List;
 import java.util.UUID;
@@ -35,7 +36,7 @@ public class Wallet {
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "wallet")
     @OrderBy("createdOn DESC")
-    private List<Donation> donations;
+    private List<Donation> donations = new ArrayList<>();
 
     @Column(nullable = false)
     private LocalDateTime createdOn;
