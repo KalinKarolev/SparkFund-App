@@ -41,7 +41,7 @@ body {
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
     padding: 20px;
-    min-height: 648px;
+    min-height: 707px;
 }
 
 .wallet-container {
@@ -81,6 +81,12 @@ body {
     gap: 10px;
 }
 
+.last-update {
+    flex-basis: 100%;
+    text-align: center;
+    margin: 0;
+}
+
 .checkbox-field {
     display: flex;
     align-items: center;
@@ -94,25 +100,49 @@ body {
     cursor: pointer;
 }
 
-/* Form field container */
+.custom-form {
+    display: flex;
+    flex-direction: column; /* Ensures fields stack vertically */
+    align-items: center; /* Centers fields horizontally */
+    gap: 30px; /* Adds spacing between fields */
+    width: 100%;
+}
+
 .form-field {
     position: relative;
     width: 150%;
     text-align: center;
+    min-width: 115px;
+}
+
+/* Ensures input fields inside the form behave the same */
+.custom-form input[type="text"] {
+    width: 85%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
+}
+
+/* Fixes checkbox alignment */
+.checkbox-field {
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
 .form-field select {
-    width: 100%; /* Match the input field width */
-    height: 40px; /* Match the input field height */
-    padding: 8px 10px; /* Add padding for consistent spacing */
-    border: 1px solid #ccc; /* Match the border style */
-    border-radius: 5px; /* Match the rounded corners */
-    font-size: 16px; /* Match the font size */
-    font-family: inherit; /* Use the same font as the input */
-    background-color: white; /* Ensure background matches */
-    appearance: none; /* Removes default styles (optional) */
-    text-align: center; /* Center the text */
-    text-align-last: center; /* Ensures the selected option is centered */
+    width: 100%;
+    height: 40px;
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    font-family: inherit;
+    background-color: white;
+    appearance: none;
+    text-align: center;
+    text-align-last: center;
 }
 
 .form-field select {
@@ -227,4 +257,29 @@ main {
 
 .footer span {
     white-space: nowrap;
+}
+
+.alert-warning {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 300;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    background: linear-gradient(to left, #f88e8e, #f56767, #f53b3b);
+    background-size: 200%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+p.alert-warning {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 300;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    background: linear-gradient(to left, #f88e8e, #f56767, #f53b3b);
+    background-size: 200%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 5px 0 0;
 }

@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/css/index.css">
     <link rel="stylesheet" href="/css/common.css">
     <link rel="stylesheet" href="/css/wallet.css">
+    <link rel="stylesheet" href="/css/add-funds-popup.css">
 </head>
 <body>
 <main>
@@ -17,47 +18,60 @@
             <div class="main-form">
                 <h2>Edit Your Profile</h2>
                 <div class="status-role-container">
-                    <img src="/images/Default-User_Image.png" alt="Profile Status" class="status-role-image">
+                    <img th:src="${#strings.isEmpty(user.profilePicture) ? '/images/Default-User_Image.png' : user.profilePicture}" alt="Profile Status" class="status-role-image">
                     <div class="status-role-fields">
                         <div class="form-field">
                             <select id="status" name="status" disabled>
-                                <option>ACTIVE</option>
-                                <option>INACTIVE</option>
+                                <option th:text="${user.userStatus}"></option>
                             </select>
                         </div>
                         <div class="form-field">
                             <select id="role" name="role" disabled>
-                                <option>USER</option>
-                                <option>ADMIN</option>
+                                <option th:text="${user.userRole}"></option>
                             </select>
                         </div>
                     </div>
                 </div>
+                <p class="last-update" th:if="${!#strings.isEmpty(user.updatedOn)}" th:text="'Last profile update: ' + ${#temporals.format(user.updatedOn, 'dd MMM yyyy HH:mm')}"></p>
+                <p class="last-update" th:if="${#strings.isEmpty(user.updatedOn)}" th:text="'Last profile update: ' + ${#temporals.format(user.createdOn, 'dd MMM yyyy HH:mm')}"></p>
 
-                <div class="form-field">
-                    <label for="username">Username:</label>
-                    <input type="text" id="username" value="username">
-                </div>
-                <div class="form-field">
-                    <label for="picture1">Profile Picture:</label>
-                    <input type="text" id="picture1" value="Add picture 1">
-                </div>
-                <div class="form-field">
-                    <label for="first-name">First name:</label>
-                    <input type="text" id="first-name" value="first-name">
-                </div>
-                <div class="form-field">
-                    <label for="last-name">Last name:</label>
-                    <input type="text" id="last-name" value="last-name">
-                </div>
-                <div class="form-field">
-                    <label for="email">Email:</label>
-                    <input type="text" id="email" value="email">
-                </div>
-                <div class="checkbox-field">
-                    <input type="checkbox" id="email-updates" class="custom-checkbox">
-                    <label for="email-updates">Anonymous donations</label>
-                </div>
+                <form class="custom-form" th:action="@{'/users/' + ${user.id} + '/profile'}" th:method="PUT" th:object="${editProfileRequest}">
+                    <div class="form-field">
+                        <label for="username">Username:</label>
+                        <input type="text" id="username" placeholder="Username" th:field="*{username}">
+                        <p class="alert-warning" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
+                    </div>
+                    <div class="form-field">
+                        <label for="profilePicture">Profile Picture:</label>
+                        <input type="text" id="profilePicture" placeholder="Add profile picture" th:field="*{profilePicture}">
+                        <p class="alert-warning" th:if="${#fields.hasErrors('profilePicture')}" th:errors="*{profilePicture}"></p>
+                    </div>
+                    <div class="form-field">
+                        <label for="first-name">First name:</label>
+                        <input type="text" id="first-name" placeholder="Edit first name" th:field="*{firstName}">
+                        <p class="alert-warning" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
+                    </div>
+                    <div class="form-field">
+                        <label for="last-name">Last name:</label>
+                        <input type="text" id="last-name" placeholder="Edit last name" th:field="*{lastName}">
+                        <p class="alert-warning" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
+                    </div>
+                    <div class="form-field">
+                        <label for="email">Email:</label>
+                        <input type="text" id="email" placeholder="Add email" th:field="*{email}">
+                        <p class="alert-warning" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+                    </div>
+                    <div class="checkbox-field">
+                        <input type="checkbox" id="email-updates" class="custom-checkbox" th:field="*{isAnonymousDonator}">
+                        <label for="email-updates">Anonymous donations</label>
+                    </div>
+                    <button class="save-button">
+                        <p>Save</p>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
+                    </button>
+                </form>
             </div>
         </div>
 
@@ -67,14 +81,33 @@
             <!-- Current Balance -->
             <div class="wallet-balance">
                 <p>Current Balance:</p>
-                <h3>€500.00</h3>
-                <button class="add-funds-btn">Add Funds</button>
+                <h3 th:text="'€' + ${wallet.amount}"></h3>
+                <button class="wallet-add-funds-btn" onclick="document.getElementById('popupAddFunds').showModal()">Add Funds</button>
             </div>
+
+            <!-- Pop-up Form -->
+            <dialog id="popupAddFunds">
+                <div class="popup-content">
+                    <h2>Add Funds</h2>
+                    <form th:action="@{'/wallet/' + ${user.getWallet().id} + '/add-funds'}" th:method="PUT">
+                        <label for="amount">Amount (€):</label>
+                        <input type="number" id="amount" name="amount" placeholder="Enter amount" required  step="0.1" min="0">
+
+                        <button class="add-funds-btn">Add Funds</button>
+                        <button class="close-btn" onclick="document.getElementById('popupAddFunds').close()">Close</button>
+                    </form>
+                </div>
+            </dialog>
 
             <!-- Donation Summary -->
             <div class="donation-summary">
-                <p><b>Total Donated:</b> €1200.00</p>
-                <p><b>Donation Impact:</b>⭐Your donations helped 10 projects!⭐</p>
+                <p>
+                    <span><b>Total Donated: </b><span th:text="'€' + ${walletDonationInfo.totalDonations}"></span></span>
+                </p>
+                <p>
+                    <span th:if="${walletDonationInfo.totalSparks == 0}"><b>Donation Impact: </b> You haven't donated yet.</span>
+                    <span th:unless="${walletDonationInfo.totalSparks == 0}"><b>Donation Impact: </b> ⭐Your donations helped <span th:text="${walletDonationInfo.totalSparks}"></span> projects!⭐</span>
+                </p>
             </div>
 
             <!-- Recent Donations Table -->

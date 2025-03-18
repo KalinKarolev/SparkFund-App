@@ -78,6 +78,29 @@ h2 {
     background-color: #e88c28;
 }
 
+.form-already {
+    color: #000000;
+    font-weight: 300;
+    text-align: center;
+    font-size: 15px;
+    margin: 20px auto auto;
+}
+
+.form-already a {
+    text-decoration: none;
+    transition: 0.5s ease-out;
+    background: #fc9d10;
+    background-size: 200%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.form-already a:hover {
+    background-position: right;
+    transition: 0.5s ease-out;
+}
+
 .alert-warning {
     font-family: 'Poppins', sans-serif;
     font-weight: 300;
@@ -101,27 +124,4 @@ p.alert-warning {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     margin: 5px 0 0;
-}
-
-.form-already {
-    color: #000000;
-    font-weight: 300;
-    text-align: center;
-    font-size: 15px;
-    margin: 20px auto auto;
-}
-
-.form-already a {
-    text-decoration: none;
-    transition: 0.5s ease-out;
-    background: #fc9d10;
-    background-size: 200%;
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.form-already a:hover {
-    background-position: right;
-    transition: 0.5s ease-out;
 }

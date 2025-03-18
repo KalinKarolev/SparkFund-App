@@ -1,11 +1,13 @@
 package app.web;
 
+import app.security.AuthenticationDetails;
 import app.user.model.User;
 import app.user.repository.UserRepository;
 import app.user.service.UserService;
 import app.web.dto.LoginRequest;
 import app.web.dto.RegisterRequest;
 import jakarta.validation.Valid;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Objects;
+import java.util.UUID;
 
 @Controller
 @RequestMapping
@@ -65,7 +68,13 @@ public class IndexController {
     }
 
     @GetMapping("/home")
-    public String getHomePage() {
-        return "home";
+    public ModelAndView getHomePage(@AuthenticationPrincipal AuthenticationDetails authenticationDetails) {
+        User user = userService.getAuthenticatedUser(authenticationDetails);
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("home");
+        modelAndView.addObject("user", user);
+
+        return modelAndView;
     }
 }

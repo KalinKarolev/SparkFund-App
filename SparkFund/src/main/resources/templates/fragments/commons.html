@@ -7,17 +7,17 @@
         <div class="logo">
             <img src="/images/SparkFund-logo.png" alt="Logo">
         </div>
-        <form>
+        <form th:action="@{/home}" th:method="GET">
             <button class="button">Home</button>
         </form>
-        <form>
+        <form th:action="@{'users/' + ${user.id} + '/profile'}" th:method="GET">
             <button class="button">My profile</button>
         </form>
         <form>
-            <button class="button">All Sparks</button>
+            <button class="button">Create Spark</button>
         </form>
         <form>
-            <button class="button">My Sparks</button>
+            <button class="button">All Sparks</button>
         </form>
         <form>
             <button class="button">Send Signal</button>

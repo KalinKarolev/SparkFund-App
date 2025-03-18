@@ -8,8 +8,11 @@ import app.user.model.UserStatus;
 import app.user.repository.UserRepository;
 import app.wallet.model.Wallet;
 import app.wallet.service.WalletService;
+import app.web.dto.EditProfileRequest;
 import app.web.dto.RegisterRequest;
+import app.web.dto.WalletDonationInfo;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,7 +21,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Slf4j
 @Service
@@ -76,5 +81,40 @@ public class UserService implements UserDetailsService {
                 , user.getPassword()
                 , user.getUserRole()
                 , user.getUserStatus());
+    }
+
+    public void updateUserProfile(UUID id, EditProfileRequest editProfileRequest) {
+        User user = getUserById(id);
+        user.setUsername(editProfileRequest.getUsername());
+        user.setFirstName(editProfileRequest.getFirstName());
+        user.setLastName(editProfileRequest.getLastName());
+        user.setProfilePicture(editProfileRequest.getProfilePicture());
+        user.setEmail(editProfileRequest.getEmail());
+        user.setIsAnonymousDonator(editProfileRequest.getIsAnonymousDonator());
+        user.setUpdatedOn(LocalDateTime.now());
+        userRepository.save(user);
+    }
+
+    public WalletDonationInfo getWalletDonationInfo(User user) {
+        return walletService.getWalletDonationInfo(user.getWallet());
+    }
+
+    public boolean isUsernameTaken(String username, UUID currentUserId) {
+        List<User> result = userRepository.findByUsernameAndIdNot(username, currentUserId);
+        return !result.isEmpty();
+    }
+
+    public boolean isEmailTaken(String username, UUID currentUserId) {
+        List<User> result = userRepository.findByEmailAndIdNot(username, currentUserId);
+        return !result.isEmpty();
+    }
+
+    public User getUserById(UUID _id) {
+        return userRepository.findById(_id)
+                .orElseThrow(() -> new DomainException("No user with id [%s] found".formatted(_id)));
+    }
+
+    public User getAuthenticatedUser(AuthenticationDetails authenticationDetails) {
+        return getUserById(UUID.fromString(authenticationDetails.getUserId().toString()));
     }
 }
