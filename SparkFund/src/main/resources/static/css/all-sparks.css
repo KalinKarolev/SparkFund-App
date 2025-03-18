@@ -57,6 +57,7 @@
     font-weight: bold;
     margin: 0;
     padding-bottom: 10px;
+    text-align: center;
 }
 
 /* Description styling with truncation */
@@ -68,8 +69,20 @@
     text-overflow: ellipsis;
     white-space: normal;
     overflow: hidden;
-    max-width: 740px; /* Ensure the description doesn't exceed the container width */
+    max-width: 740px;
     line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    position: relative;
+}
+
+.spark-description::after {
+    content: "...";
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: white;
 }
 
 /* Right part: Button and amount container */

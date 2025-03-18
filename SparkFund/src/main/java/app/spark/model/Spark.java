@@ -5,6 +5,7 @@ import app.user.model.User;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -27,8 +28,13 @@ public class Spark {
     @Column(nullable = false)
     private String title;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 1000)
     private String description;
+
+    @Column(nullable = false)
+    private BigDecimal goalAmount;
+
+    private BigDecimal currentAmount;
 
     @Column(nullable = false)
     private String firstPictureUrl;
@@ -39,11 +45,11 @@ public class Spark {
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private SparkStatus sparkStatus;
+    private SparkStatus status;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private SparkCategory sparkCategory;
+    private SparkCategory category;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "spark")
     @OrderBy("createdOn DESC")

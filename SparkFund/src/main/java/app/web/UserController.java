@@ -2,7 +2,6 @@ package app.web;
 
 import app.user.model.User;
 import app.user.service.UserService;
-import app.wallet.model.Wallet;
 import app.web.dto.EditProfileRequest;
 import app.web.dto.WalletDonationInfo;
 import app.web.mapper.DtoMapper;

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Spark</title>
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/common.css">
+</head>
+<body>
+<main>
+    <div th:replace="fragments/commons :: nav-bar"></div>
+
+    <form class="content-wrapper" th:action="@{'/manage-spark'}" th:method="POST" th:object="${manageSparkRequest}">
+        <div class="main-container">
+            <div class="main-form">
+                <h2>✨Ignite Your Spark✨</h2>
+                <div class="form-field">
+                    <label for="spark-title">Title:</label>
+                    <input type="text" id="spark-title" value="Spark Title" th:field="*{title}">
+                    <p class="alert-warning" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></p>
+                </div>
+                <div class="form-field">
+                    <label for="spark-description">Description:</label>
+                    <textarea id="spark-description" rows="5" th:field="*{description}"></textarea>
+                    <p class="alert-warning" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
+                </div>
+                <div class="form-field">
+                    <label for="goalAmount">Goal Amount:</label>
+                    <input type="number" id="goalAmount" step="0.1" min="1" th:field="*{goalAmount}">
+                    <p class="alert-warning" th:if="${#fields.hasErrors('goalAmount')}" th:errors="*{goalAmount}"></p>
+                </div>
+
+                <div class="form-field">
+                    <label for="category">Category:</label>
+                    <select id="category" name="category" th:field="*{category}">
+                        <option th:each="category : ${T(app.spark.model.SparkCategory).values()}" th:value="${category}" th:text="${#strings.capitalize(#strings.toLowerCase(category))}"></option>
+                    </select>
+                </div>
+                <div class="form-field">
+                    <label for="status">Status:</label>
+                    <select id="status" name="status" th:field="*{status}">
+                        <option th:each="status : ${T(app.spark.model.SparkStatus).values()}" th:value="${status}" th:text="${status}"></option>
+                    </select>
+                </div>
+
+                <div class="form-field">
+                    <label for="picture1">Picture 1:</label>
+                    <input type="text" id="picture1" value="Add picture 1" th:field="*{firstPictureUrl}">
+                    <p class="alert-warning" th:if="${#fields.hasErrors('firstPictureUrl')}" th:errors="*{firstPictureUrl}"></p>
+                </div>
+                <div class="form-field">
+                    <label for="picture2">Picture 2:</label>
+                    <input type="text" id="picture2" value="Add picture 2" th:field="*{secondPictureUrl}">
+                </div>
+                <div class="form-field">
+                    <label for="picture3">Picture 3:</label>
+                    <input type="text" id="picture3" value="Add picture 3" th:field="*{thirdPictureUrl}">
+                </div>
+                <button class="save-button">
+                    <p>Save</p>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </form>
+
+    <div th:replace="fragments/commons :: footer"></div>
+</main>
+
+</body>
+</html>

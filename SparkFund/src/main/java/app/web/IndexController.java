@@ -2,7 +2,6 @@ package app.web;
 
 import app.security.AuthenticationDetails;
 import app.user.model.User;
-import app.user.repository.UserRepository;
 import app.user.service.UserService;
 import app.web.dto.LoginRequest;
 import app.web.dto.RegisterRequest;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Objects;
-import java.util.UUID;
 
 @Controller
 @RequestMapping

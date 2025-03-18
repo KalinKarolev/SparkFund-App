@@ -43,7 +43,7 @@ public class WalletService {
                 .totalDonations(getTotalDonations(wallet))
                 .totalSparks(getTotalSparkCount(wallet))
                 .build();
-    };
+    }
 
     private String getTotalDonations(Wallet wallet) {
         List<Donation> walletDonations = wallet.getDonations();
