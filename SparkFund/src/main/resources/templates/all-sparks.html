@@ -83,7 +83,7 @@
                     <form th:action="@{'/' + ${spark.id} + '/show-spark'}" th:method="GET">
                         <button class="spark-button">Show</button>
                     </form>
-                    <form th:action="@{'/manage-spark'}" th:method="GET">
+                    <form th:action="@{'/' + ${spark.id} + '/donation'}" th:method="GET">
                         <button class="spark-button">Donate</button>
                     </form>
                 </div>

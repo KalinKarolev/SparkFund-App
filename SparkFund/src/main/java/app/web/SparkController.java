@@ -42,8 +42,8 @@ public class SparkController {
         return modelAndView;
     }
 
-    @GetMapping("/manage-spark")
-    public ModelAndView getEditSparkPage(@AuthenticationPrincipal AuthenticationDetails authenticationDetails) {
+    @GetMapping("/create-spark")
+    public ModelAndView getCreateSparkPage(@AuthenticationPrincipal AuthenticationDetails authenticationDetails) {
         User user = userService.getAuthenticatedUser(authenticationDetails);
 
         ModelAndView modelAndView = new ModelAndView();
@@ -54,8 +54,8 @@ public class SparkController {
         return modelAndView;
     }
 
-    @PostMapping("/manage-spark")
-    public ModelAndView manageSpark(@AuthenticationPrincipal AuthenticationDetails authenticationDetails, @Valid ManageSparkRequest manageSparkRequest, BindingResult bindingResult) {
+    @PostMapping("/create-spark")
+    public ModelAndView createSpark(@AuthenticationPrincipal AuthenticationDetails authenticationDetails, @Valid ManageSparkRequest manageSparkRequest, BindingResult bindingResult) {
         User user = userService.getAuthenticatedUser(authenticationDetails);
         if (bindingResult.hasErrors()) {
             ModelAndView modelAndView = new ModelAndView();
@@ -71,6 +71,16 @@ public class SparkController {
         modelAndView.addObject("user", user);
         modelAndView.setViewName("redirect:/home");
         return modelAndView;
+    }
+
+    @GetMapping("/{id}/update-spark")
+    public ModelAndView getUpdateSparkPage(@AuthenticationPrincipal AuthenticationDetails authenticationDetails) {
+        return null;
+    }
+
+    @PostMapping("{id}/update-spark")
+    public ModelAndView updateSpark(@AuthenticationPrincipal AuthenticationDetails authenticationDetails, @Valid ManageSparkRequest manageSparkRequest, BindingResult bindingResult) {
+        return null;
     }
 
     @GetMapping("/all-sparks")

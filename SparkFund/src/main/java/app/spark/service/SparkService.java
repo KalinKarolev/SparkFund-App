@@ -97,6 +97,13 @@ public class SparkService {
 
     }
 
+    public void increaseCurrentAmount(Spark spark, BigDecimal amount) {
+        BigDecimal currentAmount = spark.getCurrentAmount() != null ? spark.getCurrentAmount() : BigDecimal.ZERO;
+        spark.setCurrentAmount(currentAmount.add(amount));
+        spark.setUpdatedOn(LocalDateTime.now());
+        sparkRepository.save(spark);
+    }
+
     public Spark getSparkById(UUID id) {
         return sparkRepository.findById(id)
                 .orElseThrow(() -> new DomainException("No spark found with ID: " + id));

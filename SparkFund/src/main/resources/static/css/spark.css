@@ -89,8 +89,8 @@
     width: 100%; /* Make it take full width */
 }
 
-.spark-small-info-container div .update-button {
-    margin-left: auto; /* Apply only to this button */
+.spark-donate-button {
+    margin-left: auto;
 }
 
 .small-info-container img.creator-image {

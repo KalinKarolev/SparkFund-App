@@ -68,6 +68,17 @@ public class WalletService {
                 .size();
     }
 
+    public void reduceAmount(User user, BigDecimal amount) {
+        Wallet wallet = user.getWallet();
+        BigDecimal walletBalance = wallet.getAmount().subtract(amount);
+        if (walletBalance.compareTo(BigDecimal.ZERO) > 0) {
+            wallet.setAmount(walletBalance);
+            walletRepository.save(wallet);
+        } else {
+            throw new DomainException("There is not enough balance in your Wallet for this donation");
+        }
+    }
+    
     public void addFunds(Wallet wallet, BigDecimal amount, UserStatus userStatus) {
         if(userStatus == UserStatus.ACTIVE) {
             BigDecimal currentAmount = wallet.getAmount() != null ? wallet.getAmount() : new BigDecimal(0);
@@ -82,4 +93,6 @@ public class WalletService {
         return walletRepository.findById(_id)
                 .orElseThrow(() -> new DomainException("No wallet with ID [%s] found".formatted(_id)));
     }
+
+
 }

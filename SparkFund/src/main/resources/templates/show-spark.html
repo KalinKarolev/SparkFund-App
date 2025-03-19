@@ -80,7 +80,9 @@
             <select class="dropdown" disabled>
               <option th:text="${spark.category}"></option>
             </select>
-            <span> <button class="update-button">Update</button></span>
+            <form th:action="@{'/' + ${spark.id} + '/donation'}" th:method="GET">
+              <span> <button class="update-button">Update</button></span>
+            </form>
           </div>
         </div>
 
@@ -119,10 +121,12 @@
                th:style="'width: ' + (${spark.currentAmount} * 100 / ${spark.goalAmount}) + '%'"></div>
         </div>
         <div>
-          <select class="dropdown" disabled>
-            <option th:text="${spark.status}"></option>
-          </select>
-          <button class="donate-button">Donate</button>
+          <form th:action="@{'/' + ${spark.id} + '/donation'}" th:method="GET">
+            <select class="dropdown" disabled>
+              <option th:text="${spark.status}"></option>
+            </select>
+            <button class="spark-donate-button donate-button">Donate</button>
+          </form>
         </div>
       </div>
     </div>

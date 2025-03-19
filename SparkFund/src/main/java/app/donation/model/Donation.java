@@ -24,7 +24,7 @@ public class Donation {
     @Column(nullable = false)
     private BigDecimal amount;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 1000)
     private String message;
 
     @ManyToOne(fetch = FetchType.EAGER)

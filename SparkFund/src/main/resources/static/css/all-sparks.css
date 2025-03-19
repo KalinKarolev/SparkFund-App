@@ -124,6 +124,10 @@
     background-color: #ff8c1a; /* Hover color */
 }
 
+.spark-button p {
+    font-size: 18px; /* Adjust the font size as needed */
+}
+
 /* Styling for the amount information under buttons */
 .amount-container {
     background-color: #FFB84D;
