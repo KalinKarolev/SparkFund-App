@@ -16,33 +16,30 @@
 
   <div class="spark-content-wrapper">
     <div class="spark-container-header">
-      <form class="spark-filter-form" method="GET">
+      <form class="spark-filter-form" th:action="@{/all-sparks}" th:method="GET" th:object="${filterData}">
         <div class="spark-filter-container">
           <div class="filter-group">
             <label for="status-filter" class="filter-label">Filter by Status:</label>
-            <select id="status-filter" name="status" class="spark-filter-dropdown" onchange="this.form.submit()">
-              <option value="Any Status">ACTIVE</option>
-              <option value="pending">COMPLETED</option>
-              <option value="resolved">CANCELLED</option>
+            <select id="status-filter" name="status" class="spark-filter-dropdown" onchange="this.form.submit()" th:field="*{status}">
+              <option th:each="status : ${T(app.spark.model.SparkStatus).values()}" th:value="${status}" th:text="${status}" th:selected="${param.status != null and param.status == status}">></option>
             </select>
           </div>
 
           <div class="filter-group">
             <label for="category-filter" class="filter-label">Filter by Category:</label>
-            <select id="category-filter" name="category" class="spark-filter-dropdown" onchange="this.form.submit()">
-              <option value="Any Status">ALL CATEGORIES</option>
-              <option value="Any Status">EDUCATION</option>
-              <option value="pending">ENVIRONMENT</option>
-              <option value="resolved">ENTERTAINMENT</option>
+            <select id="category-filter" name="category" class="spark-filter-dropdown" onchange="this.form.submit()" th:field="*{category}">
+              <option value="ALL">ALL CATEGORIES</option>
+              <option th:each="category : ${T(app.spark.model.SparkCategory).values()}" th:value="${category}" th:text="${category}" th:selected="${param.category != null and param.category == category}">></option>
             </select>
           </div>
 
           <div class="filter-group">
             <label for="ownership-filter" class="filter-label">Filter by Ownership:</label>
-            <select id="ownership-filter" name="ownership" class="spark-filter-dropdown" onchange="this.form.submit()">
-              <option value="pending">ALL SPARKS</option>
-              <option value="Any Status">MY SPARKS</option>
-              <option value="resolved">SPARKS I DONATE TO</option>
+            <select id="ownership-filter" name="ownership" class="spark-filter-dropdown" onchange="this.form.submit()" th:field="*{ownership}">
+              <option value="ALL_SPARKS" th:selected="${param.ownership == 'ALL_SPARKS'}">ALL SPARKS</option>
+              <option value="MY_SPARKS" th:selected="${param.ownership == 'MY_SPARKS'}">MY SPARKS</option>
+              <option value="SPARKS_I_DONATE_TO" th:selected="${param.ownership == 'SPARKS_I_DONATE_TO'}">SPARKS I DONATE TO</option>
+            </select>
             </select>
           </div>
         </div>
@@ -50,16 +47,23 @@
     </div>
 
     <form>
-      <div class="spark-container" th:each="spark : ${activeSparks}">
+      <div class="spark-container" th:each="spark : ${allSparks}">
         <div class="spark-image-container">
           <img th:src="${spark.firstPictureUrl}" alt="Spark Image" class="spark-image">
         </div>
         <div class="spark-text-container">
           <h3 class="spark-title" th:text="${spark.title}"></h3>
-          <div class="dropdown-container">
-            <select class="dropdown" disabled>
-              <option th:text="${spark.status}"></option>
-            </select>
+          <div class="spark-dropdown-container">
+            <div class="dropdown-container">
+              <select class="dropdown" disabled>
+                <option th:text="${spark.status}"></option>
+              </select>
+            </div>
+            <div class="dropdown-container">
+              <select class="dropdown" disabled>
+                <option th:text="${spark.category}"></option>
+              </select>
+            </div>
           </div>
           <p class="spark-description" th:text="${spark.description}"></p>
         </div>

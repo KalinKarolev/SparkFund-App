@@ -6,6 +6,7 @@ import app.spark.service.SparkService;
 import app.user.model.User;
 import app.user.service.UserService;
 import app.web.dto.ManageSparkRequest;
+import app.web.dto.SparkFilterData;
 import jakarta.validation.Valid;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -66,13 +68,18 @@ public class SparkController {
     }
 
     @GetMapping("/all-sparks")
-    public ModelAndView getAllSparks(@AuthenticationPrincipal AuthenticationDetails authenticationDetails) {
+    public ModelAndView getAllSparks(@AuthenticationPrincipal AuthenticationDetails authenticationDetails
+            , @RequestParam(name = "status", required = false) String status
+            , @RequestParam(name = "category", required = false) String category
+            , @RequestParam(name = "ownership", required = false) String ownership) {
         User user = userService.getAuthenticatedUser(authenticationDetails);
-        List<Spark> activeSparks = sparkService.getAllActiveSparks();
+        SparkFilterData filterData = new SparkFilterData(status, category, ownership);
+        List<Spark> allSparks = sparkService.getAllSparks(user, status, category, ownership);
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("user", user);
-        modelAndView.addObject("activeSparks", activeSparks);
+        modelAndView.addObject("allSparks", allSparks);
+        modelAndView.addObject("filterData", filterData);
         modelAndView.setViewName("all-sparks");
 
         return modelAndView;

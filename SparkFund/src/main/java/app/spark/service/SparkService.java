@@ -6,6 +6,7 @@ import app.spark.model.SparkStatus;
 import app.spark.repostiroty.SparkRepository;
 import app.user.model.User;
 import app.user.model.UserStatus;
+import app.util.CommonUtils;
 import app.web.dto.ManageSparkRequest;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
@@ -46,7 +47,50 @@ public class SparkService {
         sparkRepository.save(spark);
     }
 
-    public List<Spark> getAllActiveSparks() {
-        return sparkRepository.findAllByStatus(SparkStatus.ACTIVE);
+    /**
+     * Retrieves a list of Sparks that match the provided filtering criteria (status, category, and ownership).
+     * If the screen for All Sparks is loaded for the first time, all active Sparks will be returned.
+     *
+     * @param user The User who is viewing the All Sparks screen.
+     * @param status The status of the Sparks to filter by.
+     * @param category The category of the Sparks to filter by.
+     * @param ownership The ownership filter (e.g., "ALL_SPARKS", "MY_SPARKS", "SPARKS_I_DONATE_TO").
+     * @return A list of filtered Sparks based on the provided criteria.
+     */
+    public List<Spark> getAllSparks(User user, String status, String category, String ownership) {
+        if (CommonUtils.areAllNull(status, category, ownership)) {
+            return sparkRepository.findAllByStatus(SparkStatus.ACTIVE);
+        }
+        List<Spark> filteredSparksByStatus = new java.util.ArrayList<>(sparkRepository.findAll().stream()
+                .filter(spark -> spark.getStatus().name().equals(status))
+                .toList());
+        if (!"ALL".equals(category)) {
+            filteredSparksByStatus.removeIf(spark -> !spark.getCategory().name().equals(category));
+        }
+        if (!"ALL_SPARKS".equals(ownership)) {
+            filterSparksByOwner(user, filteredSparksByStatus, ownership);
+        }
+        return filteredSparksByStatus;
+    }
+
+    /**
+     * Filters the provided list of Sparks based on the ownership criteria.
+     * The Sparks are filtered depending on whether the user is the creator of the Spark
+     * or if the user has made donations to the Spark's associated wallet.
+     *
+     * @param user The User whose ownership or donations will be used for filtering.
+     * @param filteredSparks The list of Sparks to filter based on ownership.
+     * @param ownership The ownership filter criteria ("MY_SPARKS" or "SPARKS_I_DONATE_TO").
+     */
+    private void filterSparksByOwner(User user, List<Spark> filteredSparks, String ownership) {
+        if ("MY_SPARKS".equals(ownership)) {
+            filteredSparks.removeIf(spark -> !spark.getCreator().equals(user));
+        } else if ("SPARKS_I_DONATE_TO".equals(ownership)) {
+            filteredSparks.removeIf(spark ->
+                    spark.getDonations().stream()
+                            .noneMatch(donation -> donation.getWallet().equals(user.getWallet()))
+            );
+        }
+
     }
 }

@@ -51,6 +51,12 @@
     max-height: 200px;
 }
 
+.spark-dropdown-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
 /* Title styling */
 .spark-title {
     font-size: 20px;
@@ -145,8 +151,8 @@
 
 .dropdown-container {
     margin-bottom: 10px;
-    display: flex;  /* Added Flexbox to center */
-    justify-content: center; /* Horizontally center the dropdown */
+    display: flex;
+    justify-content: center;
 }
 
 .dropdown {
