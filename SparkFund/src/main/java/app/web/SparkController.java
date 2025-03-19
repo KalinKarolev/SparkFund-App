@@ -11,13 +11,11 @@ import jakarta.validation.Valid;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 @RequestMapping()
@@ -31,9 +29,17 @@ public class SparkController {
         sparkService = _sparkService;
     }
 
-    @GetMapping("/view-spark")
-    public String getSparkPage() {
-        return "spark";
+    @GetMapping("/{id}/show-spark")
+    public ModelAndView getSparkPage(@PathVariable UUID id, @AuthenticationPrincipal AuthenticationDetails authenticationDetails) {
+        User user = userService.getAuthenticatedUser(authenticationDetails);
+        Spark spark = sparkService.getSparkById(id);
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("user", user);
+        modelAndView.addObject("spark", spark);
+        modelAndView.setViewName("show-spark");
+
+        return modelAndView;
     }
 
     @GetMapping("/manage-spark")

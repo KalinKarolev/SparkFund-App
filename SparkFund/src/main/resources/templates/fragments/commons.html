@@ -10,7 +10,7 @@
         <form th:action="@{/home}" th:method="GET">
             <button class="button">Home</button>
         </form>
-        <form th:action="@{'users/' + ${user.id} + '/profile'}" th:method="GET">
+        <form th:action="@{'/users/' + ${user.id} + '/profile'}" th:method="GET">
             <button class="button">My profile</button>
         </form>
         <form th:action="@{'/manage-spark'}" th:method="GET">

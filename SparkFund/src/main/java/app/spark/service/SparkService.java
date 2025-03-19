@@ -11,8 +11,10 @@ import app.web.dto.ManageSparkRequest;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class SparkService {
@@ -32,6 +34,7 @@ public class SparkService {
                 .creator(user)
                 .title(manageSparkRequest.getTitle())
                 .description(manageSparkRequest.getDescription())
+                .currentAmount(manageSparkRequest.getCurrentAmount() != null ? manageSparkRequest.getCurrentAmount() : BigDecimal.ZERO)
                 .goalAmount(manageSparkRequest.getGoalAmount())
                 .category(manageSparkRequest.getCategory())
                 .status(manageSparkRequest.getStatus())
@@ -59,9 +62,9 @@ public class SparkService {
      */
     public List<Spark> getAllSparks(User user, String status, String category, String ownership) {
         if (CommonUtils.areAllNull(status, category, ownership)) {
-            return sparkRepository.findAllByStatus(SparkStatus.ACTIVE);
+            return sparkRepository.findAllByStatusOrderByCreatedOnDesc(SparkStatus.ACTIVE);
         }
-        List<Spark> filteredSparksByStatus = new java.util.ArrayList<>(sparkRepository.findAll().stream()
+        List<Spark> filteredSparksByStatus = new java.util.ArrayList<>(sparkRepository.findAllByOrderByCreatedOnDesc().stream()
                 .filter(spark -> spark.getStatus().name().equals(status))
                 .toList());
         if (!"ALL".equals(category)) {
@@ -92,5 +95,10 @@ public class SparkService {
             );
         }
 
+    }
+
+    public Spark getSparkById(UUID id) {
+        return sparkRepository.findById(id)
+                .orElseThrow(() -> new DomainException("No spark found with ID: " + id));
     }
 }

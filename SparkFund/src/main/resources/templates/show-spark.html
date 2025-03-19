@@ -18,69 +18,73 @@
     <div class="spark-info-container">
       <!-- Left column: Title, Description, and Creator Info -->
       <div class="spark-info-left">
-        <h2>Spark Title</h2>
-        <p class="spark-description">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-        </p>
+        <h2 th:text="${spark.title}"></h2>
+        <p class="spark-description" th:text="${spark.description}"></p>
         <!-- Creator info moved here -->
         <div class="small-info-container">
           <h3>Created by:</h3>
-          <img class="creator-image" src="/images/Default-User_Image.png" alt="Creator Image">
+          <img class="creator-image" th:src="${spark.creator.profilePicture}" alt="Creator Image">
           <div>
-            <p class="creator-name">John Doe</p>
-            <p class="creator-email">john@example.com</p>
+            <p class="creator-name" th:text="${spark.creator.username}"></p>
+            <p class="creator-email" th:text="${spark.creator.email}"></p>
           </div>
         </div>
       </div>
 
-      <!-- Right column: Slideshow (80% height) and Meta info (20% height) -->
       <div class="spark-info-right">
         <!-- Slideshow container -->
         <div class="slideshow-container">
           <!-- Radio buttons to control slides -->
           <input type="radio" name="slider" id="slide1" checked>
-          <input type="radio" name="slider" id="slide2">
-          <input type="radio" name="slider" id="slide3">
+          <th:block th:unless="${#strings.isEmpty(spark.secondPictureUrl)}">
+            <input type="radio" name="slider" id="slide2">
+          </th:block>
+          <th:block th:unless="${#strings.isEmpty(spark.thirdPictureUrl)}">
+            <input type="radio" name="slider" id="slide3">
+          </th:block>
 
           <!-- Slides wrapper -->
           <div class="slides">
             <div class="slide">
-              <img src="/images/Default-User_Image.png" alt="Image 1">
+              <img th:src="${spark.firstPictureUrl}" alt="Image 1">
             </div>
             <div class="slide">
-              <img src="/images/Default-User_Image.png" alt="Image 2">
+              <img th:src="${spark.secondPictureUrl}" alt="Image 2">
             </div>
             <div class="slide">
-              <img src="/images/Default-User_Image.png" alt="Image 3">
+              <img th:src="${spark.thirdPictureUrl}" alt="Image 3">
             </div>
           </div>
 
           <!-- Navigation dots -->
           <div class="navigation">
             <label for="slide1"></label>
-            <label for="slide2"></label>
-            <label for="slide3"></label>
+            <th:block th:unless="${#strings.isEmpty(spark.secondPictureUrl)}">
+              <label for="slide2"></label>
+            </th:block>
+            <th:block th:unless="${#strings.isEmpty(spark.thirdPictureUrl)}">
+              <label for="slide3"></label>
+            </th:block>
           </div>
         </div>
 
         <!-- Meta information container -->
-        <div class="small-info-container">
+        <div class="spark-small-info-container">
           <p>
-            <label for="category"><b>Category:</b></label>
-            <select id="category" name="category" disabled>
-              <option>Education</option>
-              <option>Health</option>
-              <option>Environment</option>
-              <option>Community</option>
-              <option>Emergency</option>
+            <b>Created:</b> <span class="created-date"
+                                  th:text="${#temporals.format(spark.createdOn, 'dd-MM-yyyy')}"></span> |
+            <b>Updated:</b> <span class="updated-date"
+                                  th:text="${#temporals.format(spark.updatedOn, 'dd-MM-yyyy')}"></span>
+          </p>
+          <div>
+            <select class="dropdown" disabled>
+              <option th:text="${spark.category}"></option>
             </select>
-          </p>
-          <p>
-            <b>Created:</b> <span class="created-date">2025-02-24</span> |
-            <b>Updated:</b> <span class="updated-date">2025-02-25</span>
             <span> <button class="update-button">Update</button></span>
-          </p>
+          </div>
         </div>
+
+
       </div>
     </div>
 
@@ -106,24 +110,20 @@
       <div class="financial-info-container">
         <h3>Financial Details</h3>
         <p>
-          <b>Current Amount:</b> <span class="current-amount">$500</span> |
-          <b>Goal Amount:</b> <span class="goal-amount">$1000</span>
+          <b>Current Amount:</b> <span class="current-amount" th:text="'€' + ${spark.currentAmount}"></span> |
+          <b>Goal Amount:</b> <span class="goal-amount" th:text="'€' + ${spark.goalAmount}"></span>
         </p>
-
         <!-- Progress Bar -->
         <div class="progress-container">
-          <div class="progress-bar" style="width: 60%;"></div>
+          <div class="progress-bar"
+               th:style="'width: ' + (${spark.currentAmount} * 100 / ${spark.goalAmount}) + '%'"></div>
         </div>
-
-        <p>
-          <label for="status">Status:</label>
-          <select id="status" name="status" disabled>
-            <option>Active</option>
-            <option>Completed</option>
-            <option>Canceled</option>
+        <div>
+          <select class="dropdown" disabled>
+            <option th:text="${spark.status}"></option>
           </select>
           <button class="donate-button">Donate</button>
-        </p>
+        </div>
       </div>
     </div>
   </div>

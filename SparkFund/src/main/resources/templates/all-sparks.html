@@ -1,96 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>All Sparks</title>
-  <link rel="stylesheet" href="/css/index.css">
-  <link rel="stylesheet" href="/css/common.css">
-  <link rel="stylesheet" href="/css/users.css">
-  <link rel="stylesheet" href="/css/all-sparks.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Sparks</title>
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/users.css">
+    <link rel="stylesheet" href="/css/all-sparks.css">
 </head>
 <body>
 
 <main>
     <div th:replace="fragments/commons :: nav-bar"></div>
 
-  <div class="spark-content-wrapper">
-    <div class="spark-container-header">
-      <form class="spark-filter-form" th:action="@{/all-sparks}" th:method="GET" th:object="${filterData}">
-        <div class="spark-filter-container">
-          <div class="filter-group">
-            <label for="status-filter" class="filter-label">Filter by Status:</label>
-            <select id="status-filter" name="status" class="spark-filter-dropdown" onchange="this.form.submit()" th:field="*{status}">
-              <option th:each="status : ${T(app.spark.model.SparkStatus).values()}" th:value="${status}" th:text="${status}" th:selected="${param.status != null and param.status == status}">></option>
-            </select>
-          </div>
+    <div class="spark-content-wrapper">
+        <div class="spark-container-header">
+            <form class="spark-filter-form" th:action="@{/all-sparks}" th:method="GET" th:object="${filterData}">
+                <div class="spark-filter-container">
+                    <div class="filter-group">
+                        <label for="status-filter" class="filter-label">Filter by Status:</label>
+                        <select id="status-filter" name="status" class="spark-filter-dropdown"
+                                onchange="this.form.submit()" th:field="*{status}">
+                            <option th:each="status : ${T(app.spark.model.SparkStatus).values()}" th:value="${status}"
+                                    th:text="${status}"
+                                    th:selected="${param.status != null and param.status == status}">>
+                            </option>
+                        </select>
+                    </div>
 
-          <div class="filter-group">
-            <label for="category-filter" class="filter-label">Filter by Category:</label>
-            <select id="category-filter" name="category" class="spark-filter-dropdown" onchange="this.form.submit()" th:field="*{category}">
-              <option value="ALL">ALL CATEGORIES</option>
-              <option th:each="category : ${T(app.spark.model.SparkCategory).values()}" th:value="${category}" th:text="${category}" th:selected="${param.category != null and param.category == category}">></option>
-            </select>
-          </div>
+                    <div class="filter-group">
+                        <label for="category-filter" class="filter-label">Filter by Category:</label>
+                        <select id="category-filter" name="category" class="spark-filter-dropdown"
+                                onchange="this.form.submit()" th:field="*{category}">
+                            <option value="ALL">ALL CATEGORIES</option>
+                            <option th:each="category : ${T(app.spark.model.SparkCategory).values()}"
+                                    th:value="${category}" th:text="${category}"
+                                    th:selected="${param.category != null and param.category == category}">>
+                            </option>
+                        </select>
+                    </div>
 
-          <div class="filter-group">
-            <label for="ownership-filter" class="filter-label">Filter by Ownership:</label>
-            <select id="ownership-filter" name="ownership" class="spark-filter-dropdown" onchange="this.form.submit()" th:field="*{ownership}">
-              <option value="ALL_SPARKS" th:selected="${param.ownership == 'ALL_SPARKS'}">ALL SPARKS</option>
-              <option value="MY_SPARKS" th:selected="${param.ownership == 'MY_SPARKS'}">MY SPARKS</option>
-              <option value="SPARKS_I_DONATE_TO" th:selected="${param.ownership == 'SPARKS_I_DONATE_TO'}">SPARKS I DONATE TO</option>
-            </select>
-            </select>
-          </div>
+                    <div class="filter-group">
+                        <label for="ownership-filter" class="filter-label">Filter by Ownership:</label>
+                        <select id="ownership-filter" name="ownership" class="spark-filter-dropdown"
+                                onchange="this.form.submit()" th:field="*{ownership}">
+                            <option value="ALL_SPARKS" th:selected="${param.ownership == 'ALL_SPARKS'}">ALL SPARKS
+                            </option>
+                            <option value="MY_SPARKS" th:selected="${param.ownership == 'MY_SPARKS'}">MY SPARKS</option>
+                            <option value="SPARKS_I_DONATE_TO" th:selected="${param.ownership == 'SPARKS_I_DONATE_TO'}">
+                                SPARKS I DONATE TO
+                            </option>
+                        </select>
+                        </select>
+                    </div>
+                </div>
+            </form>
         </div>
-      </form>
+
+        <div class="spark-container" th:each="spark : ${allSparks}">
+            <div class="spark-image-container">
+                <img th:src="${spark.firstPictureUrl}" alt="Spark Image" class="spark-image">
+            </div>
+            <div class="spark-text-container">
+                <h3 class="spark-title" th:text="${spark.title}"></h3>
+                <div class="spark-dropdown-container">
+                    <div class="dropdown-container">
+                        <select class="dropdown" disabled>
+                            <option th:text="${spark.status}"></option>
+                        </select>
+                    </div>
+                    <div class="dropdown-container">
+                        <select class="dropdown" disabled>
+                            <option th:text="${spark.category}"></option>
+                        </select>
+                    </div>
+                </div>
+                <p class="spark-description" th:text="${spark.description}"></p>
+            </div>
+            <div class="spark-right-container">
+                <div class="button-container">
+                    <form th:action="@{'/' + ${spark.id} + '/show-spark'}" th:method="GET">
+                        <button class="spark-button">Show</button>
+                    </form>
+                    <form th:action="@{'/manage-spark'}" th:method="GET">
+                        <button class="spark-button">Donate</button>
+                    </form>
+                </div>
+                <div class="amount-container">
+                    <svg class="amount-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24"
+                         height="24">
+                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+                              fill="#FF6347"/>
+                    </svg>
+                    <svg class="amount-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24"
+                         height="24">
+                        <circle cx="12" cy="12" r="10" stroke="white" stroke-width="2" fill="#FFD700"/>
+                        <text x="12" y="16" text-anchor="middle" font-size="12" font-weight="bold" fill="white">€</text>
+                    </svg>
+                    <div class="amount-text" th:if="${spark.currentAmount} == null">Current amount: €0.00</div>
+                    <div class="amount-text" th:if="${spark.currentAmount} != null"
+                         th:text="'Current amount: €' + ${spark.currentAmount}"></div>
+                    <div class="amount-text" th:text="'Target amount: €' + ${spark.goalAmount}"></div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
-    <form>
-      <div class="spark-container" th:each="spark : ${allSparks}">
-        <div class="spark-image-container">
-          <img th:src="${spark.firstPictureUrl}" alt="Spark Image" class="spark-image">
-        </div>
-        <div class="spark-text-container">
-          <h3 class="spark-title" th:text="${spark.title}"></h3>
-          <div class="spark-dropdown-container">
-            <div class="dropdown-container">
-              <select class="dropdown" disabled>
-                <option th:text="${spark.status}"></option>
-              </select>
-            </div>
-            <div class="dropdown-container">
-              <select class="dropdown" disabled>
-                <option th:text="${spark.category}"></option>
-              </select>
-            </div>
-          </div>
-          <p class="spark-description" th:text="${spark.description}"></p>
-        </div>
-        <div class="spark-right-container">
-          <div class="button-container">
-            <button class="spark-button">Show</button>
-            <button class="spark-button">Donate</button>
-          </div>
-          <div class="amount-container">
-            <svg class="amount-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#FF6347"/>
-            </svg>
-            <svg class="amount-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-              <circle cx="12" cy="12" r="10" stroke="white" stroke-width="2" fill="#FFD700" />
-              <text x="12" y="16" text-anchor="middle" font-size="12" font-weight="bold" fill="white">€</text>
-            </svg>
-            <div class="amount-text" th:if="${spark.currentAmount} == null">Current amount: €0.00</div>
-            <div class="amount-text" th:if="${spark.currentAmount} != null" th:text="'Current amount: €' + ${spark.currentAmount}"></div>
-            <div class="amount-text" th:text="'Target amount: €' + ${spark.goalAmount}"></div>
-          </div>
-        </div>
-      </div>
-    </form>
-
-  </div>
-
-  <div th:replace="fragments/commons :: footer"></div>
+    <div th:replace="fragments/commons :: footer"></div>
 </main>
 
 </body>

@@ -11,5 +11,8 @@ import java.util.UUID;
 @Repository
 public interface SparkRepository extends JpaRepository<Spark, UUID> {
 
-    List<Spark> findAllByStatus(SparkStatus status);
+    List<Spark> findAllByStatusOrderByCreatedOnDesc(SparkStatus status);
+
+    List<Spark> findAllByOrderByCreatedOnDesc();
+
 }
