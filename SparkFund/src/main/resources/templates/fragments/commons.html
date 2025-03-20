@@ -19,14 +19,17 @@
         <form th:action="@{'/all-sparks'}" th:method="GET">
             <button class="button">All Sparks</button>
         </form>
-        <form>
+        <form th:action="@{'/send-signal'}" th:method="GET">
             <button class="button">Send Signal</button>
+        </form>
+        <form th:action="@{'/my-signals'}" th:method="GET">
+            <button class="button">My Signals</button>
+        </form>
+        <form th:action="@{'/all-signals'}" th:method="GET">
+            <button class="button">All User Signals</button>
         </form>
         <form>
             <button class="button">All Users</button>
-        </form>
-        <form>
-            <button class="button">All User Signals</button>
         </form>
         <form th:action="@{/logout}" th:method="GET">
             <button class="button" type="submit">Logout</button>

@@ -283,3 +283,28 @@ p.alert-warning {
     -webkit-text-fill-color: transparent;
     margin: 5px 0 0;
 }
+
+.readonly {
+    background-color: rgba(240, 240, 240, 0.5);
+    color: #888;
+    border: 1px solid #ddd;
+}
+
+.readonly-page {
+    pointer-events: none;
+    opacity: 0.9;
+}
+
+.readonly-page select,
+.readonly-page input,
+.readonly-page button,
+.readonly-page textarea {
+    background-color: #f3f3f3;
+    color: #777;
+    cursor: not-allowed;
+}
+
+.readonly-page #status #adminResponse {
+    pointer-events: none;
+    background-color: #f0f0f0; /* Optional: Gray it out */
+}

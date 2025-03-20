@@ -25,13 +25,14 @@ public class UserSignal {
     @Column(nullable = false)
     private String title;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 1000)
     private String message;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private UserSignalStatus userSignalStatus;
 
+    @Column(length = 1000)
     private String adminResponse;
 
     @Column(nullable = false)

@@ -41,45 +41,15 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>Message Title</td>
-                        <td>KKarolev</td>
-                        <td>no email</td>
-                        <td>PENDING</td>
-                        <td>25-02-2025</td>
-                        <td>26-02-2025</td>
+                    <tr th:each="signal : ${allSignals}">
+                        <td th:text="${signal.title}"></td>
+                        <td th:text="${signal.creator.username}"></td>
+                        <td th:text="${#strings.isEmpty(signal.creator.email) ? 'no email' : signal.creator.email}"></td>
+                        <td th:text="${signal.userSignalStatus}"></td>
+                        <td th:text="${#temporals.format(signal.createdOn, 'dd MMM yyyy')}"></td>
+                        <td th:text="${#temporals.format(signal.updatedOn, 'dd MMM yyyy')}"></td>
                         <td>
-                            <form method="GET">
-                                <button class="profile-actions-button">
-                                    <p>Open</p>
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Message Title</td>
-                        <td>KKarolev</td>
-                        <td>no email</td>
-                        <td>PENDING</td>
-                        <td>25-02-2025</td>
-                        <td>26-02-2025</td>
-                        <td>
-                            <form method="GET">
-                                <button class="profile-actions-button">
-                                    <p>Open</p>
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Message Title</td>
-                        <td>KKarolev</td>
-                        <td>no email</td>
-                        <td>PENDING</td>
-                        <td>25-02-2025</td>
-                        <td>26-02-2025</td>
-                        <td>
-                            <form method="GET">
+                            <form th:action="@{'/' + ${signal.id} + '/signal'}" th:method="GET">
                                 <button class="profile-actions-button">
                                     <p>Open</p>
                                 </button>
