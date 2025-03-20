@@ -80,7 +80,7 @@
             <select class="dropdown" disabled>
               <option th:text="${spark.category}"></option>
             </select>
-            <form th:action="@{'/' + ${spark.id} + '/donation'}" th:method="GET">
+            <form th:action="@{'/' + ${spark.id} + '/update-spark'}" th:method="GET">
               <span> <button class="update-button">Update</button></span>
             </form>
           </div>

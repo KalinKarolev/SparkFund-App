@@ -7,6 +7,7 @@ import app.user.model.User;
 import app.user.service.UserService;
 import app.web.dto.ManageSparkRequest;
 import app.web.dto.SparkFilterData;
+import app.web.mapper.DtoMapper;
 import jakarta.validation.Valid;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -49,7 +50,7 @@ public class SparkController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("user", user);
         modelAndView.addObject("manageSparkRequest", new ManageSparkRequest());
-        modelAndView.setViewName("manage-spark");
+        modelAndView.setViewName("create-spark");
 
         return modelAndView;
     }
@@ -61,26 +62,49 @@ public class SparkController {
             ModelAndView modelAndView = new ModelAndView();
             modelAndView.addObject("user", user);
             modelAndView.addObject("manageSparkRequest", manageSparkRequest);
-            modelAndView.setViewName("manage-spark");
+            modelAndView.setViewName("create-spark");
             return modelAndView;
         }
 
-        sparkService.manageSpark(manageSparkRequest, user);
+        Spark spark = sparkService.createSpark(manageSparkRequest, user);
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("user", user);
-        modelAndView.setViewName("redirect:/home");
+        modelAndView.setViewName("redirect:/" + spark.getId() + "/show-spark");
         return modelAndView;
     }
 
     @GetMapping("/{id}/update-spark")
-    public ModelAndView getUpdateSparkPage(@AuthenticationPrincipal AuthenticationDetails authenticationDetails) {
-        return null;
+    public ModelAndView getUpdateSparkPage(@PathVariable UUID id, @AuthenticationPrincipal AuthenticationDetails authenticationDetails) {
+        User user = userService.getAuthenticatedUser(authenticationDetails);
+        Spark sparkForUpdate = sparkService.getSparkById(id);
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("user", user);
+        modelAndView.addObject("manageSparkRequest", DtoMapper.mapSparkToManageSparkRequest(sparkForUpdate));
+        modelAndView.setViewName("update-spark");
+
+        return modelAndView;
     }
 
-    @PostMapping("{id}/update-spark")
-    public ModelAndView updateSpark(@AuthenticationPrincipal AuthenticationDetails authenticationDetails, @Valid ManageSparkRequest manageSparkRequest, BindingResult bindingResult) {
-        return null;
+    @PutMapping("/{id}/update-spark")
+    public ModelAndView updateSpark(@PathVariable UUID id, @AuthenticationPrincipal AuthenticationDetails authenticationDetails, @Valid ManageSparkRequest manageSparkRequest, BindingResult bindingResult) {
+        User user = userService.getAuthenticatedUser(authenticationDetails);
+        if (bindingResult.hasErrors()) {
+            ModelAndView modelAndView = new ModelAndView();
+            modelAndView.addObject("user", user);
+            modelAndView.addObject("manageSparkRequest", manageSparkRequest);
+            modelAndView.setViewName("update-spark");
+            return modelAndView;
+        }
+
+        Spark spark = sparkService.getSparkById(id);
+        sparkService.updateSpark(manageSparkRequest, spark, user);
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("user", user);
+        modelAndView.setViewName("redirect:/" + spark.getId() + "/show-spark");
+        return modelAndView;
     }
 
     @GetMapping("/all-sparks")

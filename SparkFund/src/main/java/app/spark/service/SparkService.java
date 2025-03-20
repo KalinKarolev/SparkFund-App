@@ -26,7 +26,7 @@ public class SparkService {
     }
 
     @Transactional
-    public void manageSpark(ManageSparkRequest manageSparkRequest, User user) {
+    public Spark createSpark(ManageSparkRequest manageSparkRequest, User user) {
         if (user.getUserStatus() != UserStatus.ACTIVE) {
             throw new DomainException("Action denied: Inactive users cannot create new Sparks.");
         }
@@ -41,12 +41,28 @@ public class SparkService {
                 .firstPictureUrl(manageSparkRequest.getFirstPictureUrl())
                 .secondPictureUrl(manageSparkRequest.getSecondPictureUrl())
                 .thirdPictureUrl(manageSparkRequest.getThirdPictureUrl())
+                .createdOn(LocalDateTime.now())
                 .build();
-        if (spark.getCreatedOn() == null) {
-            spark.setCreatedOn(LocalDateTime.now());
-        } else {
-            spark.setUpdatedOn(LocalDateTime.now());
+        return sparkRepository.save(spark);
+    }
+
+    @Transactional
+    public void updateSpark(ManageSparkRequest manageSparkRequest, Spark spark, User user) {
+        if (user.getUserStatus() != UserStatus.ACTIVE) {
+            throw new DomainException("Action denied: Inactive users cannot update Sparks.");
         }
+        if (spark.getStatus() != SparkStatus.ACTIVE) {
+            throw new DomainException("Action denied: Only active Sparks can be updated.");
+        }
+        spark.setTitle(manageSparkRequest.getTitle());
+        spark.setDescription(manageSparkRequest.getDescription());
+        spark.setGoalAmount(manageSparkRequest.getGoalAmount());
+        spark.setCategory(manageSparkRequest.getCategory());
+        spark.setStatus(manageSparkRequest.getStatus());
+        spark.setFirstPictureUrl(manageSparkRequest.getFirstPictureUrl());
+        spark.setSecondPictureUrl(manageSparkRequest.getSecondPictureUrl());
+        spark.setThirdPictureUrl(manageSparkRequest.getThirdPictureUrl());
+        spark.setUpdatedOn(LocalDateTime.now());
         sparkRepository.save(spark);
     }
 

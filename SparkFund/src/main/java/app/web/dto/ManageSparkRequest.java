@@ -12,12 +12,15 @@ import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.URL;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 @Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class ManageSparkRequest {
+
+    private UUID id;
 
     @NotBlank(message = "Spark title should not be empty")
     @Size(min = 1, max = 50, message = "Spark title must be between 1 and 50 symbols")
