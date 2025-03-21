@@ -122,40 +122,10 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>March 10, 2025</td>
-                        <td>€50</td>
-                        <td>Charity A</td>
-                    </tr>
-                    <tr>
-                        <td>March 5, 2025</td>
-                        <td>€100</td>
-                        <td>Charity B</td>
-                    </tr>
-                    <tr>
-                        <td>March 1, 2025</td>
-                        <td>€75</td>
-                        <td>Charity C</td>
-                    </tr>
-                    <tr>
-                        <td>Feb 20, 2025</td>
-                        <td>€200</td>
-                        <td>Charity D</td>
-                    </tr>
-                    <tr>
-                        <td>Feb 10, 2025</td>
-                        <td>€150</td>
-                        <td>Charity E</td>
-                    </tr>
-                    <tr>
-                        <td>Feb 10, 2025</td>
-                        <td>€150</td>
-                        <td>Charity E</td>
-                    </tr>
-                    <tr>
-                        <td>Feb 10, 2025</td>
-                        <td>€150</td>
-                        <td>Charity E</td>
+                    <tr th:each="donation : ${user.wallet.donations}" >
+                        <td th:text="${#temporals.format(donation.createdOn, 'dd-MM-yyyy')}">March 10, 2025</td>
+                        <td th:text="${'€' + donation.amount}"></td>
+                        <td class="truncate-text" th:text="${donation.spark.title}"></td>
                     </tr>
                     </tbody>
                 </table>

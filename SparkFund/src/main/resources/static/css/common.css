@@ -308,3 +308,10 @@ p.alert-warning {
     pointer-events: none;
     background-color: #f0f0f0; /* Optional: Gray it out */
 }
+
+.truncate-text {
+    max-width: 225px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

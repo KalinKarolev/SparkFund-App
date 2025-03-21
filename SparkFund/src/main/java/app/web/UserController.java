@@ -1,11 +1,13 @@
 package app.web;
 
+import app.security.AuthenticationDetails;
 import app.user.model.User;
 import app.user.service.UserService;
 import app.web.dto.EditProfileRequest;
 import app.web.dto.WalletDonationInfo;
 import app.web.mapper.DtoMapper;
 import jakarta.validation.Valid;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -24,11 +27,6 @@ public class UserController {
 
     public UserController(UserService _userService) {
         userService = _userService;
-    }
-
-    @GetMapping("/all")
-    public String getAllUsersPage() {
-        return "users";
     }
 
     @GetMapping("/{id}/profile")
@@ -70,5 +68,30 @@ public class UserController {
 
         userService.updateUserProfile(id, editProfileRequest);
         return new ModelAndView("redirect:/home");
+    }
+
+    @GetMapping
+    public ModelAndView getAllUsersPage(@AuthenticationPrincipal AuthenticationDetails authenticationDetails) {
+        User user = userService.getAuthenticatedUser(authenticationDetails);
+        List<User> allUsers = userService.getAllUsers();
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("user", user);
+        modelAndView.addObject("allUsers", allUsers);
+        modelAndView.setViewName("users");
+
+        return modelAndView;
+    }
+
+    @PutMapping("/{id}/status")
+    public String changeUserStatus(@PathVariable UUID id) {
+        userService.switchStatus(id);
+        return "redirect:/users";
+    }
+
+    @PutMapping("/{id}/role")
+    public String changeUserRole(@PathVariable UUID id) {
+        userService.switchRole(id);
+        return "redirect:/users";
     }
 }

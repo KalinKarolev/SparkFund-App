@@ -28,7 +28,7 @@
         <form th:if="${#strings.equals(user.userRole, 'ADMIN')}" th:action="@{'/all-signals'}" th:method="GET">
             <button class="button">All User Signals</button>
         </form>
-        <form th:if="${#strings.equals(user.userRole, 'ADMIN')}">
+        <form th:if="${#strings.equals(user.userRole, 'ADMIN')}" th:action="@{'/users'}" th:method="GET">
             <button class="button">All Users</button>
         </form>
         <form th:action="@{/logout}" th:method="GET">

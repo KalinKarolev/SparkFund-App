@@ -93,6 +93,26 @@ public class UserService implements UserDetailsService {
         userRepository.save(user);
     }
 
+    public void switchStatus(UUID _id) {
+        User user = getUserById(_id);
+        if (user.getUserStatus() == UserStatus.ACTIVE) {
+            user.setUserStatus(UserStatus.INACTIVE);
+        } else {
+            user.setUserStatus(UserStatus.ACTIVE);
+        }
+        userRepository.save(user);
+    }
+
+    public void switchRole(UUID _id) {
+        User user = getUserById(_id);
+        if (user.getUserRole() == UserRole.USER) {
+            user.setUserRole(UserRole.ADMIN);
+        } else {
+            user.setUserRole(UserRole.USER);
+        }
+        userRepository.save(user);
+    }
+
     public WalletDonationInfo getWalletDonationInfo(User user) {
         return walletService.getWalletDonationInfo(user.getWallet());
     }
@@ -114,5 +134,9 @@ public class UserService implements UserDetailsService {
 
     public User getAuthenticatedUser(AuthenticationDetails authenticationDetails) {
         return getUserById(UUID.fromString(authenticationDetails.getUserId().toString()));
+    }
+
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
     }
 }

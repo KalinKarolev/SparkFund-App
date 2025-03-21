@@ -20,6 +20,6 @@ public class DonationRequest {
     @DecimalMin(value = "1", message = "Amount must be at least 1")
     private BigDecimal amount;
 
-    @Size(max = 300, message = "Your message cannot exceed 300 symbols")
+    @Size(max = 200, message = "Your message cannot exceed 200 symbols")
     private String message;
 }

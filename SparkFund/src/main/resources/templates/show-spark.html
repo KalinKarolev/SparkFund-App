@@ -94,18 +94,18 @@
     <div class="info-row">
       <!-- Donator Messages Container: 50% width -->
       <div class="donator-messages-container">
-        <div class="spark-message-container">
-          <img class="creator-image" src="/images/Default-User_Image.png" alt="Creator Image">
-          <p class="donator-message">"Great initiative!" - Donator A</p>
+        <div class="spark-message-container" th:each="donation : ${spark.donations}">
+          <img class="creator-image" th:src="${donation.wallet.owner.profilePicture}" alt="Creator Image">
+          <p class="donator-message" th:text="${donation.message}"></p>
         </div>
-        <div class="spark-message-container">
-          <img class="creator-image" src="/images/Default-User_Image.png" alt="Creator Image">
-          <p class="donator-message">"Happy to help!" - Donator B</p>
-        </div>
-        <div class="spark-message-container">
-          <img class="creator-image" src="/images/Default-User_Image.png" alt="Creator Image">
-          <p class="donator-message">"Great initiative!" - Donator A</p>
-        </div>
+<!--        <div class="spark-message-container">-->
+<!--          <img class="creator-image" src="/images/Default-User_Image.png" alt="Creator Image">-->
+<!--          <p class="donator-message">"Happy to help!" - Donator B</p>-->
+<!--        </div>-->
+<!--        <div class="spark-message-container">-->
+<!--          <img class="creator-image" src="/images/Default-User_Image.png" alt="Creator Image">-->
+<!--          <p class="donator-message">"Great initiative!" - Donator A</p>-->
+<!--        </div>-->
       </div>
 
       <!-- Financial Information Container: 50% width -->
