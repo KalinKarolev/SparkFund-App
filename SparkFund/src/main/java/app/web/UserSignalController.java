@@ -5,9 +5,11 @@ import app.user.model.User;
 import app.user.service.UserService;
 import app.usersignal.model.UserSignal;
 import app.usersignal.service.UserSignalService;
+import app.web.dto.FilterData;
 import app.web.dto.UserSignalRequest;
 import app.web.mapper.DtoMapper;
 import jakarta.validation.Valid;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -75,12 +77,14 @@ public class UserSignalController {
         }
         UserSignal userSignal = userSignalService.getUserSignalById(userSignalRequest.getId());
         userSignalService.closeUserSignal(userSignal, userSignalRequest);
+        FilterData filterData = new FilterData("ALL", null, null,"all-signals");
 
-        List<UserSignal> allSignals = userSignalService.getAllSignals(user);
+        List<UserSignal> allSignals = userSignalService.getAllSignals(user, "ALL");
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("user", user);
         modelAndView.addObject("allSignals", allSignals);
+        modelAndView.addObject("filterData", filterData);
         modelAndView.setViewName("all-signals");
 
         return modelAndView;
@@ -100,25 +104,32 @@ public class UserSignalController {
     }
 
     @GetMapping("/my-signals")
-    public ModelAndView getMySignalsPage(@AuthenticationPrincipal AuthenticationDetails authenticationDetails) {
+    public ModelAndView getMySignalsPage(@AuthenticationPrincipal AuthenticationDetails authenticationDetails, @RequestParam(name = "status", required = false, defaultValue = "ALL") String status) {
         User user = userService.getAuthenticatedUser(authenticationDetails);
+        FilterData filterData = new FilterData(status, null, null, "my-signals");
+
+        List<UserSignal> userSignals = userSignalService.getUserSignals(user.getUserSignals(), status);
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("user", user);
-        modelAndView.addObject("allSignals", user.getUserSignals());
+        modelAndView.addObject("allSignals", userSignals);
+        modelAndView.addObject("filterData", filterData);
         modelAndView.setViewName("all-signals");
 
         return modelAndView;
     }
 
     @GetMapping("/all-signals")
-    public ModelAndView getAllSignalsPage(@AuthenticationPrincipal AuthenticationDetails authenticationDetails) {
+    @PreAuthorize("hasRole('ADMIN')")
+    public ModelAndView getAllSignalsPage(@AuthenticationPrincipal AuthenticationDetails authenticationDetails, @RequestParam(name = "status", required = false, defaultValue = "ALL") String status) {
         User user = userService.getAuthenticatedUser(authenticationDetails);
-        List<UserSignal> allSignals = userSignalService.getAllSignals(user);
+        List<UserSignal> allSignals = userSignalService.getAllSignals(user, status);
+        FilterData filterData = new FilterData(status, null, null, "all-signals");
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("user", user);
         modelAndView.addObject("allSignals", allSignals);
+        modelAndView.addObject("filterData", filterData);
         modelAndView.setViewName("all-signals");
 
         return modelAndView;

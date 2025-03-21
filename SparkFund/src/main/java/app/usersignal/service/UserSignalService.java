@@ -39,10 +39,22 @@ public class UserSignalService {
                 .orElseThrow(() -> new DomainException("No user signal found with ID: " + id));
     }
 
-    public List<UserSignal> getAllSignals(User user) {
+    public List<UserSignal> getAllSignals(User user, String status) {
         List<UserSignal> allSignals = userSignalRepository.findAll();
         allSignals.removeIf(userSignal -> userSignal.getCreator().getId().equals(user.getId()));
+        if ("ALL".equals(status)) {
+            return allSignals;
+        }
+        allSignals.removeIf(userSignal -> !userSignal.getUserSignalStatus().name().equals(status));
         return allSignals;
+    }
+
+    public List<UserSignal> getUserSignals(List<UserSignal> userSignals, String status) {
+        if ("ALL".equals(status)) {
+            return userSignals;
+        }
+        userSignals.removeIf(userSignal -> !userSignal.getUserSignalStatus().name().equals(status));
+        return userSignals;
     }
 
     @Transactional

@@ -6,7 +6,7 @@ import app.spark.service.SparkService;
 import app.user.model.User;
 import app.user.service.UserService;
 import app.web.dto.ManageSparkRequest;
-import app.web.dto.SparkFilterData;
+import app.web.dto.FilterData;
 import app.web.mapper.DtoMapper;
 import jakarta.validation.Valid;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -113,7 +113,7 @@ public class SparkController {
             , @RequestParam(name = "category", required = false) String category
             , @RequestParam(name = "ownership", required = false) String ownership) {
         User user = userService.getAuthenticatedUser(authenticationDetails);
-        SparkFilterData filterData = new SparkFilterData(status, category, ownership);
+        FilterData filterData = new FilterData(status, category, ownership, "all-sparks");
         List<Spark> allSparks = sparkService.getAllSparks(user, status, category, ownership);
 
         ModelAndView modelAndView = new ModelAndView();

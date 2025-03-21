@@ -9,11 +9,13 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SparkFilterData {
+public class FilterData {
 
     private String status;
 
     private String category;
 
     private String ownership;
+
+    private String endpoint;
 }
