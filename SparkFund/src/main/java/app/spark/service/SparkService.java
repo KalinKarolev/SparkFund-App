@@ -1,5 +1,6 @@
 package app.spark.service;
 
+import app.donation.model.Donation;
 import app.exceptions.DomainException;
 import app.spark.model.Spark;
 import app.spark.model.SparkStatus;
@@ -7,6 +8,8 @@ import app.spark.repostiroty.SparkRepository;
 import app.user.model.User;
 import app.user.model.UserStatus;
 import app.util.CommonUtils;
+import app.wallet.model.Wallet;
+import app.wallet.service.WalletService;
 import app.web.dto.ManageSparkRequest;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
@@ -20,9 +23,11 @@ import java.util.UUID;
 public class SparkService {
 
     private final SparkRepository sparkRepository;
+    private final WalletService walletService;
 
-    public SparkService(SparkRepository _sparkRepository) {
+    public SparkService(SparkRepository _sparkRepository, WalletService _walletService) {
         sparkRepository = _sparkRepository;
+        walletService = _walletService;
     }
 
     @Transactional
@@ -123,5 +128,35 @@ public class SparkService {
     public Spark getSparkById(UUID id) {
         return sparkRepository.findById(id)
                 .orElseThrow(() -> new DomainException("No spark found with ID: " + id));
+    }
+
+    /**
+     * Cancels the specified Spark by returning all donations to the donors' wallets,
+     * nullifying the current amount of the Spark, and setting its status to CANCELLED.
+     *
+     * @param spark The Spark to be cancelled.
+     */
+    public void cancelSparkAndReturnDonations(Spark spark) {
+        if (!CommonUtils.isZeroAmount(spark.getCurrentAmount()) && !spark.getDonations().isEmpty()) {
+            List<Donation> donations = spark.getDonations();
+            for (Donation donation : donations) {
+                Wallet donatorWallet = donation.getWallet();
+                walletService.addFundsWithoutUserValidation(donatorWallet, donation.getAmount());
+            }
+            spark.setCurrentAmount(BigDecimal.ZERO);
+        }
+        spark.setStatus(SparkStatus.CANCELLED);
+        spark.setUpdatedOn(LocalDateTime.now());
+        sparkRepository.save(spark);
+    }
+
+    public List<Spark> findSparksForCompletion() {
+        return sparkRepository.findAllWhereStatusActiveAndCurrentAmountIsGreaterThanOrEqualToGoalAmount();
+    }
+
+    public void completeSpark(Spark spark) {
+        spark.setStatus(SparkStatus.COMPLETED);
+        spark.setUpdatedOn(LocalDateTime.now());
+        sparkRepository.save(spark);
     }
 }

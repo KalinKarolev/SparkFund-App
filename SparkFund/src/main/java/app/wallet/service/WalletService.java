@@ -81,12 +81,16 @@ public class WalletService {
     
     public void addFunds(Wallet wallet, BigDecimal amount, UserStatus userStatus) {
         if(userStatus == UserStatus.ACTIVE) {
-            BigDecimal currentAmount = wallet.getAmount() != null ? wallet.getAmount() : new BigDecimal(0);
-            wallet.setAmount(currentAmount.add(amount));
-            walletRepository.save(wallet);
+            addFundsWithoutUserValidation(wallet, amount);
         } else {
             throw new DomainException("Action denied: Funds cannot be added to the wallet of an inactive user.");
         }
+    }
+
+    public void addFundsWithoutUserValidation(Wallet wallet, BigDecimal amount) {
+        BigDecimal currentAmount = wallet.getAmount() != null ? wallet.getAmount() : new BigDecimal(0);
+        wallet.setAmount(currentAmount.add(amount));
+        walletRepository.save(wallet);
     }
 
     public Wallet findWalletById(UUID _id) {

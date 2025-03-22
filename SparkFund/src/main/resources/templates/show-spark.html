@@ -80,8 +80,8 @@
             <select class="dropdown" disabled>
               <option th:text="${spark.category}"></option>
             </select>
-            <form th:action="@{'/' + ${spark.id} + '/update-spark'}" th:method="GET">
-              <span> <button class="update-button">Update</button></span>
+            <form th:if="${#strings.equals(user.username, spark.creator.username) and #strings.equals(spark.status, 'ACTIVE')}" th:action="@{'/' + ${spark.id} + '/update-spark'}" th:method="GET">
+              <span> <button class="spark-action-button update-button">Update</button></span>
             </form>
           </div>
         </div>
@@ -92,20 +92,12 @@
 
     <!-- Info Row: Donator Messages and Financial Details -->
     <div class="info-row">
-      <!-- Donator Messages Container: 50% width -->
+      <!-- Donator Messages Container -->
       <div class="donator-messages-container">
         <div class="spark-message-container" th:each="donation : ${spark.donations}">
           <img class="creator-image" th:src="${donation.wallet.owner.profilePicture}" alt="Creator Image">
-          <p class="donator-message" th:text="${donation.message}"></p>
+          <p class="donator-message" th:text="${donation.wallet.owner.username + ': ' + donation.message}"></p>
         </div>
-<!--        <div class="spark-message-container">-->
-<!--          <img class="creator-image" src="/images/Default-User_Image.png" alt="Creator Image">-->
-<!--          <p class="donator-message">"Happy to help!" - Donator B</p>-->
-<!--        </div>-->
-<!--        <div class="spark-message-container">-->
-<!--          <img class="creator-image" src="/images/Default-User_Image.png" alt="Creator Image">-->
-<!--          <p class="donator-message">"Great initiative!" - Donator A</p>-->
-<!--        </div>-->
       </div>
 
       <!-- Financial Information Container: 50% width -->
@@ -120,12 +112,17 @@
           <div class="progress-bar"
                th:style="'width: ' + (${spark.currentAmount} * 100 / ${spark.goalAmount}) + '%'"></div>
         </div>
-        <div>
-          <form th:action="@{'/' + ${spark.id} + '/donation'}" th:method="GET">
+        <div class="action-container">
+          <form class="form-inline">
             <select class="dropdown" disabled>
               <option th:text="${spark.status}"></option>
             </select>
-            <button class="spark-donate-button donate-button">Donate</button>
+          </form>
+          <form class="form-inline" th:if="${#strings.equals(spark.status, 'ACTIVE')}" th:action="@{'/' + ${spark.id} + '/donation'}" th:method="GET">
+            <button class="spark-action-button donate-button">Donate</button>
+          </form>
+          <form class="form-inline" th:if="${#strings.equals(user.username, spark.creator.username) and #strings.equals(spark.status, 'ACTIVE')}" th:action="@{'/' + ${spark.id} + '/cancel-spark'}" th:method="PUT">
+            <button class="spark-action-button donate-button">Cancel Spark</button>
           </form>
         </div>
       </div>

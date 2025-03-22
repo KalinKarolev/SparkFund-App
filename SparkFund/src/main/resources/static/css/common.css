@@ -306,7 +306,7 @@ p.alert-warning {
 
 .readonly-page #status #adminResponse {
     pointer-events: none;
-    background-color: #f0f0f0; /* Optional: Gray it out */
+    background-color: #f0f0f0;
 }
 
 .truncate-text {

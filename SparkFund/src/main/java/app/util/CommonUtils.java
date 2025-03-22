@@ -2,6 +2,7 @@ package app.util;
 
 import lombok.experimental.UtilityClass;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -10,5 +11,9 @@ public class CommonUtils {
 
     public static boolean areAllNull(Object... values) {
         return Arrays.stream(values).allMatch(Objects::isNull);
+    }
+
+    public static boolean isZeroAmount(BigDecimal amount) {
+        return amount == null || amount.compareTo(BigDecimal.ZERO) == 0;
     }
 }

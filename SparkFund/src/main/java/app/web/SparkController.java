@@ -107,6 +107,18 @@ public class SparkController {
         return modelAndView;
     }
 
+    @PutMapping("/{id}/cancel-spark")
+    public ModelAndView cancelSpark(@PathVariable UUID id, @AuthenticationPrincipal AuthenticationDetails authenticationDetails) {
+        Spark spark = sparkService.getSparkById(id);
+        sparkService.cancelSparkAndReturnDonations(spark);
+
+        User user = userService.getAuthenticatedUser(authenticationDetails);
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("user", user);
+        modelAndView.setViewName("redirect:/" + spark.getId() + "/show-spark");
+        return modelAndView;
+    }
+
     @GetMapping("/all-sparks")
     public ModelAndView getAllSparks(@AuthenticationPrincipal AuthenticationDetails authenticationDetails
             , @RequestParam(name = "status", required = false) String status
