@@ -5,9 +5,11 @@ import app.user.model.User;
 import app.usersignal.model.UserSignal;
 import app.usersignal.model.UserSignalStatus;
 import app.usersignal.repository.UserSignalRepository;
+import app.web.dto.FilterData;
 import app.web.dto.UserSignalRequest;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -23,6 +25,16 @@ public class UserSignalService {
     }
 
     @Transactional
+    public ModelAndView sendSignal(UserSignalRequest userSignalRequest, User user) {
+        sendSignal(user, userSignalRequest);
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("user", user);
+        modelAndView.setViewName("redirect:/home");
+
+        return modelAndView;
+    }
+
     public void sendSignal(User user, UserSignalRequest userSignalRequest) {
         UserSignal userSignal = UserSignal.builder()
                 .creator(user)
@@ -37,6 +49,50 @@ public class UserSignalService {
     public UserSignal getUserSignalById(UUID id) {
         return userSignalRepository.findById(id)
                 .orElseThrow(() -> new DomainException("No user signal found with ID: " + id));
+    }
+
+    @Transactional
+    public ModelAndView closeSignal(UserSignalRequest userSignalRequest, User user) {
+        UserSignal userSignal = getUserSignalById(userSignalRequest.getId());
+        closeUserSignal(userSignal, userSignalRequest);
+        FilterData filterData = new FilterData("ALL", null, null,"all-signals");
+
+        List<UserSignal> allSignals = getAllSignals(user, "ALL");
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("user", user);
+        modelAndView.addObject("allSignals", allSignals);
+        modelAndView.addObject("filterData", filterData);
+        modelAndView.setViewName("all-signals");
+
+        return modelAndView;
+    }
+
+    public void closeUserSignal(UserSignal userSignal, UserSignalRequest userSignalRequest) {
+        userSignal.setAdminResponse(userSignalRequest.getAdminResponse());
+        userSignal.setUserSignalStatus(UserSignalStatus.RESOLVED);
+        userSignal.setUpdatedOn(LocalDateTime.now());
+        userSignalRepository.save(userSignal);
+    }
+
+    @Transactional
+    public ModelAndView deleteSignal(UserSignalRequest userSignalRequest, User user, String status) {
+        UserSignal signal = getUserSignalById(userSignalRequest.getId());
+        if (UserSignalStatus.RESOLVED != signal.getUserSignalStatus()) {
+            throw new DomainException("Only signals in status 'Resolved' can be deleted");
+        }
+        userSignalRepository.delete(signal);
+
+        List<UserSignal> allSignals = getAllSignals(user, status);
+        FilterData filterData = new FilterData(status, null, null, "all-signals");
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("user", user);
+        modelAndView.addObject("allSignals", allSignals);
+        modelAndView.addObject("filterData", filterData);
+        modelAndView.setViewName("redirect:/all-signals");
+
+        return modelAndView;
     }
 
     public List<UserSignal> getAllSignals(User user, String status) {
@@ -55,13 +111,5 @@ public class UserSignalService {
         }
         userSignals.removeIf(userSignal -> !userSignal.getUserSignalStatus().name().equals(status));
         return userSignals;
-    }
-
-    @Transactional
-    public void closeUserSignal(UserSignal userSignal, UserSignalRequest userSignalRequest) {
-        userSignal.setAdminResponse(userSignalRequest.getAdminResponse());
-        userSignal.setUserSignalStatus(UserSignalStatus.RESOLVED);
-        userSignal.setUpdatedOn(LocalDateTime.now());
-        userSignalRepository.save(userSignal);
     }
 }

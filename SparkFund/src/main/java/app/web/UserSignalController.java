@@ -1,5 +1,6 @@
 package app.web;
 
+import app.exceptions.DomainException;
 import app.security.AuthenticationDetails;
 import app.user.model.User;
 import app.user.service.UserService;
@@ -39,53 +40,6 @@ public class UserSignalController {
         modelAndView.addObject("user", user);
         modelAndView.addObject("userSignalRequest", new UserSignalRequest());
         modelAndView.setViewName("signal");
-
-        return modelAndView;
-    }
-
-    @PostMapping("/send-signal")
-    public ModelAndView sendSignal(@AuthenticationPrincipal AuthenticationDetails authenticationDetails, @Valid UserSignalRequest userSignalRequest, BindingResult bindingResult) {
-        User user = userService.getAuthenticatedUser(authenticationDetails);
-        if (bindingResult.hasErrors()) {
-            ModelAndView modelAndView = new ModelAndView();
-            modelAndView.addObject("user", user);
-            modelAndView.addObject("userSignalRequest", userSignalRequest);
-            modelAndView.setViewName("signal");
-            return modelAndView;
-        }
-        userSignalService.sendSignal(user, userSignalRequest);
-
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("user", user);
-        modelAndView.setViewName("redirect:/home");
-
-        return modelAndView;
-    }
-
-    @PutMapping("/close-signal")
-    public ModelAndView closeSignal(@AuthenticationPrincipal AuthenticationDetails authenticationDetails, @Valid UserSignalRequest userSignalRequest, BindingResult bindingResult) {
-        User user = userService.getAuthenticatedUser(authenticationDetails);
-        if (userSignalRequest.getAdminResponse() == null) {
-            bindingResult.rejectValue("adminResponse", "error.adminResponse", "You cannot close signal without response");
-        }
-        if (bindingResult.hasErrors()) {
-            ModelAndView modelAndView = new ModelAndView();
-            modelAndView.addObject("user", user);
-            modelAndView.addObject("userSignalRequest", userSignalRequest);
-            modelAndView.setViewName("signal");
-            return modelAndView;
-        }
-        UserSignal userSignal = userSignalService.getUserSignalById(userSignalRequest.getId());
-        userSignalService.closeUserSignal(userSignal, userSignalRequest);
-        FilterData filterData = new FilterData("ALL", null, null,"all-signals");
-
-        List<UserSignal> allSignals = userSignalService.getAllSignals(user, "ALL");
-
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("user", user);
-        modelAndView.addObject("allSignals", allSignals);
-        modelAndView.addObject("filterData", filterData);
-        modelAndView.setViewName("all-signals");
 
         return modelAndView;
     }
@@ -134,4 +88,35 @@ public class UserSignalController {
 
         return modelAndView;
     }
+
+    @PostMapping("/edit-signal")
+    public ModelAndView handleSignalAction(@AuthenticationPrincipal AuthenticationDetails authenticationDetails
+            , @RequestParam("actionType") String actionType
+            , @RequestParam(name = "status", required = false, defaultValue = "ALL") String status
+            , @Valid UserSignalRequest userSignalRequest
+            , BindingResult bindingResult) {
+
+        User user = userService.getAuthenticatedUser(authenticationDetails);
+        if ("close".equals(actionType) && userSignalRequest.getAdminResponse() == null) {
+            bindingResult.rejectValue("adminResponse", "error.adminResponse", "You cannot close signal without response");
+        }
+        if ("send".equals(actionType) && bindingResult.hasErrors()) {
+            ModelAndView modelAndView = new ModelAndView();
+            modelAndView.addObject("user", user);
+            modelAndView.addObject("userSignalRequest", userSignalRequest);
+            modelAndView.setViewName("signal");
+            return modelAndView;
+        }
+
+        if ("send".equals(actionType)) {
+            return userSignalService.sendSignal(userSignalRequest, user);
+        } else if ("close".equals(actionType)) {
+            return userSignalService.closeSignal(userSignalRequest, user);
+        } else if ("delete".equals(actionType)) {
+            return userSignalService.deleteSignal(userSignalRequest, user, status);
+        } else {
+            throw new DomainException("Unsupported action type: " + actionType);
+        }
+    }
+
 }

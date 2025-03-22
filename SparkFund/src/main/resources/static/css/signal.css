@@ -16,3 +16,9 @@
     border: 2px solid #4D90FF; /* Light Blue Border */
     background-color: #E8F0FE; /* Soft blue background */
 }
+
+.signal-button-container {
+    display: flex;
+    gap: 10px; /* Adjust spacing between buttons */
+    align-items: center; /* Align buttons vertically */
+}
