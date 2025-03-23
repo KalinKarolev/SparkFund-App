@@ -13,16 +13,16 @@
         <form th:action="@{'/users/' + ${user.id} + '/profile'}" th:method="GET">
             <button class="button">My profile</button>
         </form>
-        <form th:action="@{'/create-spark'}" th:method="GET">
+        <form th:action="@{'/spark/new'}" th:method="GET">
             <button class="button">Create Spark</button>
         </form>
         <form th:action="@{'/all-sparks'}" th:method="GET">
             <button class="button">All Sparks</button>
         </form>
-        <form th:action="@{'/send-signal'}" th:method="GET">
+        <form th:action="@{'/signal'}" th:method="GET">
             <button class="button">Send Signal</button>
         </form>
-        <form th:action="@{'/my-signals'}" th:method="GET">
+        <form th:action="@{'/user-signals'}" th:method="GET">
             <button class="button">My Signals</button>
         </form>
         <form th:if="${#strings.equals(user.userRole, 'ADMIN')}" th:action="@{'/all-signals'}" th:method="GET">

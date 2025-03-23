@@ -80,7 +80,7 @@
             <select class="dropdown" disabled>
               <option th:text="${spark.category}"></option>
             </select>
-            <form th:if="${#strings.equals(user.username, spark.creator.username) and #strings.equals(spark.status, 'ACTIVE')}" th:action="@{'/' + ${spark.id} + '/update-spark'}" th:method="GET">
+            <form th:if="${#strings.equals(user.username, spark.creator.username) and #strings.equals(spark.status, 'ACTIVE')}" th:action="@{'/' + ${spark.id} + '/spark/details'}" th:method="GET">
               <span> <button class="spark-action-button update-button">Update</button></span>
             </form>
           </div>
@@ -121,7 +121,7 @@
           <form class="form-inline" th:if="${#strings.equals(spark.status, 'ACTIVE')}" th:action="@{'/' + ${spark.id} + '/donation'}" th:method="GET">
             <button class="spark-action-button donate-button">Donate</button>
           </form>
-          <form class="form-inline" th:if="${#strings.equals(user.username, spark.creator.username) and #strings.equals(spark.status, 'ACTIVE')}" th:action="@{'/' + ${spark.id} + '/cancel-spark'}" th:method="PUT">
+          <form class="form-inline" th:if="${#strings.equals(user.username, spark.creator.username) and #strings.equals(spark.status, 'ACTIVE')}" th:action="@{'/' + ${spark.id} + '/spark/cancelled'}" th:method="PUT">
             <button class="spark-action-button donate-button">Cancel Spark</button>
           </form>
         </div>

@@ -89,7 +89,7 @@
             <dialog id="popupAddFunds">
                 <div class="popup-content">
                     <h2>Add Funds</h2>
-                    <form th:action="@{'/wallet/' + ${user.getWallet().id} + '/add-funds'}" th:method="PUT">
+                    <form th:action="@{'/wallet/' + ${user.getWallet().id} + '/funds'}" th:method="PUT">
                         <label for="amount">Amount (€):</label>
                         <input type="number" id="amount" name="amount" placeholder="Enter amount" required  step="0.1" min="0">
 

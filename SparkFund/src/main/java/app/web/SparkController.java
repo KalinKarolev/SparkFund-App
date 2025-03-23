@@ -30,7 +30,7 @@ public class SparkController {
         sparkService = _sparkService;
     }
 
-    @GetMapping("/{id}/show-spark")
+    @GetMapping("/{id}/spark")
     public ModelAndView getSparkPage(@PathVariable UUID id, @AuthenticationPrincipal AuthenticationDetails authenticationDetails) {
         User user = userService.getAuthenticatedUser(authenticationDetails);
         Spark spark = sparkService.getSparkById(id);
@@ -43,7 +43,7 @@ public class SparkController {
         return modelAndView;
     }
 
-    @GetMapping("/create-spark")
+    @GetMapping("/spark/new")
     public ModelAndView getCreateSparkPage(@AuthenticationPrincipal AuthenticationDetails authenticationDetails) {
         User user = userService.getAuthenticatedUser(authenticationDetails);
 
@@ -55,7 +55,7 @@ public class SparkController {
         return modelAndView;
     }
 
-    @PostMapping("/create-spark")
+    @PostMapping("/spark/new")
     public ModelAndView createSpark(@AuthenticationPrincipal AuthenticationDetails authenticationDetails, @Valid ManageSparkRequest manageSparkRequest, BindingResult bindingResult) {
         User user = userService.getAuthenticatedUser(authenticationDetails);
         if (bindingResult.hasErrors()) {
@@ -70,11 +70,11 @@ public class SparkController {
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("user", user);
-        modelAndView.setViewName("redirect:/" + spark.getId() + "/show-spark");
+        modelAndView.setViewName("redirect:/" + spark.getId() + "/spark");
         return modelAndView;
     }
 
-    @GetMapping("/{id}/update-spark")
+    @GetMapping("/{id}/spark/details")
     public ModelAndView getUpdateSparkPage(@PathVariable UUID id, @AuthenticationPrincipal AuthenticationDetails authenticationDetails) {
         User user = userService.getAuthenticatedUser(authenticationDetails);
         Spark sparkForUpdate = sparkService.getSparkById(id);
@@ -87,7 +87,7 @@ public class SparkController {
         return modelAndView;
     }
 
-    @PutMapping("/{id}/update-spark")
+    @PutMapping("/{id}/spark/details")
     public ModelAndView updateSpark(@PathVariable UUID id, @AuthenticationPrincipal AuthenticationDetails authenticationDetails, @Valid ManageSparkRequest manageSparkRequest, BindingResult bindingResult) {
         User user = userService.getAuthenticatedUser(authenticationDetails);
         if (bindingResult.hasErrors()) {
@@ -103,11 +103,11 @@ public class SparkController {
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("user", user);
-        modelAndView.setViewName("redirect:/" + spark.getId() + "/show-spark");
+        modelAndView.setViewName("redirect:/" + spark.getId() + "/spark");
         return modelAndView;
     }
 
-    @PutMapping("/{id}/cancel-spark")
+    @PutMapping("/{id}/spark/cancelled")
     public ModelAndView cancelSpark(@PathVariable UUID id, @AuthenticationPrincipal AuthenticationDetails authenticationDetails) {
         Spark spark = sparkService.getSparkById(id);
         sparkService.cancelSparkAndReturnDonations(spark);
@@ -115,7 +115,7 @@ public class SparkController {
         User user = userService.getAuthenticatedUser(authenticationDetails);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("user", user);
-        modelAndView.setViewName("redirect:/" + spark.getId() + "/show-spark");
+        modelAndView.setViewName("redirect:/" + spark.getId() + "/spark");
         return modelAndView;
     }
 

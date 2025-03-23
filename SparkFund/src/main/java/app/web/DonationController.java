@@ -66,7 +66,7 @@ public class DonationController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("user", user);
         modelAndView.addObject("spark", spark);
-        modelAndView.setViewName("redirect:/" + spark.getId() + "/show-spark");
+        modelAndView.setViewName("redirect:/" + spark.getId() + "/spark");
         return modelAndView;
     }
 }

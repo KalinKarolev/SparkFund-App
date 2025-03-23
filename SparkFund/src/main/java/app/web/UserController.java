@@ -7,6 +7,7 @@ import app.web.dto.EditProfileRequest;
 import app.web.dto.WalletDonationInfo;
 import app.web.mapper.DtoMapper;
 import jakarta.validation.Valid;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -71,6 +72,7 @@ public class UserController {
     }
 
     @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ModelAndView getAllUsersPage(@AuthenticationPrincipal AuthenticationDetails authenticationDetails) {
         User user = userService.getAuthenticatedUser(authenticationDetails);
         List<User> allUsers = userService.getAllUsers();

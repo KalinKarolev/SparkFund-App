@@ -16,7 +16,7 @@
     <div class="content-wrapper">
         <div class="main-container">
 
-            <form th:action="@{${filterData.endpoint == 'my-signals' ? '/my-signals' : '/all-signals'}}" th:method="GET" th:object="${filterData}">
+            <form th:action="@{${filterData.endpoint == 'user-signals' ? '/user-signals' : '/all-signals'}}" th:method="GET" th:object="${filterData}">
                 <div class="filter-container">
                     <label for="status-filter">Filter by Status:</label>
                     <select id="status-filter" name="status" class="filter-dropdown" onchange="this.form.submit()" th:field="*{status}">

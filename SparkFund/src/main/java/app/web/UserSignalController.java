@@ -32,7 +32,7 @@ public class UserSignalController {
         userSignalService = _userSignalService;
     }
 
-    @GetMapping("/send-signal")
+    @GetMapping("/signal")
     public ModelAndView getSendSignalPage(@AuthenticationPrincipal AuthenticationDetails authenticationDetails) {
         User user = userService.getAuthenticatedUser(authenticationDetails);
 
@@ -57,10 +57,10 @@ public class UserSignalController {
         return modelAndView;
     }
 
-    @GetMapping("/my-signals")
+    @GetMapping("/user-signals")
     public ModelAndView getMySignalsPage(@AuthenticationPrincipal AuthenticationDetails authenticationDetails, @RequestParam(name = "status", required = false, defaultValue = "ALL") String status) {
         User user = userService.getAuthenticatedUser(authenticationDetails);
-        FilterData filterData = new FilterData(status, null, null, "my-signals");
+        FilterData filterData = new FilterData(status, null, null, "user-signals");
 
         List<UserSignal> userSignals = userSignalService.getUserSignals(user.getUserSignals(), status);
 
@@ -89,7 +89,7 @@ public class UserSignalController {
         return modelAndView;
     }
 
-    @PostMapping("/edit-signal")
+    @PostMapping("/signal/actions")
     public ModelAndView handleSignalAction(@AuthenticationPrincipal AuthenticationDetails authenticationDetails
             , @RequestParam("actionType") String actionType
             , @RequestParam(name = "status", required = false, defaultValue = "ALL") String status

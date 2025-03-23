@@ -13,7 +13,7 @@
     <div th:replace="fragments/commons :: nav-bar"></div>
 
     <div class="content-wrapper" th:classappend="${userSignalRequest.createdOn != null and user.username.equals(userSignalRequest.creatorUsername)} ? 'readonly-page'">
-        <form class="main-container" th:action="@{/edit-signal}" th:method="POST" th:object="${userSignalRequest}">
+        <form class="main-container" th:action="@{/signal/actions}" th:method="POST" th:object="${userSignalRequest}">
             <div class="main-form">
                 <h2>Send Us a Signal</h2>
                 <div class="form-field">

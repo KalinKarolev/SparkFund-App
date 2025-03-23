@@ -11,7 +11,7 @@
 <main>
     <div th:replace="fragments/commons :: nav-bar"></div>
 
-    <form class="content-wrapper" th:action="@{'/' + ${manageSparkRequest.id} + '/update-spark'}" th:method="PUT" th:object="${manageSparkRequest}">
+    <form class="content-wrapper" th:action="@{'/' + ${manageSparkRequest.id} + '/spark/details'}" th:method="PUT" th:object="${manageSparkRequest}">
         <div class="main-container">
             <div class="main-form">
                 <h2>✨Ignite Your Spark✨</h2>

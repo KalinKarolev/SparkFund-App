@@ -30,7 +30,7 @@ public class WalletController {
         userService = _userService;
     }
 
-    @PutMapping("/{id}/add-funds")
+    @PutMapping("/{id}/funds")
     public ModelAndView addFundsToWallet(@PathVariable UUID id
             , @RequestParam(name = "amount") BigDecimal amount
             , @AuthenticationPrincipal AuthenticationDetails authenticationDetails) {
