@@ -1,10 +1,14 @@
 package app.web;
 
+import app.donation.service.DonationService;
 import app.security.AuthenticationDetails;
+import app.spark.model.Spark;
+import app.spark.service.SparkService;
 import app.user.model.User;
 import app.user.service.UserService;
 import app.web.dto.LoginRequest;
 import app.web.dto.RegisterRequest;
+import app.web.dto.TotalDonationsInfo;
 import jakarta.validation.Valid;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -14,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
 import java.util.Objects;
 
 @Controller
@@ -21,9 +26,13 @@ import java.util.Objects;
 public class IndexController {
 
     private final UserService userService;
+    private final SparkService sparkService;
+    private final DonationService donationService;
 
-    public IndexController(UserService _userService) {
+    public IndexController(UserService _userService, SparkService _sparkService, DonationService _donationService) {
         userService = _userService;
+        sparkService = _sparkService;
+        donationService = _donationService;
     }
 
     @GetMapping
@@ -67,12 +76,16 @@ public class IndexController {
 
     @GetMapping("/home")
     public ModelAndView getHomePage(@AuthenticationPrincipal AuthenticationDetails authenticationDetails) {
-        User user = userService.getAuthenticatedUser(authenticationDetails);
+        User registeredUser = userService.getAuthenticatedUser(authenticationDetails);
+
+        List<Spark> allActiveSparks = sparkService.getAllActiveSparks();
+        TotalDonationsInfo donationsInfo = donationService.getTotalDonationsInfo();
 
         ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("user", registeredUser);
+        modelAndView.addObject("allSparks", allActiveSparks);
+        modelAndView.addObject("donationsInfo", donationsInfo);
         modelAndView.setViewName("home");
-        modelAndView.addObject("user", user);
-
         return modelAndView;
     }
 }

@@ -33,24 +33,28 @@
     </div>
 
     <div class="home-container">
-      <div class="latest-sparks-container">
+      <div class="latest-sparks-container" th:each="spark : ${allSparks}">
         <div class="home-spark-container">
           <div class="home-spark-image-container">
-            <img src="https://t3.ftcdn.net/jpg/06/16/24/10/360_F_616241094_wxi9weiwE5gTPusHQZ4O5kfPjZwvEr4p.jpg" alt="Spark Image" class="spark-image">
+            <img th:src="${spark.firstPictureUrl}" alt="Spark Image" class="spark-image">
           </div>
           <div class="home-spark-text-container">
-            <h3 class="spark-title">Spark Title</h3>
+            <h3 class="spark-title" th:text="${spark.title}"></h3>
             <div class="dropdown-container">
               <select class="dropdown" disabled>
                 <option>ACTIVE</option>
               </select>
             </div>
-            <p class="home-spark-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent tempor erat sem. Duis gravida dapibus metus sit amet lacinia. Curabitur et leo vitae dolor gravida pellentesque et quis quam. In elementum enim pellentesque fermentum tempus. Duis maximus nisi vitae lacus bibendum malesuada. Maecenas ac nunc sollicitudin, suscipit ex in, dapibus dolor. Nam interdum turpis sit amet lacinia auctor. Etiam maximus laoreet arcu congue molestie. Nam sit amet nisl ac mi ullamcorper bibendum. Nulla pretium ornare diam nec consectetur.</p>
+            <p class="home-spark-description" th:text="${spark.description}"></p>
           </div>
           <div class="spark-right-container">
             <div class="button-container">
-              <button class="spark-button">Show</button>
-              <button class="spark-button">Donate</button>
+              <form th:action="@{'/' + ${spark.id} + '/show-spark'}" th:method="GET">
+                <button class="spark-button">Show</button>
+              </form>
+              <form th:action="@{'/' + ${spark.id} + '/donation'}" th:method="GET">
+                <button class="spark-button">Donate</button>
+              </form>
             </div>
             <div class="amount-container">
               <svg class="amount-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
@@ -60,101 +64,8 @@
                 <circle cx="12" cy="12" r="10" stroke="white" stroke-width="2" fill="#FFD700" />
                 <text x="12" y="16" text-anchor="middle" font-size="12" font-weight="bold" fill="white">€</text>
               </svg>
-              <div class="amount-text">Current amount: 500€</div>
-              <div class="amount-text">Target amount: 1000€</div>
-            </div>
-          </div>
-        </div>
-        <div class="home-spark-container">
-          <div class="home-spark-image-container">
-            <img src="https://t3.ftcdn.net/jpg/06/16/24/10/360_F_616241094_wxi9weiwE5gTPusHQZ4O5kfPjZwvEr4p.jpg" alt="Spark Image" class="spark-image">
-          </div>
-          <div class="home-spark-text-container">
-            <h3 class="spark-title">Spark Title</h3>
-            <div class="dropdown-container">
-              <select class="dropdown" disabled>
-                <option>ACTIVE</option>
-              </select>
-            </div>
-            <p class="home-spark-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent tempor erat sem. Duis gravida dapibus metus sit amet lacinia. Curabitur et leo vitae dolor gravida pellentesque et quis quam. In elementum enim pellentesque fermentum tempus. Duis maximus nisi vitae lacus bibendum malesuada. Maecenas ac nunc sollicitudin, suscipit ex in, dapibus dolor. Nam interdum turpis sit amet lacinia auctor. Etiam maximus laoreet arcu congue molestie. Nam sit amet nisl ac mi ullamcorper bibendum. Nulla pretium ornare diam nec consectetur.</p>
-          </div>
-          <div class="spark-right-container">
-            <div class="button-container">
-              <button class="spark-button">Show</button>
-              <button class="spark-button">Donate</button>
-            </div>
-            <div class="amount-container">
-              <svg class="amount-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#FF6347"/>
-              </svg>
-              <svg class="amount-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-                <circle cx="12" cy="12" r="10" stroke="white" stroke-width="2" fill="#FFD700" />
-                <text x="12" y="16" text-anchor="middle" font-size="12" font-weight="bold" fill="white">€</text>
-              </svg>
-              <div class="amount-text">Current amount: 500€</div>
-              <div class="amount-text">Target amount: 1000€</div>
-            </div>
-          </div>
-        </div>
-        <div class="home-spark-container">
-          <div class="home-spark-image-container">
-            <img src="https://t3.ftcdn.net/jpg/06/16/24/10/360_F_616241094_wxi9weiwE5gTPusHQZ4O5kfPjZwvEr4p.jpg" alt="Spark Image" class="spark-image">
-          </div>
-          <div class="home-spark-text-container">
-            <h3 class="spark-title">Spark Title</h3>
-            <div class="dropdown-container">
-              <select class="dropdown" disabled>
-                <option>ACTIVE</option>
-              </select>
-            </div>
-            <p class="home-spark-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent tempor erat sem. Duis gravida dapibus metus sit amet lacinia. Curabitur et leo vitae dolor gravida pellentesque et quis quam. In elementum enim pellentesque fermentum tempus. Duis maximus nisi vitae lacus bibendum malesuada. Maecenas ac nunc sollicitudin, suscipit ex in, dapibus dolor. Nam interdum turpis sit amet lacinia auctor. Etiam maximus laoreet arcu congue molestie. Nam sit amet nisl ac mi ullamcorper bibendum. Nulla pretium ornare diam nec consectetur.</p>
-          </div>
-          <div class="spark-right-container">
-            <div class="button-container">
-              <button class="spark-button">Show</button>
-              <button class="spark-button">Donate</button>
-            </div>
-            <div class="amount-container">
-              <svg class="amount-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#FF6347"/>
-              </svg>
-              <svg class="amount-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-                <circle cx="12" cy="12" r="10" stroke="white" stroke-width="2" fill="#FFD700" />
-                <text x="12" y="16" text-anchor="middle" font-size="12" font-weight="bold" fill="white">€</text>
-              </svg>
-              <div class="amount-text">Current amount: 500€</div>
-              <div class="amount-text">Target amount: 1000€</div>
-            </div>
-          </div>
-        </div>
-        <div class="home-spark-container">
-          <div class="home-spark-image-container">
-            <img src="https://t3.ftcdn.net/jpg/06/16/24/10/360_F_616241094_wxi9weiwE5gTPusHQZ4O5kfPjZwvEr4p.jpg" alt="Spark Image" class="spark-image">
-          </div>
-          <div class="home-spark-text-container">
-            <h3 class="spark-title">Spark Title</h3>
-            <div class="dropdown-container">
-              <select class="dropdown" disabled>
-                <option>ACTIVE</option>
-              </select>
-            </div>
-            <p class="home-spark-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent tempor erat sem. Duis gravida dapibus metus sit amet lacinia. Curabitur et leo vitae dolor gravida pellentesque et quis quam. In elementum enim pellentesque fermentum tempus. Duis maximus nisi vitae lacus bibendum malesuada. Maecenas ac nunc sollicitudin, suscipit ex in, dapibus dolor. Nam interdum turpis sit amet lacinia auctor. Etiam maximus laoreet arcu congue molestie. Nam sit amet nisl ac mi ullamcorper bibendum. Nulla pretium ornare diam nec consectetur.</p>
-          </div>
-          <div class="spark-right-container">
-            <div class="button-container">
-              <button class="spark-button">Show</button>
-              <button class="spark-button">Donate</button>
-            </div>
-            <div class="amount-container">
-              <svg class="amount-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#FF6347"/>
-              </svg>
-              <svg class="amount-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-                <circle cx="12" cy="12" r="10" stroke="white" stroke-width="2" fill="#FFD700" />
-                <text x="12" y="16" text-anchor="middle" font-size="12" font-weight="bold" fill="white">€</text>
-              </svg>
-              <div class="amount-text">Current amount: 500€</div>
-              <div class="amount-text">Target amount: 1000€</div>
+              <div class="amount-text" th:text="${'Current amount: €' + spark.currentAmount}"></div>
+              <div class="amount-text" th:text="${'Target amount: €' + spark.goalAmount}"></div>
             </div>
           </div>
         </div>
@@ -165,11 +76,11 @@
       <div class="donation-summary-container">
         <div class="donation-info">
           <div class="donation-amount">
-            <span class="amount-number">€12,500</span>
+            <span class="amount-number" th:text="${'€' + donationsInfo.totalMoneyRaised}"></span>
             <span class="amount-label">Total Raised</span>
           </div>
           <div class="spark-count">
-            <span class="spark-number">25</span>
+            <span class="spark-number" th:text="${donationsInfo.totalSparksFunded}"></span>
             <span class="spark-label">Sparks Funded</span>
           </div>
         </div>
@@ -179,26 +90,26 @@
         <h4>🎖️ Biggest donators 🎖️</h4>
         <div class="donators-container">
           <h4>🥇</h4>
-          <img class="creator-image" src="/images/Default-User_Image.png" alt="Creator Image">
+          <img class="creator-image" th:src="${#strings.isEmpty(donationsInfo.firstDonorImage) ? '/images/Default-User_Image.png' : donationsInfo.firstDonorImage}" alt="Creator Image">
           <p>
-            <span class="donator-pad">Kalin Karolev</span>
-            <span class="donator-pad">500 EUR</span>
+            <span class="donator-pad" th:text="${donationsInfo.firstDonorName}"></span>
+            <span class="donator-pad" th:text="'€' + ${donationsInfo.firstDonorDonations}"></span>
           </p>
         </div>
-        <div class="donators-container">
+        <div class="donators-container" th:unless="${#strings.isEmpty(donationsInfo.secondDonorName)}">
           <h4>🥈</h4>
-          <img class="creator-image" src="/images/Default-User_Image.png" alt="Creator Image">
+          <img class="creator-image" th:src="${#strings.isEmpty(donationsInfo.secondDonorImage) ? '/images/Default-User_Image.png' : donationsInfo.secondDonorImage}" alt="Creator Image">
           <p>
-            <span class="donator-pad">Kalin Karolev</span>
-            <span class="donator-pad">500 EUR</span>
+            <span class="donator-pad" th:text="${donationsInfo.secondDonorName}"></span>
+            <span class="donator-pad" th:text="'€' + ${donationsInfo.secondDonorDonations}"></span>
           </p>
         </div>
-        <div class="donators-container">
+        <div class="donators-container" th:unless="${#strings.isEmpty(donationsInfo.thirdDonorName)}">
           <h4>🥉</h4>
-          <img class="creator-image" src="/images/Default-User_Image.png" alt="Creator Image">
+          <img class="creator-image" th:src="${#strings.isEmpty(donationsInfo.thirdDonorImage) ? '/images/Default-User_Image.png' : donationsInfo.thirdDonorImage}" alt="Creator Image">
           <p>
-            <span class="donator-pad">Kalin Karolev</span>
-            <span class="donator-pad">500 EUR</span>
+            <span class="donator-pad" th:text="${donationsInfo.thirdDonorName}"></span>
+            <span class="donator-pad" th:text="'€' + ${donationsInfo.thirdDonorDonations}"></span>
           </p>
         </div>
       </div>

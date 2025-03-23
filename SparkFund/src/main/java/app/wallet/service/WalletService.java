@@ -99,4 +99,7 @@ public class WalletService {
     }
 
 
+    public  List<Wallet> findAllWallets() {
+        return walletRepository.findAll();
+    }
 }

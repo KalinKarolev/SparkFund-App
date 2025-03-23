@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
@@ -18,4 +19,6 @@ public interface SparkRepository extends JpaRepository<Spark, UUID> {
 
     @Query("SELECT s FROM Spark s WHERE s.currentAmount >= s.goalAmount AND s.status = 'ACTIVE'")
     List<Spark> findAllWhereStatusActiveAndCurrentAmountIsGreaterThanOrEqualToGoalAmount();
+
+    List<Spark> findAllByCurrentAmountGreaterThan(BigDecimal _amount);
 }

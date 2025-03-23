@@ -83,7 +83,7 @@ public class SparkService {
      */
     public List<Spark> getAllSparks(User user, String status, String category, String ownership) {
         if (CommonUtils.areAllNull(status, category, ownership)) {
-            return sparkRepository.findAllByStatusOrderByCreatedOnDesc(SparkStatus.ACTIVE);
+            return getAllActiveSparks();
         }
         List<Spark> filteredSparksByStatus = new java.util.ArrayList<>(sparkRepository.findAllByOrderByCreatedOnDesc().stream()
                 .filter(spark -> spark.getStatus().name().equals(status))
@@ -158,5 +158,16 @@ public class SparkService {
         spark.setStatus(SparkStatus.COMPLETED);
         spark.setUpdatedOn(LocalDateTime.now());
         sparkRepository.save(spark);
+    }
+
+    public List<Spark> findAllSparksWithDonations() {
+        return sparkRepository.findAllByCurrentAmountGreaterThan(BigDecimal.ZERO);
+    }
+
+    /**
+     * Retrieves all Sparks in status ACTIVE ordered by date of creation in descending order.
+     */
+    public List<Spark> getAllActiveSparks() {
+        return sparkRepository.findAllByStatusOrderByCreatedOnDesc(SparkStatus.ACTIVE);
     }
 }

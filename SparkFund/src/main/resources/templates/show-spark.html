@@ -23,7 +23,7 @@
         <!-- Creator info moved here -->
         <div class="small-info-container">
           <h3>Created by:</h3>
-          <img class="creator-image" th:src="${spark.creator.profilePicture}" alt="Creator Image">
+          <img class="creator-image" th:src="${#strings.isEmpty(spark.creator.profilePicture) ? '/images/Default-User_Image.png' : spark.creator.profilePicture}" alt="Creator Image">
           <div>
             <p class="creator-name" th:text="${spark.creator.username}"></p>
             <p class="creator-email" th:text="${spark.creator.email}"></p>
@@ -95,7 +95,7 @@
       <!-- Donator Messages Container -->
       <div class="donator-messages-container">
         <div class="spark-message-container" th:each="donation : ${spark.donations}">
-          <img class="creator-image" th:src="${donation.wallet.owner.profilePicture}" alt="Creator Image">
+          <img class="creator-image" th:src="${#strings.isEmpty(donation.wallet.owner.profilePicture) ? '/images/Default-User_Image.png' : donation.wallet.owner.profilePicture}" alt="Creator Image">
           <p class="donator-message" th:text="${donation.wallet.owner.username + ': ' + donation.message}"></p>
         </div>
       </div>
