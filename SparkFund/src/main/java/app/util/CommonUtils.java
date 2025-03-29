@@ -16,4 +16,8 @@ public class CommonUtils {
     public static boolean isZeroAmount(BigDecimal amount) {
         return amount == null || amount.compareTo(BigDecimal.ZERO) == 0;
     }
+
+    public static boolean isNotEmpty(String text) {
+        return text != null && !text.isEmpty();
+    }
 }

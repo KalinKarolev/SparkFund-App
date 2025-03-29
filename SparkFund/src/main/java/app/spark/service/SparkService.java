@@ -1,6 +1,7 @@
 package app.spark.service;
 
 import app.donation.model.Donation;
+import app.email.service.EmailService;
 import app.exceptions.DomainException;
 import app.spark.model.Spark;
 import app.spark.model.SparkStatus;
@@ -24,10 +25,12 @@ public class SparkService {
 
     private final SparkRepository sparkRepository;
     private final WalletService walletService;
+    private final EmailService emailService;
 
-    public SparkService(SparkRepository _sparkRepository, WalletService _walletService) {
+    public SparkService(SparkRepository _sparkRepository, WalletService _walletService, EmailService _emailService) {
         sparkRepository = _sparkRepository;
         walletService = _walletService;
+        emailService = _emailService;
     }
 
     @Transactional
@@ -142,6 +145,7 @@ public class SparkService {
             for (Donation donation : donations) {
                 Wallet donatorWallet = donation.getWallet();
                 walletService.addFundsWithoutUserValidation(donatorWallet, donation.getAmount());
+                sendEmailForSparkCancellation(donatorWallet.getOwner().getEmail(), spark.getTitle(), donation.getAmount());
             }
             spark.setCurrentAmount(BigDecimal.ZERO);
         }
@@ -158,6 +162,19 @@ public class SparkService {
         spark.setStatus(SparkStatus.COMPLETED);
         spark.setUpdatedOn(LocalDateTime.now());
         sparkRepository.save(spark);
+        sendEmailForSparkCompletion(spark);
+    }
+
+    private void sendEmailForSparkCompletion(Spark spark) {
+        String emailSubject = "Your Spark is completed";
+        String emailBody = String.format("Your Spark [%s] is completed after the goal amount of %s was raised!", spark.getTitle(), spark.getGoalAmount().toString());
+        emailService.sendEmail(spark.getCreator().getEmail(), emailSubject, emailBody);
+    }
+
+    private void sendEmailForSparkCancellation(String donatorEmail, String sparkTitle, BigDecimal donationAmount) {
+        String emailSubject = "Refund from SparkFund";
+        String emailBody = String.format("Spark [%s] was cancelled and your donation for %s euro is refunded", sparkTitle, donationAmount.toString());
+        emailService.sendEmail(donatorEmail, emailSubject, emailBody);
     }
 
     public List<Spark> findAllSparksWithDonations() {

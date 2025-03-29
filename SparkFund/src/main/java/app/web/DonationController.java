@@ -62,6 +62,7 @@ public class DonationController {
         }
 
         donationService.addDonationToSpark(user, spark, donationRequest);
+        donationService.sendEmailForDonation(spark, user.getUsername(), donationRequest.getMessage(), donationRequest.getAmount());
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("user", user);

@@ -2,12 +2,14 @@ package app.donation.service;
 
 import app.donation.model.Donation;
 import app.donation.repository.DonationRepository;
+import app.email.service.EmailService;
 import app.exceptions.DomainException;
 import app.spark.model.Spark;
 import app.spark.model.SparkStatus;
 import app.spark.service.SparkService;
 import app.user.model.User;
 import app.user.model.UserStatus;
+import app.util.CommonUtils;
 import app.wallet.model.Wallet;
 import app.wallet.service.WalletService;
 import app.web.dto.DonationRequest;
@@ -29,11 +31,13 @@ public class DonationService {
     private final DonationRepository donationRepository;
     private final SparkService sparkService;
     private final WalletService walletService;
+    private final EmailService emailService;
 
-    public DonationService(DonationRepository _donationRepository, SparkService _sparkService, WalletService walletService) {
+    public DonationService(DonationRepository _donationRepository, SparkService _sparkService, WalletService walletService, EmailService _emailService) {
         donationRepository = _donationRepository;
         sparkService = _sparkService;
         this.walletService = walletService;
+        emailService = _emailService;
     }
 
     @Transactional
@@ -133,5 +137,12 @@ public class DonationService {
         }
     }
 
-
+    public void sendEmailForDonation(Spark spark, String donorName, String message, BigDecimal amount) {
+        String emailSubject = "Your Spark received donation";
+        String emailBody = String.format("Your Spark [%s] received donation for %s euro from donor with username: %s", spark.getTitle(), amount.toString(), donorName);
+        if (CommonUtils.isNotEmpty(message)) {
+            emailBody += String.format("%n%n They sent you following message: %s", message);
+        }
+        emailService.sendEmail(spark.getCreator().getEmail(), emailSubject, emailBody);
+    }
 }

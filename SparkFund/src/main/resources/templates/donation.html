@@ -20,8 +20,7 @@
             <div class="main-form" th:object="${donationRequest}">
                 <div class="form-field">
                     <label for="donation-to">Donation To:</label>
-                    <input type="text" id="donation-to" placeholder="No Spark is selected" readonly
-                           th:value="${spark.title}">
+                    <input type="text" id="donation-to" placeholder="No Spark is selected" readonly th:field="${spark.title}">
                 </div>
                 <div class="form-field">
                     <label for="amount">Amount:</label>
