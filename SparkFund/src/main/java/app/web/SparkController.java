@@ -57,7 +57,7 @@ public class SparkController {
     }
 
     @PostMapping("/spark/new")
-    public ModelAndView createSpark(@AuthenticationPrincipal AuthenticationDetails authenticationDetails, @Valid ManageSparkRequest manageSparkRequest, BindingResult bindingResult) throws AccessDeniedException {
+    public ModelAndView createSpark(@AuthenticationPrincipal AuthenticationDetails authenticationDetails, @Valid ManageSparkRequest manageSparkRequest, BindingResult bindingResult) {
         User user = userService.getAuthenticatedUser(authenticationDetails);
         if (bindingResult.hasErrors()) {
             ModelAndView modelAndView = new ModelAndView();
@@ -89,7 +89,7 @@ public class SparkController {
     }
 
     @PutMapping("/{id}/spark/details")
-    public ModelAndView updateSpark(@PathVariable UUID id, @AuthenticationPrincipal AuthenticationDetails authenticationDetails, @Valid ManageSparkRequest manageSparkRequest, BindingResult bindingResult) throws AccessDeniedException {
+    public ModelAndView updateSpark(@PathVariable UUID id, @AuthenticationPrincipal AuthenticationDetails authenticationDetails, @Valid ManageSparkRequest manageSparkRequest, BindingResult bindingResult) {
         User user = userService.getAuthenticatedUser(authenticationDetails);
         if (bindingResult.hasErrors()) {
             ModelAndView modelAndView = new ModelAndView();

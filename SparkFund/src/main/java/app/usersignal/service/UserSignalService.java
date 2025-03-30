@@ -8,9 +8,9 @@ import app.usersignal.model.UserSignalStatus;
 import app.usersignal.repository.UserSignalRepository;
 import app.web.dto.UserSignalRequest;
 import jakarta.transaction.Transactional;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
-import java.nio.file.AccessDeniedException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
@@ -58,7 +58,7 @@ public class UserSignalService {
     }
 
     @Transactional
-    public List<UserSignal> deleteSignal(UserSignalRequest userSignalRequest, User user, String status) throws AccessDeniedException {
+    public List<UserSignal> deleteSignal(UserSignalRequest userSignalRequest, User user, String status) {
         UserSignal signal = getUserSignalById(userSignalRequest.getId());
         if (UserSignalStatus.RESOLVED != signal.getUserSignalStatus()) {
             throw new AccessDeniedException("Only signals in status 'Resolved' can be deleted");

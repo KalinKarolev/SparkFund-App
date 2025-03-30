@@ -13,10 +13,10 @@ import app.wallet.model.Wallet;
 import app.wallet.service.WalletService;
 import app.web.dto.ManageSparkRequest;
 import jakarta.transaction.Transactional;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.nio.file.AccessDeniedException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -35,7 +35,7 @@ public class SparkService {
     }
 
     @Transactional
-    public Spark createSpark(ManageSparkRequest manageSparkRequest, User user) throws AccessDeniedException {
+    public Spark createSpark(ManageSparkRequest manageSparkRequest, User user) {
         if (user.getUserStatus() != UserStatus.ACTIVE) {
             throw new AccessDeniedException("Action denied: Inactive users cannot create new Sparks.");
         }
@@ -56,7 +56,7 @@ public class SparkService {
     }
 
     @Transactional
-    public void updateSpark(ManageSparkRequest manageSparkRequest, Spark spark, User user) throws AccessDeniedException {
+    public void updateSpark(ManageSparkRequest manageSparkRequest, Spark spark, User user) {
         if (user.getUserStatus() != UserStatus.ACTIVE) {
             throw new AccessDeniedException("Action denied: Inactive users cannot update Sparks.");
         }

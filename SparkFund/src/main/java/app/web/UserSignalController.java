@@ -94,7 +94,7 @@ public class UserSignalController {
             , @RequestParam("actionType") String actionType
             , @RequestParam(name = "status", required = false, defaultValue = "ALL") String status
             , @Valid UserSignalRequest userSignalRequest
-            , BindingResult bindingResult) throws AccessDeniedException {
+            , BindingResult bindingResult) {
 
         User user = userService.getAuthenticatedUser(authenticationDetails);
         if ("close".equals(actionType) && userSignalRequest.getAdminResponse() == null) {

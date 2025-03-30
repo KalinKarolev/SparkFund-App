@@ -52,7 +52,7 @@ public class DonationController {
     public ModelAndView donateToSpark(@PathVariable UUID id
             , @AuthenticationPrincipal AuthenticationDetails authenticationDetails
             , @Valid DonationRequest donationRequest
-            , BindingResult bindingResult) throws AccessDeniedException {
+            , BindingResult bindingResult) {
         User user = userService.getAuthenticatedUser(authenticationDetails);
         Spark spark = sparkService.getSparkById(id);
 

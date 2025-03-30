@@ -14,11 +14,11 @@ import app.wallet.service.WalletService;
 import app.web.dto.DonationRequest;
 import app.web.dto.TotalDonationsInfo;
 import jakarta.transaction.Transactional;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.nio.file.AccessDeniedException;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -41,7 +41,7 @@ public class DonationService {
     }
 
     @Transactional
-    public void addDonationToSpark(User user, Spark spark, DonationRequest donationRequest) throws AccessDeniedException {
+    public void addDonationToSpark(User user, Spark spark, DonationRequest donationRequest) {
         // Validate that the donation can be done
         validateDonation(user, spark);
 
@@ -129,7 +129,7 @@ public class DonationService {
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
-    private void validateDonation(User user, Spark spark) throws AccessDeniedException {
+    private void validateDonation(User user, Spark spark) {
         if(user.getUserStatus() != UserStatus.ACTIVE) {
             throw new AccessDeniedException("Action denied: Inactive user cannot make donation.");
         } else if (spark.getStatus() != SparkStatus.ACTIVE) {

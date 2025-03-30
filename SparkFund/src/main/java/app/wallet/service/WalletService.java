@@ -9,10 +9,10 @@ import app.wallet.model.Wallet;
 import app.wallet.repository.WalletRepository;
 import app.web.dto.WalletDonationInfo;
 import jakarta.transaction.Transactional;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.nio.file.AccessDeniedException;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.Currency;
@@ -81,7 +81,7 @@ public class WalletService {
         }
     }
     
-    public void addFunds(Wallet wallet, BigDecimal amount, UserStatus userStatus) throws AccessDeniedException {
+    public void addFunds(Wallet wallet, BigDecimal amount, UserStatus userStatus) {
         if(userStatus == UserStatus.ACTIVE) {
             addFundsWithoutUserValidation(wallet, amount);
         } else {
