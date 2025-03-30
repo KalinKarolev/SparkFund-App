@@ -18,7 +18,6 @@ public class DtoMapper {
                 .lastName(user.getLastName())
                 .email(user.getEmail())
                 .profilePicture(user.getProfilePicture())
-                .isAnonymousDonator(user.getIsAnonymousDonator())
                 .build();
     }
 

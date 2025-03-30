@@ -32,5 +32,4 @@ public class EditProfileRequest {
     @URL
     private String profilePicture;
 
-    private Boolean isAnonymousDonator;
 }

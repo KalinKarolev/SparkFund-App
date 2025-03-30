@@ -61,10 +61,6 @@
                         <input type="text" id="email" placeholder="Add email" th:field="*{email}">
                         <p class="alert-warning" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
                     </div>
-                    <div class="checkbox-field">
-                        <input type="checkbox" id="email-updates" class="custom-checkbox" th:field="*{isAnonymousDonator}">
-                        <label for="email-updates">Anonymous donations</label>
-                    </div>
                     <button class="save-button">
                         <p>Save</p>
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

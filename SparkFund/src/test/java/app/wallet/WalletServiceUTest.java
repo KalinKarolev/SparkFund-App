@@ -16,9 +16,9 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.access.AccessDeniedException;
 
 import java.math.BigDecimal;
-import java.nio.file.AccessDeniedException;
 import java.util.ArrayList;
 import java.util.Currency;
 import java.util.List;
@@ -163,7 +163,7 @@ public class WalletServiceUTest {
     }
 
     @Test
-    void givenFundsAreAddedToWallet_andUserIsActive_thenIncreaseWalletAmount() throws Exception {
+    void givenFundsAreAddedToWallet_andUserIsActive_thenIncreaseWalletAmount() {
         Wallet wallet = Wallet.builder()
                 .amount(new BigDecimal("100"))
                 .build();

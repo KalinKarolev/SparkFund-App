@@ -61,6 +61,4 @@ public class User {
 
     private LocalDateTime updatedOn;
 
-    private Boolean isAnonymousDonator;
-
 }

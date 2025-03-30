@@ -87,9 +87,11 @@ public class DonationService {
 
         // Get the top 3 wallets with the highest donation sum and filter out wallets without donations
         List<Wallet> topWallets = wallets.stream()
-                .filter(wallet -> walletDonationsMap.getOrDefault(wallet.getOwner().getUsername(), BigDecimal.ZERO)
+                .filter(wallet ->
+                        walletDonationsMap.getOrDefault(wallet.getOwner().getUsername(), BigDecimal.ZERO)
                         .compareTo(BigDecimal.ONE) >= 0)
-                .sorted(Comparator.comparing(wallet -> walletDonationsMap.getOrDefault(wallet.getOwner().getUsername(), BigDecimal.ZERO), Comparator.reverseOrder()))
+                .sorted(Comparator.comparing(wallet ->
+                        walletDonationsMap.getOrDefault(wallet.getOwner().getUsername(), BigDecimal.ZERO), Comparator.reverseOrder()))
                 .limit(3)
                 .toList();
 

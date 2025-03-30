@@ -155,7 +155,6 @@ public class UserServiceUTest {
                 .lastName("Karolev")
                 .profilePicture("www.pic.com")
                 .email("kalin@gmail.com")
-                .isAnonymousDonator(true)
                 .build();
 
         when(userRepository.findById(userId)).thenReturn(Optional.of(user));
@@ -167,7 +166,6 @@ public class UserServiceUTest {
         assertEquals(editProfileRequest.getLastName(), user.getLastName());
         assertEquals(editProfileRequest.getProfilePicture(), user.getProfilePicture());
         assertEquals(editProfileRequest.getEmail(), user.getEmail());
-        assertEquals(editProfileRequest.getIsAnonymousDonator(), user.getIsAnonymousDonator());
     }
 
     @Test

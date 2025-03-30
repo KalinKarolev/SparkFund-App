@@ -90,7 +90,6 @@ public class UserService implements UserDetailsService {
         user.setLastName(editProfileRequest.getLastName());
         user.setProfilePicture(editProfileRequest.getProfilePicture());
         user.setEmail(editProfileRequest.getEmail());
-        user.setIsAnonymousDonator(editProfileRequest.getIsAnonymousDonator());
         user.setUpdatedOn(LocalDateTime.now());
         userRepository.save(user);
     }
