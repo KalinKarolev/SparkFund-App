@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 Not Found | SparkFund</title>
+  <link rel="stylesheet" href="/css/errors.css">
+</head>
+<body>
+<div class="container">
+  <h1>403</h1>
+  <p class="error-message">You do not have permission to perform this action.</p>
+  <p class="error-message" th:text="${exceptionMessage}"></p>
+  <form th:action="@{/home}" th:method="GET">
+    <button class="home-button">🚀 Back to Home</button>
+  </form>
+</div>
+</body>
+</html>

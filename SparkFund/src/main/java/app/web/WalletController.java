@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.math.BigDecimal;
+import java.nio.file.AccessDeniedException;
 import java.util.UUID;
 
 @Controller
@@ -33,7 +34,7 @@ public class WalletController {
     @PutMapping("/{id}/funds")
     public ModelAndView addFundsToWallet(@PathVariable UUID id
             , @RequestParam(name = "amount") BigDecimal amount
-            , @AuthenticationPrincipal AuthenticationDetails authenticationDetails) {
+            , @AuthenticationPrincipal AuthenticationDetails authenticationDetails) throws AccessDeniedException {
 
         Wallet wallet = walletService.findWalletById(id);
         WalletDonationInfo walletDonationInfo = walletService.getWalletDonationInfo(wallet);

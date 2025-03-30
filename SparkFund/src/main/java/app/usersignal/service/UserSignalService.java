@@ -1,6 +1,6 @@
 package app.usersignal.service;
 
-import app.exceptions.DomainException;
+import app.exceptions.ResourceNotFoundException;
 import app.user.model.User;
 import app.usersignal.model.UserSignal;
 import app.usersignal.model.UserSignalStatus;
@@ -11,6 +11,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.nio.file.AccessDeniedException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -48,7 +49,7 @@ public class UserSignalService {
 
     public UserSignal getUserSignalById(UUID id) {
         return userSignalRepository.findById(id)
-                .orElseThrow(() -> new DomainException("No user signal found with ID: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("No user signal found with ID: " + id));
     }
 
     @Transactional
@@ -76,10 +77,10 @@ public class UserSignalService {
     }
 
     @Transactional
-    public ModelAndView deleteSignal(UserSignalRequest userSignalRequest, User user, String status) {
+    public ModelAndView deleteSignal(UserSignalRequest userSignalRequest, User user, String status) throws AccessDeniedException {
         UserSignal signal = getUserSignalById(userSignalRequest.getId());
         if (UserSignalStatus.RESOLVED != signal.getUserSignalStatus()) {
-            throw new DomainException("Only signals in status 'Resolved' can be deleted");
+            throw new AccessDeniedException("Only signals in status 'Resolved' can be deleted");
         }
         userSignalRepository.delete(signal);
 

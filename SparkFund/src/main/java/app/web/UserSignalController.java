@@ -17,6 +17,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.nio.file.AccessDeniedException;
 import java.util.List;
 import java.util.UUID;
 
@@ -94,7 +95,7 @@ public class UserSignalController {
             , @RequestParam("actionType") String actionType
             , @RequestParam(name = "status", required = false, defaultValue = "ALL") String status
             , @Valid UserSignalRequest userSignalRequest
-            , BindingResult bindingResult) {
+            , BindingResult bindingResult) throws AccessDeniedException {
 
         User user = userService.getAuthenticatedUser(authenticationDetails);
         if ("close".equals(actionType) && userSignalRequest.getAdminResponse() == null) {

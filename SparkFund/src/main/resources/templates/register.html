@@ -20,12 +20,14 @@
             <label for="username">Username</label>
             <input type="text" id="username" name="username" required placeholder="Enter username" th:field="*{username}">
             <p class='alert-warning' th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
+            <p class='alert-warning' th:text="${usernameAlreadyExistMessage}"></p>
         </div>
 
         <div class="form-group">
             <label for="email">Email</label>
             <input type="email" id="email" name="email" required placeholder="Enter email" th:field="*{email}">
             <p class='alert-warning' th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+            <p class='alert-warning' th:text="${emailAlreadyExistMessage}"></p>
         </div>
 
         <div class="form-group">

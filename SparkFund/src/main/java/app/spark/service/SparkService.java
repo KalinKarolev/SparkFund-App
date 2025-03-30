@@ -2,7 +2,7 @@ package app.spark.service;
 
 import app.donation.model.Donation;
 import app.email.service.EmailService;
-import app.exceptions.DomainException;
+import app.exceptions.ResourceNotFoundException;
 import app.spark.model.Spark;
 import app.spark.model.SparkStatus;
 import app.spark.repostiroty.SparkRepository;
@@ -16,6 +16,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.nio.file.AccessDeniedException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -34,9 +35,9 @@ public class SparkService {
     }
 
     @Transactional
-    public Spark createSpark(ManageSparkRequest manageSparkRequest, User user) {
+    public Spark createSpark(ManageSparkRequest manageSparkRequest, User user) throws AccessDeniedException {
         if (user.getUserStatus() != UserStatus.ACTIVE) {
-            throw new DomainException("Action denied: Inactive users cannot create new Sparks.");
+            throw new AccessDeniedException("Action denied: Inactive users cannot create new Sparks.");
         }
         Spark spark = Spark.builder()
                 .creator(user)
@@ -55,12 +56,12 @@ public class SparkService {
     }
 
     @Transactional
-    public void updateSpark(ManageSparkRequest manageSparkRequest, Spark spark, User user) {
+    public void updateSpark(ManageSparkRequest manageSparkRequest, Spark spark, User user) throws AccessDeniedException {
         if (user.getUserStatus() != UserStatus.ACTIVE) {
-            throw new DomainException("Action denied: Inactive users cannot update Sparks.");
+            throw new AccessDeniedException("Action denied: Inactive users cannot update Sparks.");
         }
         if (spark.getStatus() != SparkStatus.ACTIVE) {
-            throw new DomainException("Action denied: Only active Sparks can be updated.");
+            throw new AccessDeniedException("Action denied: Only active Sparks can be updated.");
         }
         spark.setTitle(manageSparkRequest.getTitle());
         spark.setDescription(manageSparkRequest.getDescription());
@@ -130,7 +131,7 @@ public class SparkService {
 
     public Spark getSparkById(UUID id) {
         return sparkRepository.findById(id)
-                .orElseThrow(() -> new DomainException("No spark found with ID: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("No spark found with ID: " + id));
     }
 
     /**

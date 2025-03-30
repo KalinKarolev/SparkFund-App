@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.nio.file.AccessDeniedException;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -41,7 +42,7 @@ public class DonationService {
     }
 
     @Transactional
-    public void addDonationToSpark(User user, Spark spark, DonationRequest donationRequest) {
+    public void addDonationToSpark(User user, Spark spark, DonationRequest donationRequest) throws AccessDeniedException {
         // Validate that the donation can be done
         validateDonation(user, spark);
 
@@ -129,11 +130,11 @@ public class DonationService {
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
-    private void validateDonation(User user, Spark spark) {
+    private void validateDonation(User user, Spark spark) throws AccessDeniedException {
         if(user.getUserStatus() != UserStatus.ACTIVE) {
-            throw new DomainException("Action denied: Inactive user cannot make donation.");
+            throw new AccessDeniedException("Action denied: Inactive user cannot make donation.");
         } else if (spark.getStatus() != SparkStatus.ACTIVE) {
-            throw new DomainException("Action denied: You cannot donate to Spark that is not active.");
+            throw new AccessDeniedException("Action denied: You cannot donate to Spark that is not active.");
         }
     }
 

@@ -1,6 +1,8 @@
 package app.user.service;
 
-import app.exceptions.DomainException;
+import app.exceptions.EmailAlreadyExistException;
+import app.exceptions.ResourceNotFoundException;
+import app.exceptions.UsernameAlreadyExistException;
 import app.security.AuthenticationDetails;
 import app.user.model.User;
 import app.user.model.UserRole;
@@ -41,12 +43,12 @@ public class UserService implements UserDetailsService {
     public User register(RegisterRequest registerRequest) {
         Optional<User> userOptional = userRepository.findByUsername(registerRequest.getUsername());
         if (userOptional.isPresent()) {
-            throw new DomainException("Username [%s] already exist."
+            throw new UsernameAlreadyExistException("Username [%s] already exist."
                     .formatted(registerRequest.getUsername()));
         }
         userOptional = userRepository.findByEmail(registerRequest.getEmail());
         if (userOptional.isPresent()) {
-            throw new DomainException("User with email [%s] already exist."
+            throw new EmailAlreadyExistException("User with email [%s] already exist."
                     .formatted(registerRequest.getUsername()));
         }
 
@@ -73,7 +75,7 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new DomainException("No User with this username"));
+                .orElseThrow(() -> new ResourceNotFoundException("No User with this username"));
         return new AuthenticationDetails(user.getId()
                 , username
                 , user.getPassword()
@@ -129,7 +131,7 @@ public class UserService implements UserDetailsService {
 
     public User getUserById(UUID _id) {
         return userRepository.findById(_id)
-                .orElseThrow(() -> new DomainException("No user with id [%s] found".formatted(_id)));
+                .orElseThrow(() -> new ResourceNotFoundException("No user with id [%s] found".formatted(_id)));
     }
 
     public User getAuthenticatedUser(AuthenticationDetails authenticationDetails) {

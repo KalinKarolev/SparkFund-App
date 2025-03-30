@@ -2,6 +2,7 @@ package app.wallet.service;
 
 import app.donation.model.Donation;
 import app.exceptions.DomainException;
+import app.exceptions.ResourceNotFoundException;
 import app.user.model.User;
 import app.user.model.UserStatus;
 import app.wallet.model.Wallet;
@@ -11,6 +12,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.nio.file.AccessDeniedException;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.Currency;
@@ -79,11 +81,11 @@ public class WalletService {
         }
     }
     
-    public void addFunds(Wallet wallet, BigDecimal amount, UserStatus userStatus) {
+    public void addFunds(Wallet wallet, BigDecimal amount, UserStatus userStatus) throws AccessDeniedException {
         if(userStatus == UserStatus.ACTIVE) {
             addFundsWithoutUserValidation(wallet, amount);
         } else {
-            throw new DomainException("Action denied: Funds cannot be added to the wallet of an inactive user.");
+            throw new AccessDeniedException("Action denied: Funds cannot be added to the wallet of an inactive user.");
         }
     }
 
@@ -95,7 +97,7 @@ public class WalletService {
 
     public Wallet findWalletById(UUID _id) {
         return walletRepository.findById(_id)
-                .orElseThrow(() -> new DomainException("No wallet with ID [%s] found".formatted(_id)));
+                .orElseThrow(() -> new ResourceNotFoundException("No wallet with ID [%s] found".formatted(_id)));
     }
 
 

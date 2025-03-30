@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.nio.file.AccessDeniedException;
 import java.util.UUID;
 
 @Controller
@@ -48,7 +49,10 @@ public class DonationController {
     }
 
     @PostMapping("/{id}/donation")
-    public ModelAndView donateToSpark(@PathVariable UUID id, @AuthenticationPrincipal AuthenticationDetails authenticationDetails, @Valid DonationRequest donationRequest, BindingResult bindingResult){
+    public ModelAndView donateToSpark(@PathVariable UUID id
+            , @AuthenticationPrincipal AuthenticationDetails authenticationDetails
+            , @Valid DonationRequest donationRequest
+            , BindingResult bindingResult) throws AccessDeniedException {
         User user = userService.getAuthenticatedUser(authenticationDetails);
         Spark spark = sparkService.getSparkById(id);
 
