@@ -1,4 +1,4 @@
-package com.example.SparkFund;
+package app.example.SparkFund;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

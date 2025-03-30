@@ -124,8 +124,8 @@ public class UserService implements UserDetailsService {
         return !result.isEmpty();
     }
 
-    public boolean isEmailTaken(String username, UUID currentUserId) {
-        List<User> result = userRepository.findByEmailAndIdNot(username, currentUserId);
+    public boolean isEmailTaken(String email, UUID currentUserId) {
+        List<User> result = userRepository.findByEmailAndIdNot(email, currentUserId);
         return !result.isEmpty();
     }
 

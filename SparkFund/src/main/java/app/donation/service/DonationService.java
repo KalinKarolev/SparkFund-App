@@ -3,7 +3,6 @@ package app.donation.service;
 import app.donation.model.Donation;
 import app.donation.repository.DonationRepository;
 import app.email.service.EmailService;
-import app.exceptions.DomainException;
 import app.spark.model.Spark;
 import app.spark.model.SparkStatus;
 import app.spark.service.SparkService;
