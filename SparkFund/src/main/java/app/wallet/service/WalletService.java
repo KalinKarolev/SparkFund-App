@@ -73,7 +73,7 @@ public class WalletService {
     public void reduceAmount(User user, BigDecimal amount) {
         Wallet wallet = user.getWallet();
         BigDecimal walletBalance = wallet.getAmount().subtract(amount);
-        if (walletBalance.compareTo(BigDecimal.ZERO) > 0) {
+        if (walletBalance.compareTo(BigDecimal.ZERO) >= 0) {
             wallet.setAmount(walletBalance);
             walletRepository.save(wallet);
         } else {

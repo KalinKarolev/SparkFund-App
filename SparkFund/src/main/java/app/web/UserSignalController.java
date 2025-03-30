@@ -1,6 +1,5 @@
 package app.web;
 
-import app.exceptions.DomainException;
 import app.security.AuthenticationDetails;
 import app.user.model.User;
 import app.user.service.UserService;
@@ -109,14 +108,35 @@ public class UserSignalController {
             return modelAndView;
         }
 
+        userSignalService.validateActionType(actionType);
+
         if ("send".equals(actionType)) {
-            return userSignalService.sendSignal(userSignalRequest, user);
+            userSignalService.sendSignal(user, userSignalRequest);
+
+            ModelAndView modelAndView = new ModelAndView();
+            modelAndView.addObject("user", user);
+            modelAndView.setViewName("redirect:/home");
+            return modelAndView;
         } else if ("close".equals(actionType)) {
-            return userSignalService.closeSignal(userSignalRequest, user);
-        } else if ("delete".equals(actionType)) {
-            return userSignalService.deleteSignal(userSignalRequest, user, status);
+            List<UserSignal> allSignals = userSignalService.closeSignal(userSignalRequest, user);
+            FilterData filterData = new FilterData("ALL", null, null,"all-signals");
+
+            ModelAndView modelAndView = new ModelAndView();
+            modelAndView.addObject("user", user);
+            modelAndView.addObject("allSignals", allSignals);
+            modelAndView.addObject("filterData", filterData);
+            modelAndView.setViewName("all-signals");
+            return modelAndView;
         } else {
-            throw new DomainException("Unsupported action type: " + actionType);
+            List<UserSignal> allSignals = userSignalService.deleteSignal(userSignalRequest, user, status);
+            FilterData filterData = new FilterData(status, null, null, "all-signals");
+
+            ModelAndView modelAndView = new ModelAndView();
+            modelAndView.addObject("user", user);
+            modelAndView.addObject("allSignals", allSignals);
+            modelAndView.addObject("filterData", filterData);
+            modelAndView.setViewName("redirect:/all-signals");
+            return modelAndView;
         }
     }
 
