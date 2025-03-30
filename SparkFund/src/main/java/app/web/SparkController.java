@@ -5,8 +5,8 @@ import app.spark.model.Spark;
 import app.spark.service.SparkService;
 import app.user.model.User;
 import app.user.service.UserService;
-import app.web.dto.ManageSparkRequest;
 import app.web.dto.FilterData;
+import app.web.dto.ManageSparkRequest;
 import app.web.mapper.DtoMapper;
 import jakarta.validation.Valid;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -15,7 +15,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.nio.file.AccessDeniedException;
 import java.util.List;
 import java.util.UUID;
 
