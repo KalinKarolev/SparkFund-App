@@ -37,11 +37,6 @@ public class UserSignalService {
         userSignalRepository.save(userSignal);
     }
 
-    public UserSignal getUserSignalById(UUID id) {
-        return userSignalRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("No user signal found with ID: " + id));
-    }
-
     @Transactional
     public List<UserSignal> closeSignal(UserSignalRequest userSignalRequest, User user) {
         UserSignal userSignal = getUserSignalById(userSignalRequest.getId());
@@ -50,7 +45,7 @@ public class UserSignalService {
         return getAllSignals(user, "ALL");
     }
 
-    public void closeUserSignal(UserSignal userSignal, UserSignalRequest userSignalRequest) {
+    private void closeUserSignal(UserSignal userSignal, UserSignalRequest userSignalRequest) {
         userSignal.setAdminResponse(userSignalRequest.getAdminResponse());
         userSignal.setUserSignalStatus(UserSignalStatus.RESOLVED);
         userSignal.setUpdatedOn(LocalDateTime.now());
@@ -58,14 +53,14 @@ public class UserSignalService {
     }
 
     @Transactional
-    public List<UserSignal> deleteSignal(UserSignalRequest userSignalRequest, User user, String status) {
+    public List<UserSignal> deleteSignal(UserSignalRequest userSignalRequest, User user, String filterStatus) {
         UserSignal signal = getUserSignalById(userSignalRequest.getId());
         if (UserSignalStatus.RESOLVED != signal.getUserSignalStatus()) {
             throw new AccessDeniedException("Only signals in status 'Resolved' can be deleted");
         }
         userSignalRepository.delete(signal);
 
-        return getAllSignals(user, status);
+        return getAllSignals(user, filterStatus);
     }
 
     public List<UserSignal> getAllSignals(User user, String status) {
@@ -91,5 +86,10 @@ public class UserSignalService {
         if (!allowedActionTypes.contains(actionType)) {
             throw new DomainException("Unsupported action type: " + actionType);
         }
+    }
+
+    public UserSignal getUserSignalById(UUID id) {
+        return userSignalRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("No user signal found with ID: " + id));
     }
 }

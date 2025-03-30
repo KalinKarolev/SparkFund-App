@@ -4,6 +4,7 @@ import app.email.client.EmailClient;
 import app.email.client.dto.EmailRequest;
 import app.email.client.dto.EmailResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,7 @@ public class EmailService {
     public HttpStatusCode sendEmail(String userEmail, String emailSubject, String emailBody) {
         if (userEmail == null) {
             log.warn("[Feign call to sparkmail-svc failed] User email is missing");
+            return HttpStatus.BAD_REQUEST;
         }
         EmailRequest emailRequest = EmailRequest.builder()
                 .userEmail(userEmail)
@@ -32,6 +34,10 @@ public class EmailService {
                 .body(emailBody)
                 .build();
         ResponseEntity<Void> httpResponse = emailClient.sendEmail(emailRequest);
+        if (httpResponse == null) {
+            log.error("[Feign call to sparkmail-svc failed] Response is null");
+            return HttpStatus.INTERNAL_SERVER_ERROR;
+        }
         if (!httpResponse.getStatusCode().is2xxSuccessful()) {
             log.error("[Feign call to sparkmail-svc failed with code: {}] Can`t send email to {}", httpResponse.getStatusCode(), userEmail);
         }

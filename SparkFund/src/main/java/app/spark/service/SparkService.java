@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -89,7 +90,7 @@ public class SparkService {
         if (CommonUtils.areAllNull(status, category, ownership)) {
             return getAllActiveSparks();
         }
-        List<Spark> filteredSparksByStatus = new java.util.ArrayList<>(sparkRepository.findAllByOrderByCreatedOnDesc().stream()
+        List<Spark> filteredSparksByStatus = new ArrayList<>(sparkRepository.findAllByOrderByCreatedOnDesc().stream()
                 .filter(spark -> spark.getStatus().name().equals(status))
                 .toList());
         if (!"ALL".equals(category)) {
@@ -110,13 +111,14 @@ public class SparkService {
      * @param filteredSparks The list of Sparks to filter based on ownership.
      * @param ownership The ownership filter criteria ("MY_SPARKS" or "SPARKS_I_DONATE_TO").
      */
-    private void filterSparksByOwner(User user, List<Spark> filteredSparks, String ownership) {
+    public void filterSparksByOwner(User user, List<Spark> filteredSparks, String ownership) {
         if ("MY_SPARKS".equals(ownership)) {
             filteredSparks.removeIf(spark -> !spark.getCreator().equals(user));
         } else if ("SPARKS_I_DONATE_TO".equals(ownership)) {
             filteredSparks.removeIf(spark ->
                     spark.getDonations().stream()
-                            .noneMatch(donation -> donation.getWallet().equals(user.getWallet()))
+                            .noneMatch(donation -> donation.getWallet() == null
+                                    || donation.getWallet().equals(user.getWallet()))
             );
         }
 
