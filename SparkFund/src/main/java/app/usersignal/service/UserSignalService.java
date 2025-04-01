@@ -64,7 +64,7 @@ public class UserSignalService {
     }
 
     public List<UserSignal> getAllSignals(User user, String status) {
-        List<UserSignal> allSignals = userSignalRepository.findAll();
+        List<UserSignal> allSignals = userSignalRepository.findAllByOrderByCreatedOnDesc();
         allSignals.removeIf(userSignal -> userSignal.getCreator().getId().equals(user.getId()));
         if ("ALL".equals(status)) {
             return allSignals;

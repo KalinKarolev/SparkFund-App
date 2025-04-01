@@ -9,6 +9,7 @@ import app.web.dto.FilterData;
 import app.web.dto.ManageSparkRequest;
 import app.web.mapper.DtoMapper;
 import jakarta.validation.Valid;
+import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -76,6 +77,9 @@ public class SparkController {
 
     @GetMapping("/{id}/spark/details")
     public ModelAndView getUpdateSparkPage(@PathVariable UUID id, @AuthenticationPrincipal AuthenticationDetails authenticationDetails) {
+        if (!authenticationDetails.getUserId().equals(id)) {
+            throw new AuthorizationDeniedException("You are not authorized to view or edit this resource.");
+        }
         User user = userService.getAuthenticatedUser(authenticationDetails);
         Spark sparkForUpdate = sparkService.getSparkById(id);
 

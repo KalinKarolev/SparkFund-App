@@ -131,7 +131,7 @@ public class UserSignalServiceUTest {
                 .build();
         List<UserSignal> allSignals = new ArrayList<>(Arrays.asList(userSignal1, userSignal2));
 
-        when(userSignalRepository.findAll()).thenReturn(allSignals);
+        when(userSignalRepository.findAllByOrderByCreatedOnDesc()).thenReturn(allSignals);
 
         List<UserSignal> retrievedSignals = userSignalService.getAllSignals(user, "ALL");
         assertEquals(1, retrievedSignals.size());
@@ -157,7 +157,7 @@ public class UserSignalServiceUTest {
                 .build();
         List<UserSignal> allSignals = new ArrayList<>(Arrays.asList(userSignal1, userSignal2));
 
-        when(userSignalRepository.findAll()).thenReturn(allSignals);
+        when(userSignalRepository.findAllByOrderByCreatedOnDesc()).thenReturn(allSignals);
 
         List<UserSignal> retrievedSignals = userSignalService.getAllSignals(user, "PENDING");
         assertEquals(1, retrievedSignals.size());

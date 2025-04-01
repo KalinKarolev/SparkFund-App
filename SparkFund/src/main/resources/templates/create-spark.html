@@ -43,7 +43,7 @@
                     </div>
                     <div class="form-field">
                         <label for="status">Status:</label>
-                        <select id="status" name="status" th:field="*{status}">
+                        <select id="status" name="status" th:field="*{status}" style="pointer-events: none;">
                             <option th:each="status : ${T(app.spark.model.SparkStatus).values()}" th:value="${status}"
                                     th:text="${status}"></option>
                         </select>

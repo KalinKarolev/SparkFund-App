@@ -8,6 +8,7 @@ import app.web.dto.WalletDonationInfo;
 import app.web.mapper.DtoMapper;
 import jakarta.validation.Valid;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -31,7 +32,10 @@ public class UserController {
     }
 
     @GetMapping("/{id}/profile")
-    public ModelAndView getUserProfilePage(@PathVariable UUID id) {
+    public ModelAndView getUserProfilePage(@PathVariable UUID id, @AuthenticationPrincipal AuthenticationDetails authenticationDetails) {
+        if (!authenticationDetails.getUserId().equals(id)) {
+            throw new AuthorizationDeniedException("You are not authorized to view or edit this profile.");
+        }
         User user = userService.getUserById(id);
         WalletDonationInfo walletDonationInfo = userService.getWalletDonationInfo(user);
 

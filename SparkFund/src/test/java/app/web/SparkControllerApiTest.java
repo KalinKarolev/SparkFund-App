@@ -9,7 +9,6 @@ import app.user.model.User;
 import app.user.model.UserRole;
 import app.user.model.UserStatus;
 import app.user.service.UserService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;

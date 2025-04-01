@@ -55,7 +55,7 @@
                     th:text="${#temporals.format(userSignalRequest.createdOn, 'dd MMM yyyy HH:mm')}"></span> |
                 <b>Updated:</b> <span
                     th:text="${#temporals.format(userSignalRequest.updatedOn, 'dd MMM yyyy HH:mm')}"></span> |
-                <b>By:</b> <span th:text="${userSignalRequest.creatorUsername}">Very Long User Name</span>
+                <b>Created By:</b> <span th:text="${userSignalRequest.creatorUsername}"></span>
             </p>
 
             <div class="signal-button-container">
@@ -75,7 +75,7 @@
                               stroke-linejoin="round"></path>
                     </svg>
                 </button>
-                <button class="save-button" th:if="${userSignalRequest.createdOn != null}"
+                <button class="save-button" th:if="${#strings.equals(userSignalRequest.status, 'RESOLVED')}"
                         onclick="document.getElementById('actionType').value='delete'">
                     <p>Delete</p>
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
