@@ -86,12 +86,14 @@ public class UserController {
     }
 
     @PutMapping("/{id}/status")
+    @PreAuthorize("hasRole('ADMIN')")
     public String changeUserStatus(@PathVariable UUID id) {
         userService.switchStatus(id);
         return "redirect:/users";
     }
 
     @PutMapping("/{id}/role")
+    @PreAuthorize("hasRole('ADMIN')")
     public String changeUserRole(@PathVariable UUID id) {
         userService.switchRole(id);
         return "redirect:/users";

@@ -23,7 +23,7 @@ public class WebMvcConfiguration {
                 // Defines custom login logic
                 .formLogin(form -> form
                         .loginPage("/login")
-                        .defaultSuccessUrl("/home")
+                        .defaultSuccessUrl("/home", true)
                         .failureUrl("/login?error")
                         .permitAll())
                 // Defines custom logout logic

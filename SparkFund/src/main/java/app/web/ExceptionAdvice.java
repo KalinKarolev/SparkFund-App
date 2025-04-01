@@ -1,6 +1,7 @@
 package app.web;
 
 import app.exceptions.DomainException;
+import app.exceptions.EmailAlreadyExistException;
 import app.exceptions.ResourceNotFoundException;
 import app.exceptions.UsernameAlreadyExistException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -49,6 +50,12 @@ public class ExceptionAdvice {
     public String handleUsernameAlreadyExistException(RedirectAttributes redirectAttributes, HttpServletRequest request) {
         String username = request.getParameter("username");
         redirectAttributes.addFlashAttribute("usernameAlreadyExistMessage", "Username %s already exist".formatted(username));
+        return "redirect:/register";
+    }
+
+    @ExceptionHandler(EmailAlreadyExistException.class)
+    public String handleEmailAlreadyExist(RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("emailAlreadyExistMessage", "This email already exist");
         return "redirect:/register";
     }
 

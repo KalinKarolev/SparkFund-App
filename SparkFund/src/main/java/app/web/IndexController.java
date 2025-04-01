@@ -1,7 +1,6 @@
 package app.web;
 
 import app.donation.service.DonationService;
-import app.exceptions.EmailAlreadyExistException;
 import app.security.AuthenticationDetails;
 import app.spark.model.Spark;
 import app.spark.service.SparkService;
@@ -14,12 +13,11 @@ import jakarta.validation.Valid;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.Objects;
@@ -70,10 +68,13 @@ public class IndexController {
 
 
     @GetMapping("/login")
-    public ModelAndView getLoginPage() {
+    public ModelAndView getLoginPage(@RequestParam(value = "error", required = false) String errorParam) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("loginRequest", new LoginRequest());
         modelAndView.setViewName("login");
+        if (errorParam != null) {
+            modelAndView.addObject("errorMessage", "Incorrect username or password");
+        }
         return modelAndView;
     }
 
@@ -90,11 +91,5 @@ public class IndexController {
         modelAndView.addObject("donationsInfo", donationsInfo);
         modelAndView.setViewName("home");
         return modelAndView;
-    }
-
-    @ExceptionHandler(EmailAlreadyExistException.class)
-    public String handleEmailAlreadyExist(RedirectAttributes redirectAttributes) {
-        redirectAttributes.addFlashAttribute("emailAlreadyExistMessage", "This email already exist");
-        return "redirect:/register";
     }
 }

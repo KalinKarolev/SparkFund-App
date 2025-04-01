@@ -68,7 +68,6 @@ public class SparkService {
         spark.setDescription(manageSparkRequest.getDescription());
         spark.setGoalAmount(manageSparkRequest.getGoalAmount());
         spark.setCategory(manageSparkRequest.getCategory());
-        spark.setStatus(manageSparkRequest.getStatus());
         spark.setFirstPictureUrl(manageSparkRequest.getFirstPictureUrl());
         spark.setSecondPictureUrl(manageSparkRequest.getSecondPictureUrl());
         spark.setThirdPictureUrl(manageSparkRequest.getThirdPictureUrl());
