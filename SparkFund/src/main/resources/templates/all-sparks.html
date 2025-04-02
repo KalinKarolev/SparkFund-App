@@ -84,7 +84,9 @@
                         <button class="spark-button">Show</button>
                     </form>
                     <form th:action="@{'/' + ${spark.id} + '/donation'}" th:method="GET">
-                        <button class="spark-button">Donate</button>
+                        <button class="spark-button"
+                                th:attr="disabled=${#strings.equals(spark.status, 'ACTIVE')} ? null : 'readonly'"
+                                th:classappend="${#strings.equals(spark.status, 'ACTIVE')} ? '' : 'disabled-button'">Donate</button>
                     </form>
                 </div>
                 <div class="amount-container">

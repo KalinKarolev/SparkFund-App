@@ -77,11 +77,11 @@ public class SparkController {
 
     @GetMapping("/{id}/spark/details")
     public ModelAndView getUpdateSparkPage(@PathVariable UUID id, @AuthenticationPrincipal AuthenticationDetails authenticationDetails) {
-        if (!authenticationDetails.getUserId().equals(id)) {
-            throw new AuthorizationDeniedException("You are not authorized to view or edit this resource.");
-        }
         User user = userService.getAuthenticatedUser(authenticationDetails);
         Spark sparkForUpdate = sparkService.getSparkById(id);
+        if (!authenticationDetails.getUserId().equals(sparkForUpdate.getCreator().getId())) {
+            throw new AuthorizationDeniedException("You are not authorized to view or edit this resource.");
+        }
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("user", user);
