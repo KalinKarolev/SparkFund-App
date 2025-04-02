@@ -15,6 +15,7 @@ public class TestBuilder {
                 .id(UUID.randomUUID())
                 .username("user")
                 .password("password")
+                .email("user@email.com")
                 .userStatus(UserStatus.ACTIVE)
                 .userRole(UserRole.USER)
                 .build();

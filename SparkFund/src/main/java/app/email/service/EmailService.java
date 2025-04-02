@@ -3,10 +3,13 @@ package app.email.service;
 import app.email.client.EmailClient;
 import app.email.client.dto.EmailRequest;
 import app.email.client.dto.EmailResponse;
+import app.web.dto.EmailEvent;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.event.EventListener;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -54,5 +57,18 @@ public class EmailService {
 
     public void deletedFailedEmail(UUID emailId) {
         emailClient.deletedFailedEmail(emailId);
+    }
+
+    @Async
+    @EventListener
+    public void sendEmailWhenMilestoneReached(EmailEvent event) {
+        String subject = "Your signal has been resolved";
+        String emailBody = "Your user signal titled \"" + event.getSignalTitle() + "\" has been reviewed and closed by our team.\n\n" +
+                "Admin Response:\n" +
+                "\"" + event.getAdminResponse() + "\"\n\n" +
+                "If you have any further questions or concerns, feel free to reach out to us.\n\n" +
+                "Best regards,\n" +
+                "The SparkFund Team";
+        sendEmail(event.getUserEmail(), subject, emailBody);
     }
 }

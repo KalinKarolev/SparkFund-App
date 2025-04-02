@@ -6,8 +6,10 @@ import app.user.model.User;
 import app.usersignal.model.UserSignal;
 import app.usersignal.model.UserSignalStatus;
 import app.usersignal.repository.UserSignalRepository;
+import app.web.dto.EmailEvent;
 import app.web.dto.UserSignalRequest;
 import jakarta.transaction.Transactional;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
@@ -20,9 +22,11 @@ import java.util.UUID;
 public class UserSignalService {
 
     private final UserSignalRepository userSignalRepository;
+    private final ApplicationEventPublisher eventPublisher;
 
-    public UserSignalService(UserSignalRepository _userSignalRepository) {
+    public UserSignalService(UserSignalRepository _userSignalRepository, ApplicationEventPublisher _eventPublisher) {
         userSignalRepository = _userSignalRepository;
+        eventPublisher = _eventPublisher;
     }
 
     @Transactional
@@ -41,6 +45,7 @@ public class UserSignalService {
     public List<UserSignal> closeSignal(UserSignalRequest userSignalRequest, User user) {
         UserSignal userSignal = getUserSignalById(userSignalRequest.getId());
         closeUserSignal(userSignal, userSignalRequest);
+        sendEmailForClosedSignal(userSignal, userSignalRequest.getAdminResponse());
 
         return getAllSignals(user, "ALL");
     }
@@ -50,6 +55,15 @@ public class UserSignalService {
         userSignal.setUserSignalStatus(UserSignalStatus.RESOLVED);
         userSignal.setUpdatedOn(LocalDateTime.now());
         userSignalRepository.save(userSignal);
+    }
+
+    private void sendEmailForClosedSignal(UserSignal userSignal, String adminResponse) {
+        EmailEvent emailEvent = EmailEvent.builder()
+                .userEmail(userSignal.getCreator().getEmail())
+                .signalTitle(userSignal.getTitle())
+                .adminResponse(adminResponse)
+                .build();
+        eventPublisher.publishEvent(emailEvent);
     }
 
     @Transactional

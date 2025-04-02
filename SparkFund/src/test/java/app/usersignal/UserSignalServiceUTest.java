@@ -7,6 +7,8 @@ import app.usersignal.model.UserSignal;
 import app.usersignal.model.UserSignalStatus;
 import app.usersignal.repository.UserSignalRepository;
 import app.usersignal.service.UserSignalService;
+import app.web.TestBuilder;
+import app.web.dto.EmailEvent;
 import app.web.dto.UserSignalRequest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,20 +16,23 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.access.AccessDeniedException;
 
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class UserSignalServiceUTest {
 
     @Mock
     private UserSignalRepository userSignalRepository;
+
+    @Mock
+    private ApplicationEventPublisher eventPublisher;
 
     @InjectMocks
     private UserSignalService userSignalService;
@@ -60,9 +65,12 @@ public class UserSignalServiceUTest {
 
     @Test
     void givenSignalExists_whenCloseSignal_thenCloseSignal() {
+        User signalCreator = TestBuilder.randomUser();
         UUID uuid = UUID.randomUUID();
         UserSignal userSignal = UserSignal.builder()
                 .id(uuid)
+                .creator(signalCreator)
+                .title("Test Signal")
                 .userSignalStatus(UserSignalStatus.PENDING)
                 .build();
         UserSignalRequest signalRequest = UserSignalRequest.builder()
@@ -72,11 +80,18 @@ public class UserSignalServiceUTest {
 
         when(userSignalRepository.findById(uuid)).thenReturn(Optional.of(userSignal));
 
-        userSignalService.closeSignal(signalRequest, new User());
+        userSignalService.closeSignal(signalRequest, signalCreator);
 
         assertEquals(UserSignalStatus.RESOLVED, userSignal.getUserSignalStatus());
         assertEquals("message", userSignal.getAdminResponse());
         assertNotNull(userSignal.getUpdatedOn());
+
+        ArgumentCaptor<EmailEvent> captor = ArgumentCaptor.forClass(EmailEvent.class);
+        verify(eventPublisher, times(1)).publishEvent(captor.capture());
+        EmailEvent capturedEvent = captor.getValue();
+        assertEquals("user@email.com", capturedEvent.getUserEmail());
+        assertEquals("Test Signal", capturedEvent.getSignalTitle());
+        assertEquals(userSignal.getAdminResponse(), capturedEvent.getAdminResponse());
     }
 
     @Test
