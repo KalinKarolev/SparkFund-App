@@ -47,6 +47,13 @@ public class WalletService {
                 .build();
     }
 
+    /**
+     * Calculates the total amount of donations associated with the given wallet.
+     * If there are no donations, returns "0.00".
+     *
+     * @param wallet The wallet whose total donation amount is to be calculated.
+     * @return the total donation amount formatted as a string with two decimal places.
+     */
     private String getTotalDonations(Wallet wallet) {
         List<Donation> walletDonations = wallet.getDonations();
         if (walletDonations.isEmpty()) {
@@ -59,6 +66,13 @@ public class WalletService {
         return df.format(result);
     }
 
+    /**
+     * Determines the total number of unique Sparks that have received donations
+     * from the given wallet. If there are no donations, returns 0.
+     *
+     * @param wallet The wallet whose donated Sparks are to be counted.
+     * @return the number of unique Sparks supported by donations from this wallet.
+     */
     private int getTotalSparkCount(Wallet wallet) {
         List<Donation> walletDonations = wallet.getDonations();
         if (walletDonations.isEmpty()) {
@@ -70,6 +84,15 @@ public class WalletService {
                 .size();
     }
 
+    /**
+     * Subtracts the specified amount from the user's wallet balance.
+     * If the wallet has sufficient funds, the amount is subtracted,
+     * and the wallet balance is updated.
+     *
+     * @param user The user whose wallet balance is to be reduced.
+     * @param amount The amount to be withdrawn from the wallet.
+     * @throws DomainException if the wallet balance is insufficient.
+     */
     public void reduceAmount(User user, BigDecimal amount) {
         Wallet wallet = user.getWallet();
         BigDecimal walletBalance = wallet.getAmount().subtract(amount);

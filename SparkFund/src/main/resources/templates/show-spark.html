@@ -96,7 +96,9 @@
       <div class="donator-messages-container">
         <div class="spark-message-container" th:each="donation : ${spark.donations}">
           <img class="creator-image" th:src="${#strings.isEmpty(donation.wallet.owner.profilePicture) ? '/images/Default-User_Image.png' : donation.wallet.owner.profilePicture}" alt="Creator Image">
-          <p class="donator-message" th:text="${donation.wallet.owner.username + ': ' + donation.message}"></p>
+          <p class="donator-message" th:text="${#strings.isEmpty(donation.message)
+             ? donation.wallet.owner.username + ' supports your cause with a donation!'
+             : donation.wallet.owner.username + ': ' + donation.message}"></p>
         </div>
       </div>
 

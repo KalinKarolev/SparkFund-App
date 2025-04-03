@@ -143,7 +143,7 @@ public class DonationService {
         String emailSubject = "Your Spark received donation";
         String emailBody = String.format("Your Spark [%s] received donation for %s euro from donor with username: %s", spark.getTitle(), amount.toString(), donorName);
         if (CommonUtils.isNotEmpty(message)) {
-            emailBody += String.format("%n%n They sent you following message: %s", message);
+            emailBody += String.format("%n%n They sent you the following message: %s", message);
         }
         emailService.sendEmail(spark.getCreator().getEmail(), emailSubject, emailBody);
     }

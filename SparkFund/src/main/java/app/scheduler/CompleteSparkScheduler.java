@@ -14,7 +14,6 @@ public class CompleteSparkScheduler {
 
     private final SparkService sparkService;
 
-
     public CompleteSparkScheduler(SparkService _sparkService) {
         sparkService = _sparkService;
     }
