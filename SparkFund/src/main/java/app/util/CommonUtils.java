@@ -17,6 +17,10 @@ public class CommonUtils {
         return amount == null || amount.compareTo(BigDecimal.ZERO) == 0;
     }
 
+    public static boolean isEmpty(String text) {
+        return text == null || text.isEmpty();
+    }
+
     public static boolean isNotEmpty(String text) {
         return text != null && !text.isEmpty();
     }

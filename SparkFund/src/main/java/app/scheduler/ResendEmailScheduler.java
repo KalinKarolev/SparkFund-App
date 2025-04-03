@@ -21,7 +21,6 @@ public class ResendEmailScheduler {
     }
 
     @Scheduled(fixedRate = 10000)
-//    @Scheduled(fixedRate = 1800000)
     public void resendEmails() {
         List<EmailResponse> failedEmails = emailService.getFailedEmails();
         if (failedEmails.isEmpty()) {

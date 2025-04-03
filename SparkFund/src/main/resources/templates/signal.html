@@ -12,44 +12,34 @@
 <main>
     <div th:replace="fragments/commons :: nav-bar"></div>
 
-    <div class="content-wrapper" th:classappend="${userSignalRequest.createdOn != null and user.username.equals(userSignalRequest.creatorUsername)} ? 'readonly-page'">
-        <form class="main-container" th:action="@{/signal/actions}" th:method="POST" th:object="${userSignalRequest}">
-            <div class="main-form">
+    <div class="content-wrapper"
+         th:classappend="${userSignalRequest.createdOn != null and user.username.equals(userSignalRequest.creatorUsername)} ? 'readonly-page'">
+
+        <div class="main-container">
+            <form class="main-form" id="mainForm" th:object="${userSignalRequest}">
                 <h2>Send Us a Signal</h2>
+                <input type="hidden" id="id" th:field="*{id}">
                 <div class="form-field">
                     <label for="title">Title:</label>
-                    <input type="text" id="title" placeholder="Signal Title" th:field="*{title}"
-                           th:attr="readonly=${#strings.isEmpty(userSignalRequest.creatorUsername)} ? null : (${#strings.equals(userSignalRequest.creatorUsername, user.getUsername())} ? null : 'readonly')"
-                           th:classappend="${#strings.isEmpty(userSignalRequest.creatorUsername)} ? '' : (${#strings.equals(userSignalRequest.creatorUsername, user.getUsername())} ? '' : 'readonly')">
+                    <input type="text" id="title" placeholder="Signal Title" th:field="*{title}" th:readonly="${userSignalRequest.createdOn != null}">
                     <p class="alert-warning" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></p>
                 </div>
                 <div class="form-field">
                     <label for="message">Description:</label>
-                    <textarea id="message" rows="5" th:field="*{message}"
-                              th:attr="readonly=${#strings.isEmpty(userSignalRequest.creatorUsername)} ? null : (${#strings.equals(userSignalRequest.creatorUsername, user.getUsername())} ? null : 'readonly')"
-                              th:classappend="${#strings.isEmpty(userSignalRequest.creatorUsername)} ? '' : (${#strings.equals(userSignalRequest.creatorUsername, user.getUsername())} ? '' : 'readonly')">></textarea>
+                    <textarea id="message" rows="5" th:field="*{message}" th:readonly="${userSignalRequest.createdOn != null}"></textarea>
                     <p class="alert-warning" th:if="${#fields.hasErrors('message')}" th:errors="*{message}"></p>
                 </div>
                 <div class="form-field">
                     <select id="status" name="status" disabled>
-                        <option th:text="${#strings.isEmpty(userSignalRequest.status) ? 'PENDING' : userSignalRequest.status.name()}"></option>
+                        <option th:text="${userSignalRequest.status != null ? userSignalRequest.status.name() : 'PENDING'}"></option>
                     </select>
                 </div>
                 <div class="form-field">
                     <label for="adminResponse">Response from Admin:</label>
-                    <textarea id="adminResponse" rows="5"
-                              th:attr="readonly=${#strings.equals(user.userRole, 'USER')} ? 'readonly' : null"
-                              th:classappend="${#strings.equals(user.userRole, 'USER')} ? 'readonly' : ''"
-                              th:field="*{adminResponse}"></textarea>
-                    <p class="alert-warning" th:if="${#fields.hasErrors('adminResponse')}"
-                       th:errors="*{adminResponse}"></p>
+                    <textarea id="adminResponse" rows="5" th:field="*{adminResponse}" th:readonly="${#strings.equals(user.userRole, 'USER')}"></textarea>
+                    <p class="alert-warning" th:if="${#fields.hasErrors('adminResponse')}" th:errors="*{adminResponse}"></p>
                 </div>
-
-                <!-- Hidden input for the signal ID -->
-                <input type="hidden" th:field="*{id}" />
-                <!-- Hidden input to hold the action type -->
-                <input type="hidden" name="actionType" id="actionType" />
-            </div>
+            </form>
             <p>
                 <b>Created:</b> <span
                     th:text="${#temporals.format(userSignalRequest.createdOn, 'dd MMM yyyy HH:mm')}"></span> |
@@ -59,39 +49,70 @@
             </p>
 
             <div class="signal-button-container">
-                <button class="save-button" th:if="${userSignalRequest.createdOn == null}"
-                        onclick="document.getElementById('actionType').value='send'">
-                    <p>Send</p>
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="5" stroke-linecap="round"
-                              stroke-linejoin="round"></path>
-                    </svg>
-                </button>
-                <button class="save-button" th:if="${userSignalRequest.createdOn != null}"
-                        onclick="document.getElementById('actionType').value='close'">
-                    <p>Close</p>
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="5" stroke-linecap="round"
-                              stroke-linejoin="round"></path>
-                    </svg>
-                </button>
-                <button class="save-button" th:if="${#strings.equals(userSignalRequest.status, 'RESOLVED')}"
-                        onclick="document.getElementById('actionType').value='delete'">
-                    <p>Delete</p>
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M3 6h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
-                        <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" stroke="currentColor" stroke-width="2"></path>
-                        <path d="M10 11v6" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
-                        <path d="M14 11v6" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
-                        <path d="M4 6l1 14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2l1-14" stroke="currentColor" stroke-width="2"></path>
-                    </svg>
-                </button>
+                <form th:if="${userSignalRequest.createdOn == null}" th:action="@{/signals}" th:method="POST" id="sendForm">
+                    <input type="hidden" name="id">
+                    <input type="hidden" name="title">
+                    <input type="hidden" name="message">
+                    <input type="hidden" name="adminResponse">
+                    <button type="submit" class="save-button">
+                        <p>Send</p>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="5" stroke-linecap="round"
+                                  stroke-linejoin="round"></path>
+                        </svg>
+                    </button>
+                </form>
+                <form th:if="${userSignalRequest.createdOn != null}" th:action="@{/signals}" th:method="PATCH" id="closeForm">
+                    <input type="hidden" name="id">
+                    <input type="hidden" name="title">
+                    <input type="hidden" name="message">
+                    <input type="hidden" name="adminResponse">
+                    <button type="submit" class="save-button">
+                        <p>Close</p>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="5" stroke-linecap="round"
+                                  stroke-linejoin="round"></path>
+                        </svg>
+                    </button>
+                </form>
+                <form th:if="${#strings.equals(userSignalRequest.status, 'RESOLVED')}" th:action="@{/signals}" th:method="DELETE" id="deleteForm">
+                    <input type="hidden" name="id">
+                    <input type="hidden" name="title">
+                    <input type="hidden" name="message">
+                    <input type="hidden" name="adminResponse">
+                    <button type="submit" class="save-button">
+                        <p>Delete</p>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M3 6h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+                            <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" stroke="currentColor" stroke-width="2"></path>
+                            <path d="M10 11v6" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+                            <path d="M14 11v6" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+                            <path d="M4 6l1 14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2l1-14" stroke="currentColor" stroke-width="2"></path>
+                        </svg>
+                    </button>
+                </form>
             </div>
-        </form>
+        </div>
     </div>
-
 </main>
+
 <div th:replace="fragments/commons :: footer"></div>
+
+<script>
+    function populateHiddenFields(formId) {
+        const mainForm = document.getElementById('mainForm');
+        const targetForm = document.getElementById(formId);
+
+        targetForm.querySelector('[name="id"]').value = mainForm.querySelector('#id').value;
+        targetForm.querySelector('[name="title"]').value = mainForm.querySelector('#title').value;
+        targetForm.querySelector('[name="message"]').value = mainForm.querySelector('#message').value;
+        targetForm.querySelector('[name="adminResponse"]').value = mainForm.querySelector('#adminResponse').value;
+    }
+
+    document.getElementById('sendForm')?.addEventListener('submit', function() { populateHiddenFields('sendForm'); });
+    document.getElementById('closeForm')?.addEventListener('submit', function() { populateHiddenFields('closeForm'); });
+    document.getElementById('deleteForm')?.addEventListener('submit', function() { populateHiddenFields('deleteForm'); });
+</script>
 
 </body>
 </html>

@@ -5,6 +5,7 @@ import app.user.model.User;
 import app.user.service.UserService;
 import app.usersignal.model.UserSignal;
 import app.usersignal.service.UserSignalService;
+import app.util.CommonUtils;
 import app.web.dto.FilterData;
 import app.web.dto.UserSignalRequest;
 import app.web.mapper.DtoMapper;
@@ -88,18 +89,34 @@ public class UserSignalController {
         return modelAndView;
     }
 
-    @PostMapping("/signal/actions")
-    public ModelAndView handleSignalAction(@AuthenticationPrincipal AuthenticationDetails authenticationDetails
-            , @RequestParam("actionType") String actionType
-            , @RequestParam(name = "status", required = false, defaultValue = "ALL") String status
-            , @Valid UserSignalRequest userSignalRequest
-            , BindingResult bindingResult) {
-
+    @PostMapping("/signals")
+    public ModelAndView sendSignal(@AuthenticationPrincipal AuthenticationDetails authenticationDetails,
+                                   @Valid UserSignalRequest userSignalRequest,
+                                   BindingResult bindingResult) {
         User user = userService.getAuthenticatedUser(authenticationDetails);
-        if ("close".equals(actionType) && userSignalRequest.getAdminResponse() == null) {
+
+        if (bindingResult.hasErrors()) {
+            ModelAndView modelAndView = new ModelAndView("signal");
+            modelAndView.addObject("user", user);
+            modelAndView.addObject("userSignalRequest", userSignalRequest);
+            return modelAndView;
+        }
+
+        userSignalService.sendSignal(user, userSignalRequest);
+        return new ModelAndView("redirect:/home");
+    }
+
+    @PatchMapping("/signals")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ModelAndView closeSignal(@AuthenticationPrincipal AuthenticationDetails authenticationDetails,
+                                    @Valid UserSignalRequest userSignalRequest,
+                                    BindingResult bindingResult) {
+        User user = userService.getAuthenticatedUser(authenticationDetails);
+
+        if (CommonUtils.isEmpty(userSignalRequest.getAdminResponse())) {
             bindingResult.rejectValue("adminResponse", "error.adminResponse", "You cannot close signal without response");
         }
-        if ("send".equals(actionType) && bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             ModelAndView modelAndView = new ModelAndView();
             modelAndView.addObject("user", user);
             modelAndView.addObject("userSignalRequest", userSignalRequest);
@@ -107,36 +124,31 @@ public class UserSignalController {
             return modelAndView;
         }
 
-        userSignalService.validateActionType(actionType);
+        List<UserSignal> allSignals = userSignalService.closeSignal(userSignalRequest, user);
+        FilterData filterData = new FilterData("ALL", null, null, "all-signals");
 
-        if ("send".equals(actionType)) {
-            userSignalService.sendSignal(user, userSignalRequest);
+        ModelAndView modelAndView = new ModelAndView("all-signals");
+        modelAndView.addObject("user", user);
+        modelAndView.addObject("allSignals", allSignals);
+        modelAndView.addObject("filterData", filterData);
+        return modelAndView;
+    }
 
-            ModelAndView modelAndView = new ModelAndView();
-            modelAndView.addObject("user", user);
-            modelAndView.setViewName("redirect:/home");
-            return modelAndView;
-        } else if ("close".equals(actionType)) {
-            List<UserSignal> allSignals = userSignalService.closeSignal(userSignalRequest, user);
-            FilterData filterData = new FilterData("ALL", null, null,"all-signals");
+    @DeleteMapping("/signals")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ModelAndView deleteSignal(@AuthenticationPrincipal AuthenticationDetails authenticationDetails,
+                                     @RequestParam(name = "status", required = false, defaultValue = "ALL") String status,
+                                     @Valid UserSignalRequest userSignalRequest) {
+        User user = userService.getAuthenticatedUser(authenticationDetails);
+        List<UserSignal> allSignals = userSignalService.deleteSignal(userSignalRequest, user, status);
+        FilterData filterData = new FilterData(status, null, null, "all-signals");
 
-            ModelAndView modelAndView = new ModelAndView();
-            modelAndView.addObject("user", user);
-            modelAndView.addObject("allSignals", allSignals);
-            modelAndView.addObject("filterData", filterData);
-            modelAndView.setViewName("all-signals");
-            return modelAndView;
-        } else {
-            List<UserSignal> allSignals = userSignalService.deleteSignal(userSignalRequest, user, status);
-            FilterData filterData = new FilterData(status, null, null, "all-signals");
-
-            ModelAndView modelAndView = new ModelAndView();
-            modelAndView.addObject("user", user);
-            modelAndView.addObject("allSignals", allSignals);
-            modelAndView.addObject("filterData", filterData);
-            modelAndView.setViewName("redirect:/all-signals");
-            return modelAndView;
-        }
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("user", user);
+        modelAndView.addObject("allSignals", allSignals);
+        modelAndView.addObject("filterData", filterData);
+        modelAndView.setViewName("redirect:/all-signals");
+        return modelAndView;
     }
 
 }
