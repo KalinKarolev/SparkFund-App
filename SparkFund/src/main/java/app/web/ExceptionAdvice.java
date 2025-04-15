@@ -6,6 +6,7 @@ import app.exceptions.ResourceNotFoundException;
 import app.exceptions.UsernameAlreadyExistException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.hibernate.TypeMismatchException;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.web.bind.MissingRequestValueException;
@@ -38,7 +39,9 @@ public class ExceptionAdvice {
     }
 
     @ResponseStatus(HttpStatus.FORBIDDEN)
-    @ExceptionHandler({AccessDeniedException.class, DomainException.class})
+    @ExceptionHandler({AccessDeniedException.class
+            , DomainException.class
+            , DuplicateKeyException.class})
     public ModelAndView handleAccessDeniedException(Exception ex) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("exceptionMessage", ex.getMessage());

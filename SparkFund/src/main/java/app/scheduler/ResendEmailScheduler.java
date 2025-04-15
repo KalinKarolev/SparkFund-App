@@ -20,7 +20,8 @@ public class ResendEmailScheduler {
         emailService = _emailService;
     }
 
-    @Scheduled(fixedRate = 10000)
+//    @Scheduled(fixedRate = 10000)
+    @Scheduled(fixedRate = 180000)
     public void resendEmails() {
         List<EmailResponse> failedEmails = emailService.getFailedEmails();
         if (failedEmails.isEmpty()) {

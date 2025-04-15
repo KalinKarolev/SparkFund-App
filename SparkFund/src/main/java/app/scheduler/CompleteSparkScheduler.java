@@ -18,7 +18,8 @@ public class CompleteSparkScheduler {
         sparkService = _sparkService;
     }
 
-    @Scheduled(fixedRate = 10000)
+//    @Scheduled(fixedRate = 10000)
+    @Scheduled(fixedRate = 180000)
     public void completeSparks(){
         List<Spark> sparksToBeCompleted = sparkService.findSparksForCompletion();
         if (sparksToBeCompleted.isEmpty()) {

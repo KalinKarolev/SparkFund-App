@@ -61,7 +61,7 @@ public class EmailService {
 
     @Async
     @EventListener
-    public void sendEmailWhenMilestoneReached(EmailEvent event) {
+    public void sendEmailForClosedSignal(EmailEvent event) {
         String subject = "Your signal has been resolved";
         String emailBody = "Your user signal titled \"" + event.getSignalTitle() + "\" has been reviewed and closed by our team.\n\n" +
                 "Admin Response:\n" +
